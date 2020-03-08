@@ -18,10 +18,10 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
-      - run: go get golang.org/x/lint/golint
-
-      - name:
-        run: golint -set_exit_status
+      - name: golint
+        run: |
+          GO111MODULE=off GOBIN=$(pwd)/bin go get golang.org/x/lint/golint
+          bin/golint -set_exit_status ./...
         env:
           CI: true
 
