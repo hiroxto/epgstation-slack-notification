@@ -1,5 +1,7 @@
 # epgstation-slack-notification
 
+![GitHub Actions Go CI Status](https://github.com/hiroxto/epgstation-slack-notification/workflows/Go%20CI/badge.svg)
+
 EPGStation の通知を Slack に送るコマンドラインツール
 
 ## 設定
