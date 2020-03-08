@@ -1,0 +1,44 @@
+# Slack の設定
+slack:
+  # Slack の API キー
+  api-key: "YOUR_API_KEY"
+
+  # 投稿するチャンネル
+  # コマンド側で指定がない場合はこの値が使われる
+  channel: "CHANNEL_ID"
+
+# 各コマンドの設定
+commands:
+  reservation-added:
+    # 通知を実行するかの設定
+    # EPGStation の config.json にコマンドの設定はしてあるけど, 通知を無効化したいときなどは false にする
+    enable: true
+
+    # Slack で使用されるメッセージ
+    # Box Kit のヘッダーセクションで使われ, 通知の際はこのメッセージが表示される
+    # 絵文字も使える
+    message: ":new: 録画予約が新規追加されました."
+
+    # 特定のコマンドのみ別チャンネルに振り分けたい時に指定する.
+    # プロパティがない場合は slack の channel が使われる
+    channel: "CHANNEL_ID"
+
+  recorded-pre-start:
+    enable: true
+    message: ":soon: 録画準備が開始しました."
+
+  recorded-prep-rec-failed:
+    enable: true
+    message: ":x: 録画準備に失敗しました."
+
+  recorded-start:
+    enable: true
+    message: ":arrow_forward: 録画が開始しました."
+
+  recorded-end:
+    enable: true
+    message: ":white_check_mark: 録画が終了しました."
+
+  recorded-failed:
+    enable: true
+    message: ":x: 録画中にエラーが発生しました."
