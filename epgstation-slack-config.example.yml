@@ -17,7 +17,10 @@ commands:
     # Slack で使用されるメッセージ
     # Box Kit のヘッダーセクションで使われ, 通知の際はこのメッセージが表示される
     # 絵文字も使える
-    message: ":new: 録画予約が新規追加されました."
+    # 変数を埋め込むことも可能
+    # EPGStation で設定される環境変数により作られる struct が渡される
+    # struct の内容は env.go を参照
+    message: ":new: {{ .ChannelName }} で {{ .Name }} の録画予約が新規追加されました"
 
     # 特定のコマンドのみ別チャンネルに振り分けたい時に指定する.
     # プロパティがない場合は slack の channel が使われる
@@ -25,20 +28,20 @@ commands:
 
   recorded-pre-start:
     enable: true
-    message: ":soon: 録画準備が開始しました."
+    message: ":soon: {{ .ChannelName }} で {{ .Name }} の録画準備が開始しました"
 
   recorded-prep-rec-failed:
     enable: true
-    message: ":x: 録画準備に失敗しました."
+    message: ":x: {{ .ChannelName }} で {{ .Name }} の録画準備に失敗しました"
 
   recorded-start:
     enable: true
-    message: ":arrow_forward: 録画が開始しました."
+    message: ":arrow_forward: {{ .ChannelName }} で {{ .Name }} の録画が開始しました"
 
   recorded-end:
     enable: true
-    message: ":white_check_mark: 録画が終了しました."
+    message: ":white_check_mark: {{ .ChannelName }} で {{ .Name }} の録画が終了しました"
 
   recorded-failed:
     enable: true
-    message: ":x: 録画中にエラーが発生しました."
+    message: ":x: {{ .ChannelName }} で {{ .Name }} の録画中にエラーが発生しました"
