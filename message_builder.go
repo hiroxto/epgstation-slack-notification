@@ -38,10 +38,17 @@ func buildRecCommandHeaderText(messageTemplate string, env RecCommandEnv) (strin
 	return messageBuffer.String(), nil
 }
 
-func buildPreCommandBlocks(message string, env PreCommandEnv) slack.MsgOption {
-	headerText := slack.NewTextBlockObject("mrkdwn", message, false, false)
-	headerSection := slack.NewSectionBlock(headerText, nil, nil)
+func createHeaderSection(text string) *slack.SectionBlock {
+	headerText := slack.NewTextBlockObject("mrkdwn", text, false, false)
 
+	return slack.NewSectionBlock(headerText, nil, nil)
+}
+
+func createFieldsSection(fields []*slack.TextBlockObject) *slack.SectionBlock {
+	return slack.NewSectionBlock(nil, fields, nil)
+}
+
+func buildPreCommandMessageOptions(message string, env PreCommandEnv) slack.MsgOption {
 	channels := []string{
 		env.ChannelType,
 		env.ChannelID,
@@ -61,22 +68,18 @@ func buildPreCommandBlocks(message string, env PreCommandEnv) slack.MsgOption {
 		buildTextBlock("Description", env.Description),
 		buildTextBlock("Extended", env.Extended),
 	}
-	fieldsSection := slack.NewSectionBlock(nil, fields, nil)
 
 	fallbackOpt := slack.MsgOptionText(message, false)
 	blockOpt := slack.MsgOptionBlocks(
-		headerSection,
-		fieldsSection,
+		createHeaderSection(message),
+		createFieldsSection(fields),
 		slack.NewDividerBlock(),
 	)
 
 	return slack.MsgOptionCompose(fallbackOpt, blockOpt)
 }
 
-func buildRecCommandBlocks(message string, env RecCommandEnv) slack.MsgOption {
-	headerText := slack.NewTextBlockObject("mrkdwn", message, false, false)
-	headerSection := slack.NewSectionBlock(headerText, nil, nil)
-
+func buildRecCommandMessageOptions(message string, env RecCommandEnv) slack.MsgOption {
 	channels := []string{
 		env.ChannelType,
 		env.ChannelID,
@@ -99,12 +102,11 @@ func buildRecCommandBlocks(message string, env RecCommandEnv) slack.MsgOption {
 		buildTextBlock("RecPath", env.RecPath),
 		buildTextBlock("LogPath", env.LogPath),
 	}
-	fieldsSection := slack.NewSectionBlock(nil, fields, nil)
 
 	fallbackOpt := slack.MsgOptionText(message, false)
 	blockOpt := slack.MsgOptionBlocks(
-		headerSection,
-		fieldsSection,
+		createHeaderSection(message),
+		createFieldsSection(fields),
 		slack.NewDividerBlock(),
 	)
 
