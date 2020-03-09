@@ -123,9 +123,3 @@ func buildMessageOptions(message string, fields []*slack.TextBlockObject) slack.
 
 	return slack.MsgOptionCompose(fallbackOpt, blockOpt)
 }
-
-func buildTextBlock(title string, value string) *slack.TextBlockObject {
-	text := fmt.Sprintf("*%s:*\n%s", title, value)
-
-	return slack.NewTextBlockObject("mrkdwn", text, false, false)
-}
