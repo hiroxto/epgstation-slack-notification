@@ -113,18 +113,7 @@ func createFieldsSection(fields []*slack.TextBlockObject) *slack.SectionBlock {
 	return slack.NewSectionBlock(nil, fields, nil)
 }
 
-func buildPreCommandMessageOptions(message string, fields []*slack.TextBlockObject) slack.MsgOption {
-	fallbackOpt := slack.MsgOptionText(message, false)
-	blockOpt := slack.MsgOptionBlocks(
-		createHeaderSection(message),
-		createFieldsSection(fields),
-		slack.NewDividerBlock(),
-	)
-
-	return slack.MsgOptionCompose(fallbackOpt, blockOpt)
-}
-
-func buildRecCommandMessageOptions(message string, fields []*slack.TextBlockObject) slack.MsgOption {
+func buildMessageOptions(message string, fields []*slack.TextBlockObject) slack.MsgOption {
 	fallbackOpt := slack.MsgOptionText(message, false)
 	blockOpt := slack.MsgOptionBlocks(
 		createHeaderSection(message),
