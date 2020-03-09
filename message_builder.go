@@ -48,7 +48,7 @@ func createFieldsSection(fields []*slack.TextBlockObject) *slack.SectionBlock {
 	return slack.NewSectionBlock(nil, fields, nil)
 }
 
-func buildPreCommandBlocks(message string, env PreCommandEnv) slack.MsgOption {
+func buildPreCommandMessageOptions(message string, env PreCommandEnv) slack.MsgOption {
 	channels := []string{
 		env.ChannelType,
 		env.ChannelID,
