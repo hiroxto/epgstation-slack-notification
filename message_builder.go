@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/slack-go/slack"
-	"strings"
 	"text/template"
 )
 
@@ -114,27 +113,7 @@ func createFieldsSection(fields []*slack.TextBlockObject) *slack.SectionBlock {
 	return slack.NewSectionBlock(nil, fields, nil)
 }
 
-func buildPreCommandMessageOptions(message string, env PreCommandEnv) slack.MsgOption {
-	channels := []string{
-		env.ChannelType,
-		env.ChannelID,
-		env.ChannelName,
-	}
-	times := []string{
-		env.StartAt,
-		env.EndAt,
-	}
-
-	fields := []*slack.TextBlockObject{
-		buildTextBlock("ProgramID", env.ProgramID),
-		buildTextBlock("ChannelType, ChannelID, ChannelName", strings.Join(channels, "\n")),
-		buildTextBlock("StartAt, EndAt", strings.Join(times, "\n")),
-		buildTextBlock("Duration", env.Duration),
-		buildTextBlock("Name", env.Name),
-		buildTextBlock("Description", env.Description),
-		buildTextBlock("Extended", env.Extended),
-	}
-
+func buildPreCommandMessageOptions(message string, fields []*slack.TextBlockObject) slack.MsgOption {
 	fallbackOpt := slack.MsgOptionText(message, false)
 	blockOpt := slack.MsgOptionBlocks(
 		createHeaderSection(message),
@@ -145,30 +124,7 @@ func buildPreCommandMessageOptions(message string, env PreCommandEnv) slack.MsgO
 	return slack.MsgOptionCompose(fallbackOpt, blockOpt)
 }
 
-func buildRecCommandMessageOptions(message string, env RecCommandEnv) slack.MsgOption {
-	channels := []string{
-		env.ChannelType,
-		env.ChannelID,
-		env.ChannelName,
-	}
-	times := []string{
-		env.StartAt,
-		env.EndAt,
-	}
-
-	fields := []*slack.TextBlockObject{
-		buildTextBlock("RecordedID", env.RecordedID),
-		buildTextBlock("ProgramID", env.ProgramID),
-		buildTextBlock("ChannelType, ChannelID, ChannelName", strings.Join(channels, "\n")),
-		buildTextBlock("StartAt, EndAt", strings.Join(times, "\n")),
-		buildTextBlock("Duration", env.Duration),
-		buildTextBlock("Name", env.Name),
-		buildTextBlock("Description", env.Description),
-		buildTextBlock("Extended", env.Extended),
-		buildTextBlock("RecPath", env.RecPath),
-		buildTextBlock("LogPath", env.LogPath),
-	}
-
+func buildRecCommandMessageOptions(message string, fields []*slack.TextBlockObject) slack.MsgOption {
 	fallbackOpt := slack.MsgOptionText(message, false)
 	blockOpt := slack.MsgOptionBlocks(
 		createHeaderSection(message),
