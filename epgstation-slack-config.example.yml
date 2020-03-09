@@ -9,7 +9,7 @@ slack:
 
 # 各コマンドの設定
 commands:
-  reservation-added:
+  reservation-added: &pre-command-default
     # 通知を実行するかの設定
     # EPGStation の config.json にコマンドの設定はしてあるけど, 通知を無効化したいときなどは false にする
     enable: true
@@ -49,21 +49,25 @@ commands:
     channel: "CHANNEL_ID"
 
   recorded-pre-start:
+    <<: *pre-command-default
     enable: true
     message: ":soon: {{ .ChannelName }} で {{ .Name }} の録画準備が開始しました"
 
   recorded-prep-rec-failed:
+    <<: *pre-command-default
     enable: true
     message: ":x: {{ .ChannelName }} で {{ .Name }} の録画準備に失敗しました"
 
-  recorded-start:
+  recorded-start: &rec-command-default
     enable: true
     message: ":arrow_forward: {{ .ChannelName }} で {{ .Name }} の録画が開始しました"
 
   recorded-end:
+    <<: *rec-command-default
     enable: true
     message: ":white_check_mark: {{ .ChannelName }} で {{ .Name }} の録画が終了しました"
 
   recorded-failed:
+    <<: *rec-command-default
     enable: true
     message: ":x: {{ .ChannelName }} で {{ .Name }} の録画中にエラーが発生しました"
