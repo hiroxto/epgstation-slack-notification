@@ -49,9 +49,6 @@ func createFieldsSection(fields []*slack.TextBlockObject) *slack.SectionBlock {
 }
 
 func buildPreCommandBlocks(message string, env PreCommandEnv) slack.MsgOption {
-	headerText := slack.NewTextBlockObject("mrkdwn", message, false, false)
-	headerSection := slack.NewSectionBlock(headerText, nil, nil)
-
 	channels := []string{
 		env.ChannelType,
 		env.ChannelID,
@@ -71,12 +68,11 @@ func buildPreCommandBlocks(message string, env PreCommandEnv) slack.MsgOption {
 		buildTextBlock("Description", env.Description),
 		buildTextBlock("Extended", env.Extended),
 	}
-	fieldsSection := slack.NewSectionBlock(nil, fields, nil)
 
 	fallbackOpt := slack.MsgOptionText(message, false)
 	blockOpt := slack.MsgOptionBlocks(
-		headerSection,
-		fieldsSection,
+		createHeaderSection(message),
+		createFieldsSection(fields),
 		slack.NewDividerBlock(),
 	)
 
@@ -84,9 +80,6 @@ func buildPreCommandBlocks(message string, env PreCommandEnv) slack.MsgOption {
 }
 
 func buildRecCommandBlocks(message string, env RecCommandEnv) slack.MsgOption {
-	headerText := slack.NewTextBlockObject("mrkdwn", message, false, false)
-	headerSection := slack.NewSectionBlock(headerText, nil, nil)
-
 	channels := []string{
 		env.ChannelType,
 		env.ChannelID,
@@ -109,12 +102,11 @@ func buildRecCommandBlocks(message string, env RecCommandEnv) slack.MsgOption {
 		buildTextBlock("RecPath", env.RecPath),
 		buildTextBlock("LogPath", env.LogPath),
 	}
-	fieldsSection := slack.NewSectionBlock(nil, fields, nil)
 
 	fallbackOpt := slack.MsgOptionText(message, false)
 	blockOpt := slack.MsgOptionBlocks(
-		headerSection,
-		fieldsSection,
+		createHeaderSection(message),
+		createFieldsSection(fields),
 		slack.NewDividerBlock(),
 	)
 
