@@ -26,9 +26,16 @@ type Config struct {
 
 // CommandConfigStruct 各コマンドの設定
 type CommandConfigStruct struct {
-	Enable  bool   `yaml:"enable"`
-	Channel string `yaml:"channel"`
-	Message string `yaml:"message"`
+	Enable        bool                  `yaml:"enable"`
+	Channel       string                `yaml:"channel"`
+	Message       string                `yaml:"message"`
+	FieldsSection []FieldsSectionStruct `yaml:"fields-section"`
+}
+
+// FieldsSectionStruct Slack の fields の設定
+type FieldsSectionStruct struct {
+	Title    string `yaml:"title"`
+	Template string `yaml:"template"`
 }
 
 func loadConfigFile() Config {
