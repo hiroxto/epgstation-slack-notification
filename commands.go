@@ -61,6 +61,12 @@ func startRecCommandNotification(context *cli.Context, env RecCommandEnv, config
 		return err
 	}
 
+	fields, err := buildRecCommandFields(commandConfig.FieldsSection, env)
+
+	if err != nil {
+		return err
+	}
+
 	options := buildRecCommandMessageOptions(message, env)
 	_, _, err = slackClient.PostMessage(slackChannel, options)
 
