@@ -7,36 +7,6 @@ import (
 	"text/template"
 )
 
-func buildPreCommandHeaderText(messageTemplate string, env PreCommandEnv) (string, error) {
-	var messageBuffer bytes.Buffer
-	t, err := template.New("message").Parse(messageTemplate)
-
-	if err != nil {
-		return messageBuffer.String(), err
-	}
-
-	if err := t.Execute(&messageBuffer, env); err != nil {
-		return messageBuffer.String(), err
-	}
-
-	return messageBuffer.String(), nil
-}
-
-func buildRecCommandHeaderText(messageTemplate string, env RecCommandEnv) (string, error) {
-	var messageBuffer bytes.Buffer
-	t, err := template.New("message").Parse(messageTemplate)
-
-	if err != nil {
-		return messageBuffer.String(), err
-	}
-
-	if err := t.Execute(&messageBuffer, env); err != nil {
-		return messageBuffer.String(), err
-	}
-
-	return messageBuffer.String(), nil
-}
-
 func buildPreCommandFields(fieldsConfigs []FieldsSectionStruct, env PreCommandEnv) ([]*slack.TextBlockObject, error) {
 	var fields []*slack.TextBlockObject
 
