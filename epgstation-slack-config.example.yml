@@ -61,6 +61,30 @@ commands:
   recorded-start: &rec-command-default
     enable: true
     message: ":arrow_forward: {{ .ChannelName }} で {{ .Name }} の録画が開始しました"
+    fields-section:
+      - title: "RecordedID, ProgramID"
+        template: "{{ .RecordedID }}, {{ .ProgramID }}"
+
+      - title: "ChannelType, ChannelID, ChannelName"
+        template: "{{ .ChannelType }}, {{ .ChannelID }}, {{ .ChannelName }}"
+
+      - title: "StartAt, EndAt, Duration"
+        template: "{{ .StartAt }}, {{ .EndAt }}, {{ .Duration }}"
+
+      - title: "Name"
+        template: "{{ .Name }}"
+
+      - title: "Description"
+        template: "{{ .Description }}"
+
+      - title: "Extended"
+        template: "{{ .Extended }}"
+
+      - title: "RecPath"
+        template: "{{ .RecPath }}"
+
+      - title: "LogPath"
+        template: "{{ .LogPath }}"
 
   recorded-end:
     <<: *rec-command-default
