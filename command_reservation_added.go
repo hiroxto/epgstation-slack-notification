@@ -18,18 +18,7 @@ var commandReservationAdded = &cli.Command{
 func commandReservationAddedAction(context *cli.Context) error {
 	config := loadConfigFile()
 	env := loadPreCommandEnvs()
-	commandConfig := config.Commands.ReservationAdded
-
-	if !commandConfig.Enable {
-		displayCommandIsDisableMessage(context)
-		return nil
-	}
-
-	slackAPIKey := config.Slack.APIKey
-	slackChannel := getSlackChannel(config.Slack.Channel, commandConfig.Channel)
-	slackClient := createSlackClient(slackAPIKey, context.Bool("debug"))
-	blocks := buildPreCommandBlocks(commandConfig.Message, env)
-	_, _, err := slackClient.PostMessage(slackChannel, blocks)
+	err := startPreCommandNotification(context, env, config, config.Commands.ReservationAdded)
 
 	if err != nil {
 		log.Fatal(err.Error())

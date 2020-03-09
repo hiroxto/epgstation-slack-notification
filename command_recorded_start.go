@@ -18,18 +18,7 @@ var commandRecordedStart = &cli.Command{
 func commandRecordedStartAction(context *cli.Context) error {
 	config := loadConfigFile()
 	env := loadRecCommandEnv()
-	commandConfig := config.Commands.RecordedStart
-
-	if !commandConfig.Enable {
-		displayCommandIsDisableMessage(context)
-		return nil
-	}
-
-	slackAPIKey := config.Slack.APIKey
-	slackChannel := getSlackChannel(config.Slack.Channel, commandConfig.Channel)
-	slackClient := createSlackClient(slackAPIKey, context.Bool("debug"))
-	blocks := buildRecCommandBlocks(commandConfig.Message, env)
-	_, _, err := slackClient.PostMessage(slackChannel, blocks)
+	err := startRecCommandNotification(context, env, config, config.Commands.RecordedStart)
 
 	if err != nil {
 		log.Fatal(err.Error())

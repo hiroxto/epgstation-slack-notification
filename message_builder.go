@@ -1,10 +1,42 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/slack-go/slack"
 	"strings"
+	"text/template"
 )
+
+func buildPreCommandHeaderText(messageTemplate string, env PreCommandEnv) (string, error) {
+	var messageBuffer bytes.Buffer
+	t, err := template.New("message").Parse(messageTemplate)
+
+	if err != nil {
+		return messageBuffer.String(), err
+	}
+
+	if err := t.Execute(&messageBuffer, env); err != nil {
+		return messageBuffer.String(), err
+	}
+
+	return messageBuffer.String(), nil
+}
+
+func buildRecCommandHeaderText(messageTemplate string, env RecCommandEnv) (string, error) {
+	var messageBuffer bytes.Buffer
+	t, err := template.New("message").Parse(messageTemplate)
+
+	if err != nil {
+		return messageBuffer.String(), err
+	}
+
+	if err := t.Execute(&messageBuffer, env); err != nil {
+		return messageBuffer.String(), err
+	}
+
+	return messageBuffer.String(), nil
+}
 
 func buildPreCommandBlocks(message string, env PreCommandEnv) slack.MsgOption {
 	headerText := slack.NewTextBlockObject("mrkdwn", message, false, false)
