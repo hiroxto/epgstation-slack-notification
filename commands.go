@@ -30,6 +30,12 @@ func startPreCommandNotification(context *cli.Context, env PreCommandEnv, config
 		return err
 	}
 
+	fields, err := buildPreCommandFields(commandConfig.FieldsSection, env)
+
+	if err != nil {
+		return err
+	}
+
 	options := buildPreCommandMessageOptions(message, env)
 	_, _, err = slackClient.PostMessage(slackChannel, options)
 
