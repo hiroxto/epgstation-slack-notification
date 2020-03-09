@@ -38,6 +38,16 @@ func buildRecCommandHeaderText(messageTemplate string, env RecCommandEnv) (strin
 	return messageBuffer.String(), nil
 }
 
+func createHeaderSection(text string) *slack.SectionBlock {
+	headerText := slack.NewTextBlockObject("mrkdwn", text, false, false)
+
+	return slack.NewSectionBlock(headerText, nil, nil)
+}
+
+func createFieldsSection(fields []*slack.TextBlockObject) *slack.SectionBlock {
+	return slack.NewSectionBlock(nil, fields, nil)
+}
+
 func buildPreCommandBlocks(message string, env PreCommandEnv) slack.MsgOption {
 	headerText := slack.NewTextBlockObject("mrkdwn", message, false, false)
 	headerSection := slack.NewSectionBlock(headerText, nil, nil)
