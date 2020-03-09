@@ -79,7 +79,7 @@ func buildPreCommandMessageOptions(message string, env PreCommandEnv) slack.MsgO
 	return slack.MsgOptionCompose(fallbackOpt, blockOpt)
 }
 
-func buildRecCommandBlocks(message string, env RecCommandEnv) slack.MsgOption {
+func buildRecCommandMessageOptions(message string, env RecCommandEnv) slack.MsgOption {
 	channels := []string{
 		env.ChannelType,
 		env.ChannelID,
