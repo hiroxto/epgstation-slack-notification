@@ -22,6 +22,28 @@ commands:
     # struct の内容は env.go を参照
     message: ":new: {{ .ChannelName }} で {{ .Name }} の録画予約が新規追加されました"
 
+    # 環境変数を表示するフィールドの設定
+    # message と同様にフォーマットを自由に変えられる
+    # Slack API の制限で, フィールドは10個までしか設定できないので注意
+    fields-section:
+      - title: "ProgramID"
+        template: "{{ .ProgramID }}"
+
+      - title: "ChannelType, ChannelID, ChannelName"
+        template: "{{ .ChannelType }}, {{ .ChannelID }}, {{ .ChannelName }}"
+
+      - title: "StartAt, EndAt, Duration"
+        template: "{{ .StartAt }}, {{ .EndAt }}, {{ .Duration }}"
+
+      - title: "Name"
+        template: "{{ .Name }}"
+
+      - title: "Description"
+        template: "{{ .Description }}"
+
+      - title: "Extended"
+        template: "{{ .Extended }}"
+
     # 特定のコマンドのみ別チャンネルに振り分けたい時に指定する.
     # プロパティがない場合は slack の channel が使われる
     channel: "CHANNEL_ID"
