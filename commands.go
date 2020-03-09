@@ -24,13 +24,19 @@ func startPreCommandNotification(context *cli.Context, env PreCommandEnv, config
 	slackAPIKey := config.Slack.APIKey
 	slackChannel := getSlackChannel(config.Slack.Channel, commandConfig.Channel)
 	slackClient := createSlackClient(slackAPIKey, context.Bool("debug"))
-	message, err := buildPreCommandHeaderText(commandConfig.Message, env)
+	message, err := formatPreCommandEnv("", commandConfig.Message, env)
 
 	if err != nil {
 		return err
 	}
 
-	options := buildPreCommandMessageOptions(message, env)
+	fields, err := buildPreCommandFields(commandConfig.FieldsSection, env)
+
+	if err != nil {
+		return err
+	}
+
+	options := buildMessageOptions(message, fields)
 	_, _, err = slackClient.PostMessage(slackChannel, options)
 
 	if err != nil {
@@ -49,13 +55,19 @@ func startRecCommandNotification(context *cli.Context, env RecCommandEnv, config
 	slackAPIKey := config.Slack.APIKey
 	slackChannel := getSlackChannel(config.Slack.Channel, commandConfig.Channel)
 	slackClient := createSlackClient(slackAPIKey, context.Bool("debug"))
-	message, err := buildRecCommandHeaderText(commandConfig.Message, env)
+	message, err := formatRecCommandEnv("", commandConfig.Message, env)
 
 	if err != nil {
 		return err
 	}
 
-	options := buildRecCommandMessageOptions(message, env)
+	fields, err := buildRecCommandFields(commandConfig.FieldsSection, env)
+
+	if err != nil {
+		return err
+	}
+
+	options := buildMessageOptions(message, fields)
 	_, _, err = slackClient.PostMessage(slackChannel, options)
 
 	if err != nil {

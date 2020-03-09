@@ -4,13 +4,49 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/slack-go/slack"
-	"strings"
 	"text/template"
 )
 
-func buildPreCommandHeaderText(messageTemplate string, env PreCommandEnv) (string, error) {
+func buildPreCommandFields(fieldsConfigs []FieldsSectionStruct, env PreCommandEnv) ([]*slack.TextBlockObject, error) {
+	var fields []*slack.TextBlockObject
+
+	for _, fieldsConfig := range fieldsConfigs {
+		content, err := formatPreCommandEnv("", fieldsConfig.Template, env)
+
+		if err != nil {
+			return nil, err
+		}
+
+		fields = append(fields, createNewTextBlockField(fieldsConfig.Title, content))
+	}
+
+	return fields, nil
+}
+
+func buildRecCommandFields(fieldsConfigs []FieldsSectionStruct, env RecCommandEnv) ([]*slack.TextBlockObject, error) {
+	var fields []*slack.TextBlockObject
+
+	for _, fieldsConfig := range fieldsConfigs {
+		content, err := formatRecCommandEnv("", fieldsConfig.Template, env)
+
+		if err != nil {
+			return nil, err
+		}
+
+		fields = append(fields, createNewTextBlockField(fieldsConfig.Title, content))
+	}
+
+	return fields, nil
+}
+
+func createNewTextBlockField(title string, body string) *slack.TextBlockObject {
+	text := fmt.Sprintf("*%s*\n%s", title, body)
+	return slack.NewTextBlockObject("mrkdwn", text, false, false)
+}
+
+func formatPreCommandEnv(name string, userTemplate string, env PreCommandEnv) (string, error) {
 	var messageBuffer bytes.Buffer
-	t, err := template.New("message").Parse(messageTemplate)
+	t, err := template.New(name).Parse(userTemplate)
 
 	if err != nil {
 		return messageBuffer.String(), err
@@ -23,9 +59,9 @@ func buildPreCommandHeaderText(messageTemplate string, env PreCommandEnv) (strin
 	return messageBuffer.String(), nil
 }
 
-func buildRecCommandHeaderText(messageTemplate string, env RecCommandEnv) (string, error) {
+func formatRecCommandEnv(name string, userTemplate string, env RecCommandEnv) (string, error) {
 	var messageBuffer bytes.Buffer
-	t, err := template.New("message").Parse(messageTemplate)
+	t, err := template.New(name).Parse(userTemplate)
 
 	if err != nil {
 		return messageBuffer.String(), err
@@ -48,27 +84,7 @@ func createFieldsSection(fields []*slack.TextBlockObject) *slack.SectionBlock {
 	return slack.NewSectionBlock(nil, fields, nil)
 }
 
-func buildPreCommandMessageOptions(message string, env PreCommandEnv) slack.MsgOption {
-	channels := []string{
-		env.ChannelType,
-		env.ChannelID,
-		env.ChannelName,
-	}
-	times := []string{
-		env.StartAt,
-		env.EndAt,
-	}
-
-	fields := []*slack.TextBlockObject{
-		buildTextBlock("ProgramID", env.ProgramID),
-		buildTextBlock("ChannelType, ChannelID, ChannelName", strings.Join(channels, "\n")),
-		buildTextBlock("StartAt, EndAt", strings.Join(times, "\n")),
-		buildTextBlock("Duration", env.Duration),
-		buildTextBlock("Name", env.Name),
-		buildTextBlock("Description", env.Description),
-		buildTextBlock("Extended", env.Extended),
-	}
-
+func buildMessageOptions(message string, fields []*slack.TextBlockObject) slack.MsgOption {
 	fallbackOpt := slack.MsgOptionText(message, false)
 	blockOpt := slack.MsgOptionBlocks(
 		createHeaderSection(message),
@@ -77,44 +93,4 @@ func buildPreCommandMessageOptions(message string, env PreCommandEnv) slack.MsgO
 	)
 
 	return slack.MsgOptionCompose(fallbackOpt, blockOpt)
-}
-
-func buildRecCommandMessageOptions(message string, env RecCommandEnv) slack.MsgOption {
-	channels := []string{
-		env.ChannelType,
-		env.ChannelID,
-		env.ChannelName,
-	}
-	times := []string{
-		env.StartAt,
-		env.EndAt,
-	}
-
-	fields := []*slack.TextBlockObject{
-		buildTextBlock("RecordedID", env.RecordedID),
-		buildTextBlock("ProgramID", env.ProgramID),
-		buildTextBlock("ChannelType, ChannelID, ChannelName", strings.Join(channels, "\n")),
-		buildTextBlock("StartAt, EndAt", strings.Join(times, "\n")),
-		buildTextBlock("Duration", env.Duration),
-		buildTextBlock("Name", env.Name),
-		buildTextBlock("Description", env.Description),
-		buildTextBlock("Extended", env.Extended),
-		buildTextBlock("RecPath", env.RecPath),
-		buildTextBlock("LogPath", env.LogPath),
-	}
-
-	fallbackOpt := slack.MsgOptionText(message, false)
-	blockOpt := slack.MsgOptionBlocks(
-		createHeaderSection(message),
-		createFieldsSection(fields),
-		slack.NewDividerBlock(),
-	)
-
-	return slack.MsgOptionCompose(fallbackOpt, blockOpt)
-}
-
-func buildTextBlock(title string, value string) *slack.TextBlockObject {
-	text := fmt.Sprintf("*%s:*\n%s", title, value)
-
-	return slack.NewTextBlockObject("mrkdwn", text, false, false)
 }

@@ -9,7 +9,7 @@ slack:
 
 # 各コマンドの設定
 commands:
-  reservation-added:
+  reservation-added: &pre-command-default
     # 通知を実行するかの設定
     # EPGStation の config.json にコマンドの設定はしてあるけど, 通知を無効化したいときなどは false にする
     enable: true
@@ -22,26 +22,76 @@ commands:
     # struct の内容は env.go を参照
     message: ":new: {{ .ChannelName }} で {{ .Name }} の録画予約が新規追加されました"
 
+    # 環境変数を表示するフィールドの設定
+    # message と同様にフォーマットを自由に変えられる
+    # Slack API の制限で, フィールドは10個までしか設定できないので注意
+    fields-section:
+      - title: "ProgramID"
+        template: "{{ .ProgramID }}"
+
+      - title: "ChannelType, ChannelID, ChannelName"
+        template: "{{ .ChannelType }}, {{ .ChannelID }}, {{ .ChannelName }}"
+
+      - title: "StartAt, EndAt, Duration"
+        template: "{{ .StartAt }}, {{ .EndAt }}, {{ .Duration }}"
+
+      - title: "Name"
+        template: "{{ .Name }}"
+
+      - title: "Description"
+        template: "{{ .Description }}"
+
+      - title: "Extended"
+        template: "{{ .Extended }}"
+
     # 特定のコマンドのみ別チャンネルに振り分けたい時に指定する.
     # プロパティがない場合は slack の channel が使われる
     channel: "CHANNEL_ID"
 
   recorded-pre-start:
+    <<: *pre-command-default
     enable: true
     message: ":soon: {{ .ChannelName }} で {{ .Name }} の録画準備が開始しました"
 
   recorded-prep-rec-failed:
+    <<: *pre-command-default
     enable: true
     message: ":x: {{ .ChannelName }} で {{ .Name }} の録画準備に失敗しました"
 
-  recorded-start:
+  recorded-start: &rec-command-default
     enable: true
     message: ":arrow_forward: {{ .ChannelName }} で {{ .Name }} の録画が開始しました"
+    fields-section:
+      - title: "RecordedID, ProgramID"
+        template: "{{ .RecordedID }}, {{ .ProgramID }}"
+
+      - title: "ChannelType, ChannelID, ChannelName"
+        template: "{{ .ChannelType }}, {{ .ChannelID }}, {{ .ChannelName }}"
+
+      - title: "StartAt, EndAt, Duration"
+        template: "{{ .StartAt }}, {{ .EndAt }}, {{ .Duration }}"
+
+      - title: "Name"
+        template: "{{ .Name }}"
+
+      - title: "Description"
+        template: "{{ .Description }}"
+
+      - title: "Extended"
+        template: "{{ .Extended }}"
+
+      - title: "RecPath"
+        template: "{{ .RecPath }}"
+
+      - title: "LogPath"
+        template: "{{ .LogPath }}"
 
   recorded-end:
+    <<: *rec-command-default
     enable: true
     message: ":white_check_mark: {{ .ChannelName }} で {{ .Name }} の録画が終了しました"
 
   recorded-failed:
+    <<: *rec-command-default
     enable: true
     message: ":x: {{ .ChannelName }} で {{ .Name }} の録画中にエラーが発生しました"
