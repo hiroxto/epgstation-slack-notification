@@ -17,9 +17,7 @@ func buildPreCommandFields(fieldsConfigs []FieldsSectionStruct, env PreCommandEn
 			return nil, err
 		}
 
-		text := fmt.Sprintf("*%s*\n%s", fieldsConfig.Title, content)
-		newField := slack.NewTextBlockObject("mrkdwn", text, false, false)
-		fields = append(fields, newField)
+		fields = append(fields, createNewTextBlockField(fieldsConfig.Title, content))
 	}
 
 	return fields, nil
@@ -35,12 +33,15 @@ func buildRecCommandFields(fieldsConfigs []FieldsSectionStruct, env RecCommandEn
 			return nil, err
 		}
 
-		text := fmt.Sprintf("*%s*\n%s", fieldsConfig.Title, content)
-		newField := slack.NewTextBlockObject("mrkdwn", text, false, false)
-		fields = append(fields, newField)
+		fields = append(fields, createNewTextBlockField(fieldsConfig.Title, content))
 	}
 
 	return fields, nil
+}
+
+func createNewTextBlockField(title string, body string) *slack.TextBlockObject {
+	text := fmt.Sprintf("*%s*\n%s", title, body)
+	return slack.NewTextBlockObject("mrkdwn", text, false, false)
 }
 
 func formatPreCommandEnv(name string, userTemplate string, env PreCommandEnv) (string, error) {
