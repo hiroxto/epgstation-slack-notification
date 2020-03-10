@@ -25,14 +25,14 @@ type Config struct {
 
 // CommandConfig 各コマンドの設定
 type CommandConfig struct {
-	Enable        bool            `yaml:"enable"`
-	Channel       string          `yaml:"channel"`
-	Message       string          `yaml:"message"`
-	FieldsSection []FieldsSection `yaml:"fields-section"`
+	Enable        bool          `yaml:"enable"`
+	Channel       string        `yaml:"channel"`
+	Message       string        `yaml:"message"`
+	FieldsSection []FieldConfig `yaml:"fields-section"`
 }
 
-// FieldsSection Slack の fields の設定
-type FieldsSection struct {
+// FieldConfig Slack の fields の設定
+type FieldConfig struct {
 	Title    string `yaml:"title"`
 	Template string `yaml:"template"`
 }
