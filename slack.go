@@ -2,33 +2,18 @@ package main
 
 import (
 	"github.com/slack-go/slack"
-	"io"
 	"log"
 	"os"
-	"path/filepath"
 )
 
-func createSlackClient(apiKey string, debug bool) *slack.Client {
-	exeFilePath, err := os.Executable()
-	if err != nil {
-		log.Fatal(err.Error())
+func createSlackClient(apiKey string, debug bool) (*slack.Client, error) {
+	api := slack.New(apiKey, slack.OptionDebug(debug), slack.OptionLog(log.New(os.Stdout, "slack-bot: ", log.Lshortfile|log.LstdFlags)))
+
+	if _, err := api.AuthTest(); err != nil {
+		return nil, err
 	}
 
-	logfile, err := os.OpenFile(filepath.Join(filepath.Dir(exeFilePath), "slack.log"), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-	defer logfile.Close()
-
-	api := slack.New(apiKey, slack.OptionDebug(debug), slack.OptionLog(log.New(io.MultiWriter(logfile, os.Stdout), "slack-bot: ", log.Lshortfile|log.LstdFlags)))
-
-	_, err = api.AuthTest()
-
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
-	return api
+	return api, nil
 }
 
 func getSlackChannel(globalChannel string, localChannel string) string {
