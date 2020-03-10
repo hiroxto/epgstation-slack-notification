@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/urfave/cli/v2"
-	"log"
 )
 
 var commandRecordedPrepRecFailed = &cli.Command{
@@ -16,19 +15,18 @@ var commandRecordedPrepRecFailed = &cli.Command{
 
 func commandRecordedPrepRecFailedAction(context *cli.Context) error {
 	config, err := loadConfigFile()
-
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	env, err := loadPreCommandEnvs()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
-	err = startPreCommandNotification(context, env, config, config.Commands.RecordedPrepRecFailed)
 
+	err = startPreCommandNotification(context, env, config, config.Commands.RecordedPrepRecFailed)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	return nil
