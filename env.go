@@ -39,9 +39,8 @@ type RecCommandEnv struct {
 
 func loadPreCommandEnvs() (PreCommandEnv, error) {
 	var envs PreCommandEnv
-	err := envconfig.Process("", &envs)
 
-	if err != nil {
+	if err := envconfig.Process("", &envs); err != nil {
 		return envs, err
 	}
 
@@ -50,9 +49,8 @@ func loadPreCommandEnvs() (PreCommandEnv, error) {
 
 func loadRecCommandEnv() (RecCommandEnv, error) {
 	var envs RecCommandEnv
-	err := envconfig.Process("", &envs)
 
-	if err != nil {
+	if err := envconfig.Process("", &envs); err != nil {
 		return envs, err
 	}
 
