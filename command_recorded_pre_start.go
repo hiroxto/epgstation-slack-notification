@@ -21,7 +21,7 @@ func commandRecordedPreStartAction(context *cli.Context) error {
 	err := startPreCommandNotification(context, env, config, config.Commands.RecordedPreStart)
 
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Fatal(err)
 	}
 
 	return nil

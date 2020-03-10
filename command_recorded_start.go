@@ -21,7 +21,7 @@ func commandRecordedStartAction(context *cli.Context) error {
 	err := startRecCommandNotification(context, env, config, config.Commands.RecordedStart)
 
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Fatal(err)
 	}
 
 	return nil

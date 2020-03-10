@@ -21,7 +21,7 @@ func commandReservationAddedAction(context *cli.Context) error {
 	err := startPreCommandNotification(context, env, config, config.Commands.ReservationAdded)
 
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Fatal(err)
 	}
 
 	return nil

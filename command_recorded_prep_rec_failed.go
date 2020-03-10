@@ -20,7 +20,7 @@ func commandRecordedPrepRecFailedAction(context *cli.Context) error {
 	err := startPreCommandNotification(context, env, config, config.Commands.RecordedPrepRecFailed)
 
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Fatal(err)
 	}
 
 	return nil
