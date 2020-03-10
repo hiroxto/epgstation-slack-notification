@@ -3,7 +3,6 @@ package main
 import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
 )
@@ -40,7 +39,11 @@ type FieldsSectionStruct struct {
 
 func loadConfigFile() (Config, error) {
 	var config Config
-	configFilePath := getConfigFilePath()
+
+	configFilePath, err := getConfigFilePath()
+	if err != nil {
+		return config, err
+	}
 
 	data, err := ioutil.ReadFile(configFilePath)
 	if err != nil {
@@ -55,11 +58,11 @@ func loadConfigFile() (Config, error) {
 	return config, nil
 }
 
-func getConfigFilePath() string {
+func getConfigFilePath() (string, error) {
 	exeFilePath, err := os.Executable()
 	if err != nil {
-		log.Fatal(err.Error())
+		return exeFilePath, err
 	}
 
-	return filepath.Join(filepath.Dir(exeFilePath), "epgstation-slack-config.yml")
+	return filepath.Join(filepath.Dir(exeFilePath), "epgstation-slack-config.yml"), nil
 }
