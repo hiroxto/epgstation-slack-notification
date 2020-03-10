@@ -14,17 +14,17 @@ type Config struct {
 		Channel string `yaml:"channel"`
 	} `yaml:"slack"`
 	Commands struct {
-		ReservationAdded      CommandConfigStruct `yaml:"reservation-added"`
-		RecordedPreStart      CommandConfigStruct `yaml:"recorded-pre-start"`
-		RecordedPrepRecFailed CommandConfigStruct `yaml:"recorded-prep-rec-failed"`
-		RecordedStart         CommandConfigStruct `yaml:"recorded-start"`
-		RecordedEnd           CommandConfigStruct `yaml:"recorded-end"`
-		RecordedFailed        CommandConfigStruct `yaml:"recorded-failed"`
+		ReservationAdded      CommandConfig `yaml:"reservation-added"`
+		RecordedPreStart      CommandConfig `yaml:"recorded-pre-start"`
+		RecordedPrepRecFailed CommandConfig `yaml:"recorded-prep-rec-failed"`
+		RecordedStart         CommandConfig `yaml:"recorded-start"`
+		RecordedEnd           CommandConfig `yaml:"recorded-end"`
+		RecordedFailed        CommandConfig `yaml:"recorded-failed"`
 	} `yaml:"commands"`
 }
 
-// CommandConfigStruct 各コマンドの設定
-type CommandConfigStruct struct {
+// CommandConfig 各コマンドの設定
+type CommandConfig struct {
 	Enable        bool                  `yaml:"enable"`
 	Channel       string                `yaml:"channel"`
 	Message       string                `yaml:"message"`
