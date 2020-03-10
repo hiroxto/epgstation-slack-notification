@@ -16,9 +16,14 @@ var commandReservationAdded = &cli.Command{
 }
 
 func commandReservationAddedAction(context *cli.Context) error {
-	config := loadConfigFile()
+	config, err := loadConfigFile()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	env := loadPreCommandEnvs()
-	err := startPreCommandNotification(context, env, config, config.Commands.ReservationAdded)
+	err = startPreCommandNotification(context, env, config, config.Commands.ReservationAdded)
 
 	if err != nil {
 		log.Fatal(err)

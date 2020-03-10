@@ -16,9 +16,14 @@ var commandRecordedFailed = &cli.Command{
 }
 
 func commandRecordedFailedAction(context *cli.Context) error {
-	config := loadConfigFile()
+	config, err := loadConfigFile()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	env := loadRecCommandEnv()
-	err := startRecCommandNotification(context, env, config, config.Commands.RecordedFailed)
+	err = startRecCommandNotification(context, env, config, config.Commands.RecordedFailed)
 
 	if err != nil {
 		log.Fatal(err)

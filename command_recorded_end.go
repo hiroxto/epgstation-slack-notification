@@ -16,9 +16,14 @@ var commandRecordedEnd = &cli.Command{
 }
 
 func commandRecordedEndAction(context *cli.Context) error {
-	config := loadConfigFile()
+	config, err := loadConfigFile()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	env := loadRecCommandEnv()
-	err := startRecCommandNotification(context, env, config, config.Commands.RecordedEnd)
+	err = startRecCommandNotification(context, env, config, config.Commands.RecordedEnd)
 
 	if err != nil {
 		log.Fatal(err)

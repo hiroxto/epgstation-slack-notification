@@ -15,9 +15,14 @@ var commandRecordedPrepRecFailed = &cli.Command{
 }
 
 func commandRecordedPrepRecFailedAction(context *cli.Context) error {
-	config := loadConfigFile()
+	config, err := loadConfigFile()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	env := loadPreCommandEnvs()
-	err := startPreCommandNotification(context, env, config, config.Commands.RecordedPrepRecFailed)
+	err = startPreCommandNotification(context, env, config, config.Commands.RecordedPrepRecFailed)
 
 	if err != nil {
 		log.Fatal(err)

@@ -38,21 +38,21 @@ type FieldsSectionStruct struct {
 	Template string `yaml:"template"`
 }
 
-func loadConfigFile() Config {
+func loadConfigFile() (Config, error) {
 	var config Config
 	configFilePath := getConfigFilePath()
 
 	data, err := ioutil.ReadFile(configFilePath)
 	if err != nil {
-		log.Fatal(err.Error())
+		return config, err
 	}
 
 	err = yaml.UnmarshalStrict([]byte(data), &config)
 	if err != nil {
-		log.Fatal(err)
+		return config, err
 	}
 
-	return config
+	return config, nil
 }
 
 func getConfigFilePath() string {
