@@ -7,7 +7,7 @@ import (
 	"text/template"
 )
 
-func buildPreCommandFields(fieldsConfigs []FieldsSectionStruct, env PreCommandEnv) ([]*slack.TextBlockObject, error) {
+func buildPreCommandFields(fieldsConfigs []FieldsSection, env PreCommandEnv) ([]*slack.TextBlockObject, error) {
 	var fields []*slack.TextBlockObject
 
 	for _, fieldsConfig := range fieldsConfigs {
@@ -23,7 +23,7 @@ func buildPreCommandFields(fieldsConfigs []FieldsSectionStruct, env PreCommandEn
 	return fields, nil
 }
 
-func buildRecCommandFields(fieldsConfigs []FieldsSectionStruct, env RecCommandEnv) ([]*slack.TextBlockObject, error) {
+func buildRecCommandFields(fieldsConfigs []FieldsSection, env RecCommandEnv) ([]*slack.TextBlockObject, error) {
 	var fields []*slack.TextBlockObject
 
 	for _, fieldsConfig := range fieldsConfigs {
