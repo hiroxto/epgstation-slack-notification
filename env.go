@@ -37,22 +37,22 @@ type RecCommandEnv struct {
 	LogPath     string `envconfig:"LOGPATH" default:"None"`
 }
 
-func loadPreCommandEnvs() (PreCommandEnv, error) {
-	var envs PreCommandEnv
+func loadPreCommandEnv() (PreCommandEnv, error) {
+	var env PreCommandEnv
 
-	if err := envconfig.Process("", &envs); err != nil {
-		return envs, err
+	if err := envconfig.Process("", &env); err != nil {
+		return env, err
 	}
 
-	return envs, nil
+	return env, nil
 }
 
 func loadRecCommandEnv() (RecCommandEnv, error) {
-	var envs RecCommandEnv
+	var env RecCommandEnv
 
-	if err := envconfig.Process("", &envs); err != nil {
-		return envs, err
+	if err := envconfig.Process("", &env); err != nil {
+		return env, err
 	}
 
-	return envs, nil
+	return env, nil
 }
