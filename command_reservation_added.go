@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/urfave/cli/v2"
-	"log"
 )
 
 var commandReservationAdded = &cli.Command{
@@ -16,12 +15,19 @@ var commandReservationAdded = &cli.Command{
 }
 
 func commandReservationAddedAction(context *cli.Context) error {
-	config := loadConfigFile()
-	env := loadPreCommandEnvs()
-	err := startPreCommandNotification(context, env, config, config.Commands.ReservationAdded)
-
+	config, err := loadConfigFile()
 	if err != nil {
-		log.Fatal(err.Error())
+		return err
+	}
+
+	env, err := loadPreCommandEnvs()
+	if err != nil {
+		return err
+	}
+
+	err = startPreCommandNotification(context, env, config, config.Commands.ReservationAdded)
+	if err != nil {
+		return err
 	}
 
 	return nil

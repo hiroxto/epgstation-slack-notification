@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/kelseyhightower/envconfig"
-	"log"
 )
 
 // See: https://github.com/l3tnun/EPGStation/blob/master/doc/conf-manual.md
@@ -38,24 +37,22 @@ type RecCommandEnv struct {
 	LogPath     string `envconfig:"LOGPATH" default:"None"`
 }
 
-func loadPreCommandEnvs() PreCommandEnv {
+func loadPreCommandEnvs() (PreCommandEnv, error) {
 	var envs PreCommandEnv
-	err := envconfig.Process("", &envs)
 
-	if err != nil {
-		log.Fatal(err.Error())
+	if err := envconfig.Process("", &envs); err != nil {
+		return envs, err
 	}
 
-	return envs
+	return envs, nil
 }
 
-func loadRecCommandEnv() RecCommandEnv {
+func loadRecCommandEnv() (RecCommandEnv, error) {
 	var envs RecCommandEnv
-	err := envconfig.Process("", &envs)
 
-	if err != nil {
-		log.Fatal(err.Error())
+	if err := envconfig.Process("", &envs); err != nil {
+		return envs, err
 	}
 
-	return envs
+	return envs, nil
 }

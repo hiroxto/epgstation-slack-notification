@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/urfave/cli/v2"
-	"log"
 )
 
 var commandRecordedFailed = &cli.Command{
@@ -16,12 +15,19 @@ var commandRecordedFailed = &cli.Command{
 }
 
 func commandRecordedFailedAction(context *cli.Context) error {
-	config := loadConfigFile()
-	env := loadRecCommandEnv()
-	err := startRecCommandNotification(context, env, config, config.Commands.RecordedFailed)
-
+	config, err := loadConfigFile()
 	if err != nil {
-		log.Fatal(err.Error())
+		return err
+	}
+
+	env, err := loadRecCommandEnv()
+	if err != nil {
+		return err
+	}
+
+	err = startRecCommandNotification(context, env, config, config.Commands.RecordedFailed)
+	if err != nil {
+		return err
 	}
 
 	return nil

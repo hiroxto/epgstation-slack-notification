@@ -23,7 +23,11 @@ func startPreCommandNotification(context *cli.Context, env PreCommandEnv, config
 
 	slackAPIKey := config.Slack.APIKey
 	slackChannel := getSlackChannel(config.Slack.Channel, commandConfig.Channel)
-	slackClient := createSlackClient(slackAPIKey, context.Bool("debug"))
+	slackClient, err := createSlackClient(slackAPIKey, context.Bool("debug"))
+	if err != nil {
+		return err
+	}
+
 	message, err := formatPreCommandEnv("", commandConfig.Message, env)
 
 	if err != nil {
@@ -54,7 +58,11 @@ func startRecCommandNotification(context *cli.Context, env RecCommandEnv, config
 
 	slackAPIKey := config.Slack.APIKey
 	slackChannel := getSlackChannel(config.Slack.Channel, commandConfig.Channel)
-	slackClient := createSlackClient(slackAPIKey, context.Bool("debug"))
+	slackClient, err := createSlackClient(slackAPIKey, context.Bool("debug"))
+	if err != nil {
+		return err
+	}
+
 	message, err := formatRecCommandEnv("", commandConfig.Message, env)
 
 	if err != nil {

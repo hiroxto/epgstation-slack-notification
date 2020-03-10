@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/urfave/cli/v2"
+	"log"
 	"os"
 )
 
@@ -10,6 +11,8 @@ func main() {
 	err := app.Run(os.Args)
 
 	if err != nil {
+		log.Println(err)
+
 		exitCode := 1
 		excoder, ok := err.(cli.ExitCoder)
 		if ok {
