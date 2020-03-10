@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/kelseyhightower/envconfig"
-	"log"
 )
 
 // See: https://github.com/l3tnun/EPGStation/blob/master/doc/conf-manual.md
@@ -49,13 +48,13 @@ func loadPreCommandEnvs() (PreCommandEnv, error) {
 	return envs, nil
 }
 
-func loadRecCommandEnv() RecCommandEnv {
+func loadRecCommandEnv() (RecCommandEnv, error) {
 	var envs RecCommandEnv
 	err := envconfig.Process("", &envs)
 
 	if err != nil {
-		log.Fatal(err.Error())
+		return envs, err
 	}
 
-	return envs
+	return envs, nil
 }
