@@ -38,15 +38,15 @@ type RecCommandEnv struct {
 	LogPath     string `envconfig:"LOGPATH" default:"None"`
 }
 
-func loadPreCommandEnvs() PreCommandEnv {
+func loadPreCommandEnvs() (PreCommandEnv, error) {
 	var envs PreCommandEnv
 	err := envconfig.Process("", &envs)
 
 	if err != nil {
-		log.Fatal(err.Error())
+		return envs, err
 	}
 
-	return envs
+	return envs, nil
 }
 
 func loadRecCommandEnv() RecCommandEnv {
