@@ -15,7 +15,7 @@ var commands = []*cli.Command{
 	commandRecordedFailed,
 }
 
-func startPreCommandNotification(context *cli.Context, env PreCommandEnv, config Config, commandConfig CommandConfigStruct) error {
+func startPreCommandNotification(context *cli.Context, env PreCommandEnv, config Config, commandConfig CommandConfig) error {
 	if !commandConfig.Enable {
 		displayCommandIsDisableMessage(context)
 		return nil
@@ -50,7 +50,7 @@ func startPreCommandNotification(context *cli.Context, env PreCommandEnv, config
 	return nil
 }
 
-func startRecCommandNotification(context *cli.Context, env RecCommandEnv, config Config, commandConfig CommandConfigStruct) error {
+func startRecCommandNotification(context *cli.Context, env RecCommandEnv, config Config, commandConfig CommandConfig) error {
 	if !commandConfig.Enable {
 		displayCommandIsDisableMessage(context)
 		return nil
