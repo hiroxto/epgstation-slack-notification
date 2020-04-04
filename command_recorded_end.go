@@ -20,12 +20,12 @@ func commandRecordedEndAction(context *cli.Context) error {
 		return err
 	}
 
-	env, err := loadRecCommandEnv()
+	env, err := loadCommandEnv()
 	if err != nil {
 		return err
 	}
 
-	err = startRecCommandNotification(context, env, config, config.Commands.RecordedEnd)
+	err = startCommandNotification(context, env, config, config.Commands.RecordedEnd)
 	if err != nil {
 		return err
 	}

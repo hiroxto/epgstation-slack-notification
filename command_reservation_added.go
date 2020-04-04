@@ -20,12 +20,12 @@ func commandReservationAddedAction(context *cli.Context) error {
 		return err
 	}
 
-	env, err := loadPreCommandEnv()
+	env, err := loadCommandEnv()
 	if err != nil {
 		return err
 	}
 
-	err = startPreCommandNotification(context, env, config, config.Commands.ReservationAdded)
+	err = startCommandNotification(context, env, config, config.Commands.ReservationAdded)
 	if err != nil {
 		return err
 	}

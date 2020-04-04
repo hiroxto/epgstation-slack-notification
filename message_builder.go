@@ -7,27 +7,11 @@ import (
 	"text/template"
 )
 
-func buildPreCommandFields(fieldsConfigs []FieldConfig, env PreCommandEnv) ([]*slack.TextBlockObject, error) {
+func buildCommandFields(fieldsConfigs []FieldConfig, env CommandEnv) ([]*slack.TextBlockObject, error) {
 	var fields []*slack.TextBlockObject
 
 	for _, fieldsConfig := range fieldsConfigs {
-		content, err := formatPreCommandEnv("", fieldsConfig.Template, env)
-
-		if err != nil {
-			return nil, err
-		}
-
-		fields = append(fields, createNewTextBlockField(fieldsConfig.Title, content))
-	}
-
-	return fields, nil
-}
-
-func buildRecCommandFields(fieldsConfigs []FieldConfig, env RecCommandEnv) ([]*slack.TextBlockObject, error) {
-	var fields []*slack.TextBlockObject
-
-	for _, fieldsConfig := range fieldsConfigs {
-		content, err := formatRecCommandEnv("", fieldsConfig.Template, env)
+		content, err := formatCommandEnv("", fieldsConfig.Template, env)
 
 		if err != nil {
 			return nil, err
@@ -44,22 +28,7 @@ func createNewTextBlockField(title string, body string) *slack.TextBlockObject {
 	return slack.NewTextBlockObject("mrkdwn", text, false, false)
 }
 
-func formatPreCommandEnv(name string, userTemplate string, env PreCommandEnv) (string, error) {
-	var messageBuffer bytes.Buffer
-	t, err := template.New(name).Parse(userTemplate)
-
-	if err != nil {
-		return messageBuffer.String(), err
-	}
-
-	if err := t.Execute(&messageBuffer, env); err != nil {
-		return messageBuffer.String(), err
-	}
-
-	return messageBuffer.String(), nil
-}
-
-func formatRecCommandEnv(name string, userTemplate string, env RecCommandEnv) (string, error) {
+func formatCommandEnv(name string, userTemplate string, env CommandEnv) (string, error) {
 	var messageBuffer bytes.Buffer
 	t, err := template.New(name).Parse(userTemplate)
 
