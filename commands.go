@@ -15,6 +15,41 @@ var commands = []*cli.Command{
 	commandRecordedFailed,
 }
 
+func startCommandNotification(context *cli.Context, env CommandEnv, config Config, commandConfig CommandConfig) error {
+	if !commandConfig.Enable {
+		displayCommandIsDisableMessage(context)
+		return nil
+	}
+
+	slackAPIKey := config.Slack.APIKey
+	slackChannel := getSlackChannel(config.Slack.Channel, commandConfig.Channel)
+	slackClient, err := createSlackClient(slackAPIKey, context.Bool("debug"))
+	if err != nil {
+		return err
+	}
+
+	message, err := formatCommandEnv("", commandConfig.Message, env)
+
+	if err != nil {
+		return err
+	}
+
+	fields, err := buildCommandFields(commandConfig.FieldsSection, env)
+
+	if err != nil {
+		return err
+	}
+
+	options := buildMessageOptions(message, fields)
+	_, _, err = slackClient.PostMessage(slackChannel, options)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func startPreCommandNotification(context *cli.Context, env PreCommandEnv, config Config, commandConfig CommandConfig) error {
 	if !commandConfig.Enable {
 		displayCommandIsDisableMessage(context)
