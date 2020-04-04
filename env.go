@@ -73,3 +73,13 @@ func loadRecCommandEnv() (RecCommandEnv, error) {
 
 	return env, nil
 }
+
+func loadCommandEnv() (CommandEnv, error) {
+	var env CommandEnv
+
+	if err := envconfig.Process("", &env); err != nil {
+		return env, err
+	}
+
+	return env, nil
+}
