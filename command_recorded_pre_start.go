@@ -20,12 +20,12 @@ func commandRecordedPreStartAction(context *cli.Context) error {
 		return err
 	}
 
-	env, err := loadPreCommandEnv()
+	env, err := loadCommandEnv()
 	if err != nil {
 		return err
 	}
 
-	err = startPreCommandNotification(context, env, config, config.Commands.RecordedPreStart)
+	err = startCommandNotification(context, env, config, config.Commands.RecordedPreStart)
 	if err != nil {
 		return err
 	}

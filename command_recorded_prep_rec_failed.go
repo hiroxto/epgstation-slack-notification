@@ -19,12 +19,12 @@ func commandRecordedPrepRecFailedAction(context *cli.Context) error {
 		return err
 	}
 
-	env, err := loadPreCommandEnv()
+	env, err := loadCommandEnv()
 	if err != nil {
 		return err
 	}
 
-	err = startPreCommandNotification(context, env, config, config.Commands.RecordedPrepRecFailed)
+	err = startCommandNotification(context, env, config, config.Commands.RecordedPrepRecFailed)
 	if err != nil {
 		return err
 	}
