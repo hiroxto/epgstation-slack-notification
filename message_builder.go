@@ -7,6 +7,22 @@ import (
 	"text/template"
 )
 
+func buildCommandFields(fieldsConfigs []FieldConfig, env CommandEnv) ([]*slack.TextBlockObject, error) {
+	var fields []*slack.TextBlockObject
+
+	for _, fieldsConfig := range fieldsConfigs {
+		content, err := formatCommandEnv("", fieldsConfig.Template, env)
+
+		if err != nil {
+			return nil, err
+		}
+
+		fields = append(fields, createNewTextBlockField(fieldsConfig.Title, content))
+	}
+
+	return fields, nil
+}
+
 func buildPreCommandFields(fieldsConfigs []FieldConfig, env PreCommandEnv) ([]*slack.TextBlockObject, error) {
 	var fields []*slack.TextBlockObject
 
