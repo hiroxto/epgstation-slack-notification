@@ -17,7 +17,7 @@ var commands = []*cli.Command{
 
 func startCommandNotification(context *cli.Context, env CommandEnv, config Config, commandConfig CommandConfig) error {
 	if !commandConfig.Enable {
-		displayCommandIsDisableMessage(context)
+		fmt.Printf("%s command is disabled.\n", context.Command.Name)
 		return nil
 	}
 
@@ -48,8 +48,4 @@ func startCommandNotification(context *cli.Context, env CommandEnv, config Confi
 	}
 
 	return nil
-}
-
-func displayCommandIsDisableMessage(context *cli.Context) {
-	fmt.Printf("%s command is disabled.\n", context.Command.Name)
 }
