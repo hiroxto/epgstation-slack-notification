@@ -54,26 +54,6 @@ type CommandEnv struct {
 	LogPath     string `envconfig:"LOGPATH" default:"None"`
 }
 
-func loadPreCommandEnv() (PreCommandEnv, error) {
-	var env PreCommandEnv
-
-	if err := envconfig.Process("", &env); err != nil {
-		return env, err
-	}
-
-	return env, nil
-}
-
-func loadRecCommandEnv() (RecCommandEnv, error) {
-	var env RecCommandEnv
-
-	if err := envconfig.Process("", &env); err != nil {
-		return env, err
-	}
-
-	return env, nil
-}
-
 func loadCommandEnv() (CommandEnv, error) {
 	var env CommandEnv
 
