@@ -15,13 +15,3 @@ func createSlackClient(apiKey string, debug bool) (*slack.Client, error) {
 
 	return api, nil
 }
-
-func getSlackChannel(globalChannel string, localChannel string) string {
-	channel := globalChannel
-
-	if len(localChannel) > 0 {
-		channel = localChannel
-	}
-
-	return channel
-}
