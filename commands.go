@@ -22,7 +22,11 @@ func startCommandNotification(context *cli.Context, env CommandEnv, config Confi
 	}
 
 	slackAPIKey := config.Slack.APIKey
-	slackChannel := getSlackChannel(config.Slack.Channel, commandConfig.Channel)
+	slackChannel := config.Slack.Channel
+	if len(commandConfig.Channel) > 0 {
+		slackChannel = commandConfig.Channel
+	}
+
 	slackClient, err := createSlackClient(slackAPIKey, context.Bool("debug"))
 	if err != nil {
 		return err
