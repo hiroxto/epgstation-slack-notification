@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 )
@@ -24,4 +25,13 @@ func callRecordedAPI(hostName string, id string) ([]byte, error) {
 	}
 
 	return bytes, nil
+}
+
+func jsonBytesToRecordedLog(data []byte) (RecordedLog, error) {
+	var log RecordedLog
+	if err := json.Unmarshal(data, &log); err != nil {
+		return RecordedLog{}, err
+	}
+
+	return log, nil
 }
