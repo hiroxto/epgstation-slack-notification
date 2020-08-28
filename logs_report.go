@@ -12,16 +12,16 @@ type RecordedLog struct {
 	ScramblingCnt int
 }
 
-func callRecordedAPI(hostName string, id string) (string, error) {
+func callRecordedAPI(hostName string, id string) ([]byte, error) {
 	resp, err := http.Get(hostName + "/api/recorded/" + id)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	defer resp.Body.Close()
 	bytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return string(bytes), nil
+	return bytes, nil
 }
