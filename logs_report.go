@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// 録画情報を入れるstruct
+// RecordedLog 録画情報を入れるstruct
 type RecordedLog struct {
 	ID            int `json:"id"`
 	ErrorCnt      int `json:"errorCnt"`
