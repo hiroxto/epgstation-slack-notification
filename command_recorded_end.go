@@ -30,5 +30,10 @@ func commandRecordedEndAction(context *cli.Context) error {
 		return err
 	}
 
+	err = startRecordedLogNotification(context, env, config, config.Commands.RecordedEnd)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
