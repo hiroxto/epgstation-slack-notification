@@ -5,6 +5,13 @@ import (
 	"net/http"
 )
 
+type RecordedLog struct {
+	ID            string
+	ErrorCnt      int
+	DropCnt       int
+	ScramblingCnt int
+}
+
 func callRecordedAPI(hostName string, id string) (string, error) {
 	resp, err := http.Get(hostName + "/api/recorded/" + id)
 	if err != nil {
