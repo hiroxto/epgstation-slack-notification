@@ -1,3 +1,7 @@
+# EPGStationの設定
+epg-station:
+  host-name: "http://localhost:8888"
+
 # Slack の設定
 slack:
   # Slack の API キー

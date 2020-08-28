@@ -9,6 +9,9 @@ import (
 
 // Config epg-slack-config.yml で渡される設定
 type Config struct {
+	EPGStation struct {
+		HostName string `yaml:"host-name"`
+	} `yml:"epg-station"`
 	Slack struct {
 		APIKey  string `yaml:"api-key"`
 		Channel string `yaml:"channel"`
