@@ -13,6 +13,19 @@ type RecordedLog struct {
 	ScramblingCnt int `json:"scramblingCnt"`
 }
 
+func getRecordedLog(id string, config Config) (RecordedLog, error) {
+	apiResponse, err := callRecordedAPI(config.EPGStation.HostName, id)
+	if err != nil {
+		return RecordedLog{}, err
+	}
+	recordedLog, err := jsonBytesToRecordedLog(apiResponse)
+	if err != nil {
+		return RecordedLog{}, err
+	}
+
+	return recordedLog, nil
+}
+
 func callRecordedAPI(hostName string, id string) ([]byte, error) {
 	resp, err := http.Get(hostName + "/api/recorded/" + id)
 	if err != nil {
