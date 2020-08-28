@@ -11,7 +11,7 @@ import (
 type Config struct {
 	EPGStation struct {
 		HostName string `yaml:"host-name"`
-	} `yml:"epg-station"`
+	} `yaml:"epg-station"`
 	Slack struct {
 		APIKey  string `yaml:"api-key"`
 		Channel string `yaml:"channel"`
