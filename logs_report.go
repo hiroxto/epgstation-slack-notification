@@ -7,10 +7,10 @@ import (
 )
 
 type RecordedLog struct {
-	ID            string
-	ErrorCnt      int
-	DropCnt       int
-	ScramblingCnt int
+	ID            int `json:"id"`
+	ErrorCnt      int `json:"errorCnt"`
+	DropCnt       int `json:"dropCnt"`
+	ScramblingCnt int `json:"scramblingCnt"`
 }
 
 func callRecordedAPI(hostName string, id string) ([]byte, error) {
