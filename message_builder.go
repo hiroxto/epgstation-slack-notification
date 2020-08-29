@@ -63,3 +63,14 @@ func buildMessageOptions(message string, fields []*slack.TextBlockObject) slack.
 
 	return slack.MsgOptionCompose(fallbackOpt, blockOpt)
 }
+
+func buildRecordedLogReportFields(recordedLog RecordedLog) ([]*slack.TextBlockObject, error) {
+	var fields []*slack.TextBlockObject
+
+	fields = append(fields, createNewTextBlockField("RecordedID", fmt.Sprint(recordedLog.ID)))
+	fields = append(fields, createNewTextBlockField("ErrorCnt", fmt.Sprint(recordedLog.ErrorCnt)))
+	fields = append(fields, createNewTextBlockField("DropCnt", fmt.Sprint(recordedLog.DropCnt)))
+	fields = append(fields, createNewTextBlockField("ScramblingCnt", fmt.Sprint(recordedLog.ScramblingCnt)))
+
+	return fields, nil
+}
