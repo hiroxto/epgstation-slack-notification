@@ -67,10 +67,10 @@ func buildMessageOptions(message string, fields []*slack.TextBlockObject) slack.
 func buildRecordedLogReportFields(recordedLog RecordedLog) ([]*slack.TextBlockObject, error) {
 	var fields []*slack.TextBlockObject
 
-	fields = append(fields, createNewTextBlockField("録画ID", fmt.Sprint(recordedLog.ID)))
-	fields = append(fields, createNewTextBlockField("エラー数", fmt.Sprint(recordedLog.ErrorCnt)))
-	fields = append(fields, createNewTextBlockField("ドロップ数", fmt.Sprint(recordedLog.DropCnt)))
-	fields = append(fields, createNewTextBlockField("スクランブル数", fmt.Sprint(recordedLog.ScramblingCnt)))
+	fields = append(fields, createNewTextBlockField("RecordedID", fmt.Sprint(recordedLog.ID)))
+	fields = append(fields, createNewTextBlockField("ErrorCnt", fmt.Sprint(recordedLog.ErrorCnt)))
+	fields = append(fields, createNewTextBlockField("DropCnt", fmt.Sprint(recordedLog.DropCnt)))
+	fields = append(fields, createNewTextBlockField("ScramblingCnt", fmt.Sprint(recordedLog.ScramblingCnt)))
 
 	return fields, nil
 }
