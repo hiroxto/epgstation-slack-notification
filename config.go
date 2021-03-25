@@ -19,6 +19,7 @@ type Config struct {
 	Commands struct {
 		ReserveNewAddition     CommandConfig `yaml:"reserve-new-addition"`
 		ReserveUpdateCommand   CommandConfig `yaml:"reserve-update"`
+		ReserveDeletedCommand  CommandEnv    `yaml:"reserve-deleted"`
 		RecordingPreStart      CommandConfig `yaml:"recording-pre-start"`
 		RecordingPrepRecFailed CommandConfig `yaml:"recording-prep-rec-failed"`
 		RecordingStart         CommandConfig `yaml:"recording-start"`
