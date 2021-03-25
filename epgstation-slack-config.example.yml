@@ -90,7 +90,7 @@ commands:
       - title: "LogPath"
         template: "{{ .LogPath }}"
 
-  recorded-end:
+  recording-finish:
     <<: *rec-command-default
     enable: true
     message: ":white_check_mark: {{ .ChannelName }} で {{ .Name }} の録画が終了しました"
