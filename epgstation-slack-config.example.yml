@@ -62,7 +62,7 @@ commands:
     enable: true
     message: ":x: {{ .ChannelName }} で {{ .Name }} の録画準備に失敗しました"
 
-  recorded-start: &rec-command-default
+  recording-start: &rec-command-default
     enable: true
     message: ":arrow_forward: {{ .ChannelName }} で {{ .Name }} の録画が開始しました"
     fields-section:

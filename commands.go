@@ -10,7 +10,7 @@ var commands = []*cli.Command{
 	commandRecordingPreStart,
 	commandRecordingPrepRecFailed,
 
-	commandRecordedStart,
+	commandRecordingStart,
 	commandRecordedEnd,
 	commandRecordedFailed,
 }

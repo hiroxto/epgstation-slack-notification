@@ -20,7 +20,7 @@ type Config struct {
 		ReserveNewAddition     CommandConfig `yaml:"reserve-new-addition"`
 		RecordingPreStart      CommandConfig `yaml:"recording-pre-start"`
 		RecordingPrepRecFailed CommandConfig `yaml:"recording-prep-rec-failed"`
-		RecordedStart          CommandConfig `yaml:"recorded-start"`
+		RecordingStart         CommandConfig `yaml:"recording-start"`
 		RecordedEnd            CommandConfig `yaml:"recorded-end"`
 		RecordedFailed         CommandConfig `yaml:"recorded-failed"`
 	} `yaml:"commands"`
