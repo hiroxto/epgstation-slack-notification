@@ -95,7 +95,7 @@ commands:
     enable: true
     message: ":white_check_mark: {{ .ChannelName }} で {{ .Name }} の録画が終了しました"
 
-  recorded-failed:
+  recording-failed:
     <<: *rec-command-default
     enable: true
     message: ":x: {{ .ChannelName }} で {{ .Name }} の録画中にエラーが発生しました"

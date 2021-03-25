@@ -12,7 +12,7 @@ var commands = []*cli.Command{
 
 	commandRecordingStart,
 	commandRecordingFinish,
-	commandRecordedFailed,
+	commandRecordingFailed,
 }
 
 func startCommandNotification(context *cli.Context, env CommandEnv, config Config, commandConfig CommandConfig) error {
