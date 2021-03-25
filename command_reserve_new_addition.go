@@ -26,7 +26,7 @@ func commandReserveNewAdditionAction(context *cli.Context) error {
 		return err
 	}
 
-	err = startCommandNotification(context, env, config, config.Commands.ReservationAdded)
+	err = startCommandNotification(context, env, config, config.Commands.ReserveNewAddition)
 	if err != nil {
 		return err
 	}

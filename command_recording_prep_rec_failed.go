@@ -25,7 +25,7 @@ func commandRecordingPrepRecFailedAction(context *cli.Context) error {
 		return err
 	}
 
-	err = startCommandNotification(context, env, config, config.Commands.RecordedPrepRecFailed)
+	err = startCommandNotification(context, env, config, config.Commands.RecordingPrepRecFailed)
 	if err != nil {
 		return err
 	}

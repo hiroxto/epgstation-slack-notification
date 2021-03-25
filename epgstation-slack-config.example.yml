@@ -13,7 +13,7 @@ slack:
 
 # 各コマンドの設定
 commands:
-  reservation-added: &pre-command-default
+  reserve-new-addition: &pre-command-default
     # 通知を実行するかの設定
     # EPGStation の config.json にコマンドの設定はしてあるけど, 通知を無効化したいときなどは false にする
     enable: true
@@ -52,12 +52,12 @@ commands:
     # プロパティがない場合は slack の channel が使われる
     channel: "CHANNEL_ID"
 
-  recorded-pre-start:
+  recording-pre-start:
     <<: *pre-command-default
     enable: true
     message: ":soon: {{ .ChannelName }} で {{ .Name }} の録画準備が開始しました"
 
-  recorded-prep-rec-failed:
+  recording-prep-rec-failed:
     <<: *pre-command-default
     enable: true
     message: ":x: {{ .ChannelName }} で {{ .Name }} の録画準備に失敗しました"
