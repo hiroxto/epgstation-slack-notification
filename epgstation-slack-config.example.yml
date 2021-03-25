@@ -52,6 +52,16 @@ commands:
     # プロパティがない場合は slack の channel が使われる
     channel: "CHANNEL_ID"
 
+  reserve-update:
+    <<: *pre-command-default
+    enable: true
+    message: ":up: {{ .ChannelName }} で {{ .Name }} の録画情報が更新されました"
+
+  reserve-deleted:
+    <<: *pre-command-default
+    enable: true
+    message: ":black_square_for_stop: {{ .ChannelName }} で {{ .Name }} の録画予約が削除されました"
+
   recording-pre-start:
     <<: *pre-command-default
     enable: true
