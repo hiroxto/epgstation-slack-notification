@@ -18,6 +18,7 @@ type Config struct {
 	} `yaml:"slack"`
 	Commands struct {
 		ReserveNewAddition     CommandConfig `yaml:"reserve-new-addition"`
+		ReserveUpdateCommand   CommandConfig `yaml:"reserve-update"`
 		RecordingPreStart      CommandConfig `yaml:"recording-pre-start"`
 		RecordingPrepRecFailed CommandConfig `yaml:"recording-prep-rec-failed"`
 		RecordingStart         CommandConfig `yaml:"recording-start"`
