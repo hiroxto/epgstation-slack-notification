@@ -20,6 +20,7 @@ type CommandEnv struct {
 	Name                 string `envconfig:"NAME" default:"None"`
 	HalfWidthName        string `envconfig:"HALF_WIDTH_NAME" default:"None"`
 	Description          string `envconfig:"DESCRIPTION" default:"None"`
+	HalfWidthDescription string `envconfig:"HALF_WIDTH_DESCRIPTION" default:"None"`
 	Extended             string `envconfig:"EXTENDED" default:"None"`
 	RecPath              string `envconfig:"RECPATH" default:"None"`
 	LogPath              string `envconfig:"LOGPATH" default:"None"`
