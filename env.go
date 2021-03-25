@@ -18,6 +18,7 @@ type CommandEnv struct {
 	EndAt                string `envconfig:"ENDAT" default:"None"`
 	Duration             string `envconfig:"DURATION" default:"None"`
 	Name                 string `envconfig:"NAME" default:"None"`
+	HalfWidthName        string `envconfig:"HALF_WIDTH_NAME" default:"None"`
 	Description          string `envconfig:"DESCRIPTION" default:"None"`
 	Extended             string `envconfig:"EXTENDED" default:"None"`
 	RecPath              string `envconfig:"RECPATH" default:"None"`
