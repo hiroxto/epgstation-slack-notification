@@ -25,7 +25,7 @@ func commandReserveDeletedAction(context *cli.Context) error {
 		return err
 	}
 
-	err = startCommandNotification(context, env, config, config.Commands.ReserveNewAddition)
+	err = startCommandNotification(context, env, config, config.Commands.ReserveDeletedCommand)
 	if err != nil {
 		return err
 	}
