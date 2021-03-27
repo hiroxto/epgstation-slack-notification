@@ -6,13 +6,15 @@ import (
 )
 
 var commands = []*cli.Command{
-	commandReservationAdded,
-	commandRecordedPreStart,
-	commandRecordedPrepRecFailed,
+	commandReserveNewAddition,
+	commandReserveUpdate,
+	commandReserveDeleted,
+	commandRecordingPreStart,
+	commandRecordingPrepRecFailed,
 
-	commandRecordedStart,
-	commandRecordedEnd,
-	commandRecordedFailed,
+	commandRecordingStart,
+	commandRecordingFinish,
+	commandRecordingFailed,
 }
 
 func startCommandNotification(context *cli.Context, env CommandEnv, config Config, commandConfig CommandConfig) error {

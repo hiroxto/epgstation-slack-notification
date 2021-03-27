@@ -17,12 +17,14 @@ type Config struct {
 		Channel string `yaml:"channel"`
 	} `yaml:"slack"`
 	Commands struct {
-		ReservationAdded      CommandConfig `yaml:"reservation-added"`
-		RecordedPreStart      CommandConfig `yaml:"recorded-pre-start"`
-		RecordedPrepRecFailed CommandConfig `yaml:"recorded-prep-rec-failed"`
-		RecordedStart         CommandConfig `yaml:"recorded-start"`
-		RecordedEnd           CommandConfig `yaml:"recorded-end"`
-		RecordedFailed        CommandConfig `yaml:"recorded-failed"`
+		ReserveNewAddition     CommandConfig `yaml:"reserve-new-addition"`
+		ReserveUpdateCommand   CommandConfig `yaml:"reserve-update"`
+		ReserveDeletedCommand  CommandConfig `yaml:"reserve-deleted"`
+		RecordingPreStart      CommandConfig `yaml:"recording-pre-start"`
+		RecordingPrepRecFailed CommandConfig `yaml:"recording-prep-rec-failed"`
+		RecordingStart         CommandConfig `yaml:"recording-start"`
+		RecordingFinish        CommandConfig `yaml:"recording-finish"`
+		RecordingFailed        CommandConfig `yaml:"recording-failed"`
 	} `yaml:"commands"`
 }
 

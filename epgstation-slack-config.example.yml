@@ -13,7 +13,7 @@ slack:
 
 # 各コマンドの設定
 commands:
-  reservation-added: &pre-command-default
+  reserve-new-addition: &pre-command-default
     # 通知を実行するかの設定
     # EPGStation の config.json にコマンドの設定はしてあるけど, 通知を無効化したいときなどは false にする
     enable: true
@@ -52,17 +52,27 @@ commands:
     # プロパティがない場合は slack の channel が使われる
     channel: "CHANNEL_ID"
 
-  recorded-pre-start:
+  reserve-update:
+    <<: *pre-command-default
+    enable: true
+    message: ":up: {{ .ChannelName }} で {{ .Name }} の録画情報が更新されました"
+
+  reserve-deleted:
+    <<: *pre-command-default
+    enable: true
+    message: ":black_square_for_stop: {{ .ChannelName }} で {{ .Name }} の録画予約が削除されました"
+
+  recording-pre-start:
     <<: *pre-command-default
     enable: true
     message: ":soon: {{ .ChannelName }} で {{ .Name }} の録画準備が開始しました"
 
-  recorded-prep-rec-failed:
+  recording-prep-rec-failed:
     <<: *pre-command-default
     enable: true
     message: ":x: {{ .ChannelName }} で {{ .Name }} の録画準備に失敗しました"
 
-  recorded-start: &rec-command-default
+  recording-start: &rec-command-default
     enable: true
     message: ":arrow_forward: {{ .ChannelName }} で {{ .Name }} の録画が開始しました"
     fields-section:
@@ -90,12 +100,12 @@ commands:
       - title: "LogPath"
         template: "{{ .LogPath }}"
 
-  recorded-end:
+  recording-finish:
     <<: *rec-command-default
     enable: true
     message: ":white_check_mark: {{ .ChannelName }} で {{ .Name }} の録画が終了しました"
 
-  recorded-failed:
+  recording-failed:
     <<: *rec-command-default
     enable: true
     message: ":x: {{ .ChannelName }} で {{ .Name }} の録画中にエラーが発生しました"

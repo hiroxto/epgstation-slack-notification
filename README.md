@@ -18,7 +18,28 @@ $ wget -O epgstation-slack-config.yml https://raw.githubusercontent.com/hiroxto/
 
 ### コマンドをセットする
 
-EPGStation の `config.json` にコマンドをセットする.
+EPGStationの`config/config.yml` にコマンドをセットする．
+
+```yaml
+# 録画予約の新規追加時に実行されるコマンド
+reserveNewAddtionCommand: "/path/to/epgstation-slack-notification reserve-new-addition"
+# 録画情報の更新時に実行されるコマンド
+reserveUpdateCommand: "/path/to/epgstation-slack-notification reserve-update"
+# 録画予約の削除時に実行されるコマンド
+reservedeletedCommand: "/path/to/epgstation-slack-notification reserve-deleted"
+# 録画準備の開始時に実行されるコマンド
+recordingPreStartCommand: "/path/to/epgstation-slack-notification recording-pre-start"
+# 録画準備の失敗時に実行されるコマンド
+recordingPrepRecFailedCommand: "/path/to/epgstation-slack-notification recording-prep-rec-failed"
+# 録画開始時に実行するコマンド
+recordingStartCommand: "/path/to/epgstation-slack-notification recording-start"
+# 録画終了時に実行するコマンド
+recordingFinishCommand: "/path/to/epgstation-slack-notification recording-finish"
+# 録画中のエラー発生時に実行するコマンド
+recordingFailedCommand: "/path/to/epgstation-slack-notification recording-failed"
+```
+
+EPGStation v1を使っている場合は`config/config.json`にコマンドをセットする．
 
 ```json
 {

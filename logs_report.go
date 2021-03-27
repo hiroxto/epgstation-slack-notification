@@ -28,7 +28,7 @@ func getRecordedLog(id string, config Config) (RecordedLog, error) {
 }
 
 func callRecordedAPI(hostName string, id string) ([]byte, error) {
-	resp, err := http.Get(hostName + "/api/recorded/" + id)
+	resp, err := http.Get(hostName + "/api/recorded/" + id + "?isHalfWidth=false")
 	if err != nil {
 		return nil, err
 	}
