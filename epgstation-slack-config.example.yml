@@ -109,3 +109,28 @@ commands:
     <<: *rec-command-default
     enable: true
     message: ":x: {{ .ChannelName }} で {{ .Name }} の録画中にエラーが発生しました"
+
+  encoding-finish:
+    enable: true
+    message: ":white_check_mark: {{ .HalfWidthChannelName }} の {{ .HalfWidthName }} のエンコードが終了しました"
+    fields-section:
+      - title: "RecordedID, VideoFileID"
+        template: "{{ .RecordedID }}, {{ .VideoFileID }}"
+
+      - title: "OutputPath"
+        template: "{{ .OutputPath }}"
+
+      - title: "Mode"
+        template: "{{ .Mode }}"
+
+      - title: "ChannelID, HalfWidthChannelName"
+        template: "{{ .ChannelID }}, {{ .HalfWidthChannelName }}"
+
+      - title: "HalfWidthName"
+        template: "{{ .HalfWidthName }}"
+
+      - title: "HalfWidthDescription"
+        template: "{{ .HalfWidthDescription }}"
+
+      - title: "HalfWidthExtended"
+        template: "{{ .HalfWidthExtended }}"

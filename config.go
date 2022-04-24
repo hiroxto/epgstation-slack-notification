@@ -25,6 +25,7 @@ type Config struct {
 		RecordingStart         CommandConfig `yaml:"recording-start"`
 		RecordingFinish        CommandConfig `yaml:"recording-finish"`
 		RecordingFailed        CommandConfig `yaml:"recording-failed"`
+		EncodingFinish         CommandConfig `yaml:"encoding-finish"`
 	} `yaml:"commands"`
 }
 
