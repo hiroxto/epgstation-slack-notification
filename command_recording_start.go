@@ -21,7 +21,7 @@ func commandRecordingStartAction(context *cli.Context) error {
 		return err
 	}
 
-	var env CommandEnv
+	var env RecordingCommandEnv
 	if err := loadCommandEnv(&env); err != nil {
 		return err
 	}

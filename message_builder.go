@@ -7,7 +7,7 @@ import (
 	"text/template"
 )
 
-func buildCommandFields(fieldsConfigs []FieldConfig, env CommandEnv) ([]*slack.TextBlockObject, error) {
+func buildCommandFields(fieldsConfigs []FieldConfig, env RecordingCommandEnv) ([]*slack.TextBlockObject, error) {
 	var fields []*slack.TextBlockObject
 
 	for _, fieldsConfig := range fieldsConfigs {
@@ -28,7 +28,7 @@ func createNewTextBlockField(title string, body string) *slack.TextBlockObject {
 	return slack.NewTextBlockObject("mrkdwn", text, false, false)
 }
 
-func formatCommandEnv(name string, userTemplate string, env CommandEnv) (string, error) {
+func formatCommandEnv(name string, userTemplate string, env RecordingCommandEnv) (string, error) {
 	var messageBuffer bytes.Buffer
 	t, err := template.New(name).Parse(userTemplate)
 
