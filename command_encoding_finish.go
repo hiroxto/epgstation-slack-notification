@@ -15,6 +15,20 @@ var commandEncodingFinish = &cli.Command{
 }
 
 func commandEncodingFinishAction(context *cli.Context) error {
+	config, err := loadConfigFile()
+	if err != nil {
+		return err
+	}
+
+	var env EncodingCommandEnv
+	if err := loadCommandEnv(&env); err != nil {
+		return err
+	}
+
+	err = startCommandNotification(context, env, config, config.Commands.EncodingFinish)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
