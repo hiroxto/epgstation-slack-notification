@@ -37,6 +37,8 @@ recordingStartCommand: "/path/to/epgstation-slack-notification recording-start"
 recordingFinishCommand: "/path/to/epgstation-slack-notification recording-finish"
 # 録画中のエラー発生時に実行するコマンド
 recordingFailedCommand: "/path/to/epgstation-slack-notification recording-failed"
+# エンコード終了時に実行するコマンド
+encodingFinishCommand: "/path/to/epgstation-slack-notification encoding-finish"
 ```
 
 EPGStation v1を使っている場合は`config/config.json`にコマンドをセットする．

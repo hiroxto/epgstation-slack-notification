@@ -27,6 +27,23 @@ type RecordingCommandEnv struct {
 	LogPath              string `envconfig:"LOGPATH" default:"None"`
 }
 
+// EncodingCommandEnv エンコーディング関連のコマンドで渡される環境変数
+type EncodingCommandEnv struct {
+	RecordedID           string `envconfig:"RECORDEDID" default:"None"`
+	VideoFileID          string `envconfig:"VIDEOFILEID" default:"None"`
+	OutputPath           string `envconfig:"OUTPUTPATH" default:"None"`
+	Mode                 string `envconfig:"MODE" default:"None"`
+	ChannelID            string `envconfig:"CHANNELID" default:"None"`
+	ChannelName          string `envconfig:"CHANNELNAME" default:"None"`
+	HalfWidthChannelName string `envconfig:"HALF_WIDTH_CHANNELNAME" default:"None"`
+	Name                 string `envconfig:"NAME" default:"None"`
+	HalfWidthName        string `envconfig:"HALF_WIDTH_NAME" default:"None"`
+	Description          string `envconfig:"DESCRIPTION" default:"None"`
+	HalfWidthDescription string `envconfig:"HALF_WIDTH_DESCRIPTION" default:"None"`
+	Extended             string `envconfig:"EXTENDED" default:"None"`
+	HalfWidthExtended    string `envconfig:"HALF_WIDTH_EXTENDED" default:"None"`
+}
+
 func loadCommandEnv(env interface{}) error {
 	if err := envconfig.Process("", env); err != nil {
 		return err

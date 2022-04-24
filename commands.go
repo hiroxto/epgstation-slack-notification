@@ -15,6 +15,8 @@ var commands = []*cli.Command{
 	commandRecordingStart,
 	commandRecordingFinish,
 	commandRecordingFailed,
+
+	commandEncodingFinish,
 }
 
 func startCommandNotification(context *cli.Context, env interface{}, config Config, commandConfig CommandConfig) error {
