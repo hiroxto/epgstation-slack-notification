@@ -21,8 +21,8 @@ func commandRecordingPreStartAction(context *cli.Context) error {
 		return err
 	}
 
-	env, err := loadCommandEnv()
-	if err != nil {
+	var env CommandEnv
+	if err := loadCommandEnv(&env); err != nil {
 		return err
 	}
 
