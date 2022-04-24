@@ -6,8 +6,8 @@ import (
 
 // See: https://github.com/l3tnun/EPGStation/blob/master/doc/conf-manual.md
 
-// CommandEnv コマンドに渡される変数
-type CommandEnv struct {
+// RecordingCommandEnv コマンドに渡される変数
+type RecordingCommandEnv struct {
 	RecordedID           string `envconfig:"RECORDEDID" default:"None"`
 	ProgramID            string `envconfig:"PROGRAMID" default:"None"`
 	ChannelType          string `envconfig:"CHANNELTYPE" default:"None"`
