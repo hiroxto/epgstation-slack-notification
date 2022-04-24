@@ -28,7 +28,7 @@ type CommandEnv struct {
 }
 
 func loadCommandEnv(env interface{}) error {
-	if err := envconfig.Process("", &env); err != nil {
+	if err := envconfig.Process("", env); err != nil {
 		return err
 	}
 
