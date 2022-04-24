@@ -27,12 +27,10 @@ type CommandEnv struct {
 	LogPath              string `envconfig:"LOGPATH" default:"None"`
 }
 
-func loadCommandEnv() (CommandEnv, error) {
-	var env CommandEnv
-
-	if err := envconfig.Process("", &env); err != nil {
-		return env, err
+func loadCommandEnv(env interface{}) error {
+	if err := envconfig.Process("", env); err != nil {
+		return err
 	}
 
-	return env, nil
+	return nil
 }
