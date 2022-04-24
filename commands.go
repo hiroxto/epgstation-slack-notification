@@ -17,7 +17,7 @@ var commands = []*cli.Command{
 	commandRecordingFailed,
 }
 
-func startCommandNotification(context *cli.Context, env RecordingCommandEnv, config Config, commandConfig CommandConfig) error {
+func startCommandNotification(context *cli.Context, env interface{}, config Config, commandConfig CommandConfig) error {
 	if !commandConfig.Enable {
 		fmt.Printf("%s command is disabled.\n", context.Command.Name)
 		return nil
