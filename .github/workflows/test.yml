@@ -22,8 +22,6 @@ jobs:
         run: |
           GO111MODULE=off GOBIN=$(pwd)/bin go get golang.org/x/lint/golint
           bin/golint -set_exit_status ./...
-        env:
-          CI: true
 
       - name: Slack Notification
         uses: homoluctus/slatify@v1.5
