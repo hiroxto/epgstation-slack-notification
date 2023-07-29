@@ -52,3 +52,14 @@ func LoadRecordingCommandEnv() (*RecordingCommandEnv, error) {
 
 	return &env, nil
 }
+
+// LoadEncodingCommandEnv エンコーディング関連コマンドで渡される環境変数を読み込む
+func LoadEncodingCommandEnv() (*EncodingCommandEnv, error) {
+	var env EncodingCommandEnv
+
+	if err := envconfig.Process("", &env); err != nil {
+		return nil, err
+	}
+
+	return &env, nil
+}
