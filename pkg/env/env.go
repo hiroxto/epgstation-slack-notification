@@ -1,5 +1,7 @@
 package env
 
+import "github.com/kelseyhightower/envconfig"
+
 // See: https://github.com/l3tnun/EPGStation/blob/master/doc/conf-manual.md
 
 // RecordingCommandEnv コマンドに渡される変数
@@ -38,4 +40,15 @@ type EncodingCommandEnv struct {
 	HalfWidthDescription string `envconfig:"HALF_WIDTH_DESCRIPTION" default:"None"`
 	Extended             string `envconfig:"EXTENDED" default:"None"`
 	HalfWidthExtended    string `envconfig:"HALF_WIDTH_EXTENDED" default:"None"`
+}
+
+// LoadRecordingCommandEnv 録画関連コマンドで渡される環境変数を読み込む
+func LoadRecordingCommandEnv() (*RecordingCommandEnv, error) {
+	var env RecordingCommandEnv
+
+	if err := envconfig.Process("", &env); err != nil {
+		return nil, err
+	}
+
+	return &env, nil
 }
