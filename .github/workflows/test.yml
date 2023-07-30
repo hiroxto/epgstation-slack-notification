@@ -1,40 +1,40 @@
 name: Test
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
+    push:
+        branches:
+            - master
+    pull_request:
 
 jobs:
-  test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        go-version: [1.x]
+    test:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ ubuntu-latest ]
+                go-version: [ 1.x ]
 
-    steps:
-      - uses: actions/checkout@v1
+        steps:
+            -   uses: actions/checkout@v1
 
-      - name: Use Go ${{ matrix.go-version }}
-        uses: actions/setup-go@v1
-        with:
-          go-version: ${{ matrix.go-version }}
+            -   name: Use Go ${{ matrix.go-version }}
+                uses: actions/setup-go@v1
+                with:
+                    go-version: ${{ matrix.go-version }}
 
-      - name: golint
-        run: |
-          GO111MODULE=off GOBIN=$(pwd)/bin go get golang.org/x/lint/golint
-          bin/golint -set_exit_status ./...
+            -   name: golint
+                run: |
+                    GO111MODULE=off GOBIN=$(pwd)/bin go get golang.org/x/lint/golint
+                    bin/golint -set_exit_status ./...
 
-      - name: test env
-        run: go test ./pkg/env/ -v
+            -   name: test env
+                run: go test ./pkg/env/ -v
 
-      - name: Slack Notification
-        uses: homoluctus/slatify@v1.5
-        if: failure()
-        with:
-          job_name: '*${{ github.workflow }}*'
-          type: ${{ job.status }}
-          icon_emoji: ":octocat:"
-          url: ${{ secrets.SLACK_WEBHOOK }}
+            -   name: Slack Notification
+                uses: homoluctus/slatify@v1.5
+                if: failure()
+                with:
+                    job_name: '*${{ github.workflow }}*'
+                    type: ${{ job.status }}
+                    icon_emoji: ":octocat:"
+                    url: ${{ secrets.SLACK_WEBHOOK }}
