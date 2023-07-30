@@ -1,5 +1,7 @@
 package config
 
+import "gopkg.in/yaml.v2"
+
 // Config アプリの設定
 type Config struct {
 	EPGStation EPGStationConfig `yaml:"epg-station"`
@@ -43,4 +45,16 @@ type CommandConfig struct {
 type FieldConfig struct {
 	Title    string `yaml:"title"`
 	Template string `yaml:"template"`
+}
+
+// LoadConfigFromYaml YAMLから設定を読み込む
+func LoadConfigFromYaml(configYaml []byte) (Config, error) {
+	var config Config
+
+	err := yaml.UnmarshalStrict(configYaml, &config)
+	if err != nil {
+		return config, err
+	}
+
+	return config, nil
 }
