@@ -27,6 +27,9 @@ jobs:
                     GO111MODULE=off GOBIN=$(pwd)/bin go get golang.org/x/lint/golint
                     bin/golint -set_exit_status ./...
 
+            -   name: test config
+                run: go test ./pkg/config/ -v
+
             -   name: test env
                 run: go test ./pkg/env/ -v
 
