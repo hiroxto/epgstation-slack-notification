@@ -14,7 +14,7 @@ func Test_LoadRecordingCommandEnv_デフォルトパラメータで読み込め�
 		t.Error(err)
 	}
 
-	expected := &RecordingCommandEnv{
+	expected := RecordingCommandEnv{
 		RecordedID:           "None",
 		ProgramID:            "None",
 		ChannelType:          "None",
@@ -64,7 +64,7 @@ func Test_LoadRecordingCommandEnv_フルパラメータで読み込める(t *tes
 		t.Error(err)
 	}
 
-	expected := &RecordingCommandEnv{
+	expected := RecordingCommandEnv{
 		RecordedID:           "RECORDEDID",
 		ProgramID:            "PROGRAMID",
 		ChannelType:          "CHANNELTYPE",
@@ -97,7 +97,7 @@ func Test_LoadEncodingCommandEnv_デフォルトパラメータで読み込め�
 		t.Error(err)
 	}
 
-	expected := &EncodingCommandEnv{
+	expected := EncodingCommandEnv{
 		RecordedID:           "None",
 		VideoFileID:          "None",
 		OutputPath:           "None",
@@ -139,7 +139,7 @@ func Test_LoadEncodingCommandEnv_フルパラメータで読み込める(t *test
 		t.Error(err)
 	}
 
-	expected := &EncodingCommandEnv{
+	expected := EncodingCommandEnv{
 		RecordedID:           "RECORDEDID",
 		VideoFileID:          "VIDEOFILEID",
 		OutputPath:           "OUTPUTPATH",

@@ -43,23 +43,23 @@ type EncodingCommandEnv struct {
 }
 
 // LoadRecordingCommandEnv 録画関連コマンドで渡される環境変数を読み込む
-func LoadRecordingCommandEnv() (*RecordingCommandEnv, error) {
+func LoadRecordingCommandEnv() (RecordingCommandEnv, error) {
 	var env RecordingCommandEnv
 
 	if err := envconfig.Process("", &env); err != nil {
-		return nil, err
+		return env, err
 	}
 
-	return &env, nil
+	return env, nil
 }
 
 // LoadEncodingCommandEnv エンコーディング関連コマンドで渡される環境変数を読み込む
-func LoadEncodingCommandEnv() (*EncodingCommandEnv, error) {
+func LoadEncodingCommandEnv() (EncodingCommandEnv, error) {
 	var env EncodingCommandEnv
 
 	if err := envconfig.Process("", &env); err != nil {
-		return nil, err
+		return env, err
 	}
 
-	return &env, nil
+	return env, nil
 }
