@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 )
 
+// DefaultConfigFileName デフォルトの設定ファイル名
 const DefaultConfigFileName = "epgstation-slack-config.yml"
 
 var executable = os.Executable
