@@ -41,6 +41,9 @@ type RecordingCommandEnv struct {
 	HalfWidthExtended    string `envconfig:"HALF_WIDTH_EXTENDED" default:"None"`
 	RecPath              string `envconfig:"RECPATH" default:"None"`
 	LogPath              string `envconfig:"LOGPATH" default:"None"`
+	ErrorCnt             int    `envconfig:"ERROR_CNT"`
+	DropCnt              int    `envconfig:"DROP_CNT"`
+	ScramblingCount      int    `envconfig:"SCRAMBLING_CNT"`
 }
 
 // EncodingCommandEnv エンコードコマンドに渡される環境変数
