@@ -43,7 +43,7 @@ type RecordingCommandEnv struct {
 	LogPath              string `envconfig:"LOGPATH" default:"None"`
 }
 
-// EncodingCommandEnv エンコーディング関連のコマンドで渡される環境変数
+// EncodingCommandEnv エンコードコマンドに渡される環境変数
 type EncodingCommandEnv struct {
 	RecordedID           string `envconfig:"RECORDEDID" default:"None"`
 	VideoFileID          string `envconfig:"VIDEOFILEID" default:"None"`
@@ -71,7 +71,7 @@ func LoadRecordingCommandEnv() (RecordingCommandEnv, error) {
 	return env, nil
 }
 
-// LoadEncodingCommandEnv エンコーディング関連コマンドで渡される環境変数を読み込む
+// LoadEncodingCommandEnv エンコードコマンドで渡される環境変数を読み込む
 func LoadEncodingCommandEnv() (EncodingCommandEnv, error) {
 	var env EncodingCommandEnv
 
