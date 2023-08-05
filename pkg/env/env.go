@@ -60,6 +60,17 @@ type EncodingCommandEnv struct {
 	HalfWidthExtended    string `envconfig:"HALF_WIDTH_EXTENDED" default:"None"`
 }
 
+// LoadReserveCommandEnv 予約コマンドと録画準備コマンドで渡される環境変数を読み込む
+func LoadReserveCommandEnv() (ReserveCommandEnv, error) {
+	var env ReserveCommandEnv
+
+	if err := envconfig.Process("", &env); err != nil {
+		return env, err
+	}
+
+	return env, nil
+}
+
 // LoadRecordingCommandEnv 録画コマンドで渡される環境変数を読み込む
 func LoadRecordingCommandEnv() (RecordingCommandEnv, error) {
 	var env RecordingCommandEnv
