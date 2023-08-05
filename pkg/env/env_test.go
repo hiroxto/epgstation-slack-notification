@@ -6,6 +6,80 @@ import (
 	"testing"
 )
 
+func Test_LoadReserveCommandEnv_デフォルトパラメータで読み込める(t *testing.T) {
+	os.Clearenv()
+
+	actual, err := LoadReserveCommandEnv()
+	if err != nil {
+		t.Error(err)
+	}
+
+	expected := ReserveCommandEnv{
+		ProgramID:            "None",
+		ChannelType:          "None",
+		ChannelID:            "None",
+		ChannelName:          "None",
+		HalfWidthChannelName: "None",
+		StartAt:              "None",
+		EndAt:                "None",
+		Duration:             "None",
+		Name:                 "None",
+		HalfWidthName:        "None",
+		Description:          "None",
+		HalfWidthDescription: "None",
+		Extended:             "None",
+		HalfWidthExtended:    "None",
+	}
+
+	if !reflect.DeepEqual(expected, actual) {
+		t.Fatalf("expected = %v, actual = %v", expected, actual)
+	}
+}
+
+func Test_LoadReserveCommandEnv_フルパラメータで読み込める(t *testing.T) {
+	os.Clearenv()
+	os.Setenv("PROGRAMID", "PROGRAMID")
+	os.Setenv("CHANNELTYPE", "CHANNELTYPE")
+	os.Setenv("CHANNELID", "CHANNELID")
+	os.Setenv("CHANNELNAME", "CHANNELNAME")
+	os.Setenv("HALF_WIDTH_CHANNELNAME", "HALF_WIDTH_CHANNELNAME")
+	os.Setenv("STARTAT", "STARTAT")
+	os.Setenv("ENDAT", "ENDAT")
+	os.Setenv("DURATION", "DURATION")
+	os.Setenv("NAME", "NAME")
+	os.Setenv("HALF_WIDTH_NAME", "HALF_WIDTH_NAME")
+	os.Setenv("DESCRIPTION", "DESCRIPTION")
+	os.Setenv("HALF_WIDTH_DESCRIPTION", "HALF_WIDTH_DESCRIPTION")
+	os.Setenv("EXTENDED", "EXTENDED")
+	os.Setenv("HALF_WIDTH_EXTENDED", "HALF_WIDTH_EXTENDED")
+
+	actual, err := LoadReserveCommandEnv()
+	if err != nil {
+		t.Error(err)
+	}
+
+	expected := ReserveCommandEnv{
+		ProgramID:            "PROGRAMID",
+		ChannelType:          "CHANNELTYPE",
+		ChannelID:            "CHANNELID",
+		ChannelName:          "CHANNELNAME",
+		HalfWidthChannelName: "HALF_WIDTH_CHANNELNAME",
+		StartAt:              "STARTAT",
+		EndAt:                "ENDAT",
+		Duration:             "DURATION",
+		Name:                 "NAME",
+		HalfWidthName:        "HALF_WIDTH_NAME",
+		Description:          "DESCRIPTION",
+		HalfWidthDescription: "HALF_WIDTH_DESCRIPTION",
+		Extended:             "EXTENDED",
+		HalfWidthExtended:    "HALF_WIDTH_EXTENDED",
+	}
+
+	if !reflect.DeepEqual(expected, actual) {
+		t.Fatalf("expected = %v, actual = %v", expected, actual)
+	}
+}
+
 func Test_LoadRecordingCommandEnv_デフォルトパラメータで読み込める(t *testing.T) {
 	os.Clearenv()
 
