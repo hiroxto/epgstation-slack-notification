@@ -22,7 +22,7 @@ type ReserveCommandEnv struct {
 	HalfWidthExtended    string `envconfig:"HALF_WIDTH_EXTENDED" default:"None"`
 }
 
-// RecordingCommandEnv コマンドに渡される変数
+// RecordingCommandEnv 録画コマンドに渡される変数
 type RecordingCommandEnv struct {
 	RecordedID           string `envconfig:"RECORDEDID" default:"None"`
 	ProgramID            string `envconfig:"PROGRAMID" default:"None"`
@@ -60,7 +60,7 @@ type EncodingCommandEnv struct {
 	HalfWidthExtended    string `envconfig:"HALF_WIDTH_EXTENDED" default:"None"`
 }
 
-// LoadRecordingCommandEnv 録画関連コマンドで渡される環境変数を読み込む
+// LoadRecordingCommandEnv 録画コマンドで渡される環境変数を読み込む
 func LoadRecordingCommandEnv() (RecordingCommandEnv, error) {
 	var env RecordingCommandEnv
 
