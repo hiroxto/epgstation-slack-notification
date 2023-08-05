@@ -32,6 +32,9 @@ func Test_LoadRecordingCommandEnv_デフォルトパラメータで読み込め�
 		HalfWidthExtended:    "None",
 		RecPath:              "None",
 		LogPath:              "None",
+		ErrorCnt:             0,
+		DropCnt:              0,
+		ScramblingCount:      0,
 	}
 
 	if !reflect.DeepEqual(expected, actual) {
@@ -58,6 +61,9 @@ func Test_LoadRecordingCommandEnv_フルパラメータで読み込める(t *tes
 	os.Setenv("HALF_WIDTH_EXTENDED", "HALF_WIDTH_EXTENDED")
 	os.Setenv("RECPATH", "RECPATH")
 	os.Setenv("LOGPATH", "LOGPATH")
+	os.Setenv("ERROR_CNT", "1")
+	os.Setenv("DROP_CNT", "2")
+	os.Setenv("SCRAMBLING_CNT", "3")
 
 	actual, err := LoadRecordingCommandEnv()
 	if err != nil {
@@ -82,6 +88,9 @@ func Test_LoadRecordingCommandEnv_フルパラメータで読み込める(t *tes
 		HalfWidthExtended:    "HALF_WIDTH_EXTENDED",
 		RecPath:              "RECPATH",
 		LogPath:              "LOGPATH",
+		ErrorCnt:             1,
+		DropCnt:              2,
+		ScramblingCount:      3,
 	}
 
 	if !reflect.DeepEqual(expected, actual) {
