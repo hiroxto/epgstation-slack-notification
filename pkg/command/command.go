@@ -13,6 +13,8 @@ const DefaultConfigFileName = "epgstation-slack-config.yml"
 
 var executable = os.Executable
 
+// getConfigFilePath 設定ファイルのパスを取得する
+// バイナリと同じディレクトリにあるDefaultConfigFileNameのファイル名を探す
 func getConfigFilePath() (string, error) {
 	exeFilePath, err := executable()
 	if err != nil {
