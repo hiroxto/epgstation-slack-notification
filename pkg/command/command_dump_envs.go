@@ -7,6 +7,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// CommandDumpEnvs dump-envsコマンド
 var CommandDumpEnvs = &cli.Command{
 	Name:  "dump-envs",
 	Usage: "環境変数を出力するデバッグ用コマンド",
