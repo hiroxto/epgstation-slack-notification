@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/hiroxto/epgstation-slack-notification/pkg/command"
 	"github.com/urfave/cli/v2"
 )
 
@@ -17,6 +19,8 @@ var commands = []*cli.Command{
 	commandRecordingFailed,
 
 	commandEncodingFinish,
+
+	command.CommandDumpEnvs,
 }
 
 func startCommandNotification(context *cli.Context, env interface{}, config Config, commandConfig CommandConfig) error {
