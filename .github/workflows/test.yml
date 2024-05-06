@@ -24,7 +24,7 @@ jobs:
 
             -   name: golint
                 run: |
-                    GO111MODULE=off GOBIN=$(pwd)/bin go get golang.org/x/lint/golint
+                    GOBIN=$(pwd)/bin go get golang.org/x/lint/golint
                     bin/golint -set_exit_status ./...
 
             -   name: test command
