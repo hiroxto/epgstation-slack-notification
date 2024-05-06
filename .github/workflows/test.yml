@@ -33,12 +33,3 @@ jobs:
 
             -   name: test env
                 run: go test ./pkg/env/ -v
-
-            -   name: Slack Notification
-                uses: homoluctus/slatify@v1.5
-                if: failure()
-                with:
-                    job_name: '*${{ github.workflow }}*'
-                    type: ${{ job.status }}
-                    icon_emoji: ":octocat:"
-                    url: ${{ secrets.SLACK_WEBHOOK }}
