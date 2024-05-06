@@ -22,10 +22,8 @@ jobs:
                 with:
                     go-version: ${{ matrix.go-version }}
 
-            -   name: golint
-                run: |
-                    GO111MODULE=off GOBIN=$(pwd)/bin go get golang.org/x/lint/golint
-                    bin/golint -set_exit_status ./...
+            -   name: go vet
+                run: go vet
 
             -   name: test command
                 run: go test ./pkg/command/ -v
