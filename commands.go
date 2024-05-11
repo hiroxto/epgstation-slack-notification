@@ -8,11 +8,11 @@ import (
 )
 
 var commands = []*cli.Command{
-	commandReserveNewAddition,
-	commandReserveUpdate,
-	commandReserveDeleted,
-	commandRecordingPreStart,
-	commandRecordingPrepRecFailed,
+	command.ReserveNewAdditionCommand,
+	command.ReserveUpdateCommand,
+	command.ReserveDeletedCommand,
+	command.RecordingPreStartCommand,
+	command.RecordingPrepRecFailedCommand,
 
 	commandRecordingStart,
 	commandRecordingFinish,
