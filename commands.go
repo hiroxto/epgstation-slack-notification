@@ -9,7 +9,7 @@ import (
 
 var commands = []*cli.Command{
 	command.ReserveNewAdditionCommand,
-	commandReserveUpdate,
+	command.ReserveUpdateCommand,
 	commandReserveDeleted,
 	commandRecordingPreStart,
 	commandRecordingPrepRecFailed,
