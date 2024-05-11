@@ -16,11 +16,11 @@ type EncodingUseCaseParam struct {
 
 // EncodingDetail エンコーディング情報
 type EncodingDetail struct {
-	RecordedID           int
-	VideoFileID          int
+	RecordedID           string
+	VideoFileID          string
 	OutputPath           string
 	Mode                 string
-	ChannelID            int
+	ChannelID            string
 	ChannelName          string
 	HalfWidthChannelName string
 	Name                 string

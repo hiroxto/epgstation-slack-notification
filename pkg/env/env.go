@@ -6,9 +6,9 @@ import "github.com/kelseyhightower/envconfig"
 
 // ReserveCommandEnv 予約コマンドと録画準備コマンドに渡される環境変数
 type ReserveCommandEnv struct {
-	ProgramID            int    `envconfig:"PROGRAMID"`
+	ProgramID            string `envconfig:"PROGRAMID"`
 	ChannelType          string `envconfig:"CHANNELTYPE" default:"None"`
-	ChannelID            int    `envconfig:"CHANNELID"`
+	ChannelID            string `envconfig:"CHANNELID"`
 	ChannelName          string `envconfig:"CHANNELNAME" default:"None"`
 	HalfWidthChannelName string `envconfig:"HALF_WIDTH_CHANNELNAME" default:"None"`
 	StartAt              int    `envconfig:"STARTAT"`
@@ -24,10 +24,10 @@ type ReserveCommandEnv struct {
 
 // RecordingCommandEnv 録画コマンドに渡される変数
 type RecordingCommandEnv struct {
-	RecordedID           int    `envconfig:"RECORDEDID"`
-	ProgramID            int    `envconfig:"PROGRAMID"`
+	RecordedID           string `envconfig:"RECORDEDID"`
+	ProgramID            string `envconfig:"PROGRAMID"`
 	ChannelType          string `envconfig:"CHANNELTYPE" default:"None"`
-	ChannelID            int    `envconfig:"CHANNELID"`
+	ChannelID            string `envconfig:"CHANNELID"`
 	ChannelName          string `envconfig:"CHANNELNAME" default:"None"`
 	HalfWidthChannelName string `envconfig:"HALF_WIDTH_CHANNELNAME" default:"None"`
 	StartAt              int    `envconfig:"STARTAT"`
@@ -48,11 +48,11 @@ type RecordingCommandEnv struct {
 
 // EncodingCommandEnv エンコードコマンドに渡される環境変数
 type EncodingCommandEnv struct {
-	RecordedID           int    `envconfig:"RECORDEDID"`
-	VideoFileID          int    `envconfig:"VIDEOFILEID"`
+	RecordedID           string `envconfig:"RECORDEDID"`
+	VideoFileID          string `envconfig:"VIDEOFILEID"`
 	OutputPath           string `envconfig:"OUTPUTPATH" default:"None"`
 	Mode                 string `envconfig:"MODE" default:"None"`
-	ChannelID            int    `envconfig:"CHANNELID"`
+	ChannelID            string `envconfig:"CHANNELID"`
 	ChannelName          string `envconfig:"CHANNELNAME" default:"None"`
 	HalfWidthChannelName string `envconfig:"HALF_WIDTH_CHANNELNAME" default:"None"`
 	Name                 string `envconfig:"NAME" default:"None"`

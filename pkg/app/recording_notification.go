@@ -18,10 +18,10 @@ type RecordingUseCaseParam struct {
 
 // RecordingDetail 録画情報
 type RecordingDetail struct {
-	RecordedID           int
-	ProgramID            int
+	RecordedID           string
+	ProgramID            string
 	ChannelType          string
-	ChannelID            int
+	ChannelID            string
 	ChannelName          string
 	HalfWidthChannelName string
 	StartAt              int

@@ -10,9 +10,9 @@ import (
 
 func Test_RecordingDetailFromEnv(t *testing.T) {
 	env := env.RecordingCommandEnv{
-		ProgramID:            1,
+		ProgramID:            "1",
 		ChannelType:          "CHANNELTYPE",
-		ChannelID:            2,
+		ChannelID:            "2",
 		ChannelName:          "CHANNELNAME",
 		HalfWidthChannelName: "HALF_WIDTH_CHANNELNAME",
 		StartAt:              1715353200000, // Unix Millis = 2024-05-11T00:00:00+09:00
@@ -34,9 +34,9 @@ func Test_RecordingDetailFromEnv(t *testing.T) {
 	actual := RecordingDetailFromEnv(env)
 
 	expected := RecordingDetail{
-		ProgramID:            1,
+		ProgramID:            "1",
 		ChannelType:          "CHANNELTYPE",
-		ChannelID:            2,
+		ChannelID:            "2",
 		ChannelName:          "CHANNELNAME",
 		HalfWidthChannelName: "HALF_WIDTH_CHANNELNAME",
 		StartAt:              1715353200000,

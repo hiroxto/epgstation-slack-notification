@@ -18,9 +18,9 @@ type ReserveUseCaseParam struct {
 
 // ReserveDetail 予約情報
 type ReserveDetail struct {
-	ProgramID            int
+	ProgramID            string
 	ChannelType          string
-	ChannelID            int
+	ChannelID            string
 	ChannelName          string
 	HalfWidthChannelName string
 	StartAt              int
