@@ -6,14 +6,14 @@ import "github.com/kelseyhightower/envconfig"
 
 // ReserveCommandEnv 予約コマンドと録画準備コマンドに渡される環境変数
 type ReserveCommandEnv struct {
-	ProgramID            string `envconfig:"PROGRAMID" default:"None"`
+	ProgramID            int    `envconfig:"PROGRAMID"`
 	ChannelType          string `envconfig:"CHANNELTYPE" default:"None"`
-	ChannelID            string `envconfig:"CHANNELID" default:"None"`
+	ChannelID            int    `envconfig:"CHANNELID"`
 	ChannelName          string `envconfig:"CHANNELNAME" default:"None"`
 	HalfWidthChannelName string `envconfig:"HALF_WIDTH_CHANNELNAME" default:"None"`
-	StartAt              string `envconfig:"STARTAT" default:"None"`
-	EndAt                string `envconfig:"ENDAT" default:"None"`
-	Duration             string `envconfig:"DURATION" default:"None"`
+	StartAt              int    `envconfig:"STARTAT"`
+	EndAt                int    `envconfig:"ENDAT"`
+	Duration             int    `envconfig:"DURATION"`
 	Name                 string `envconfig:"NAME" default:"None"`
 	HalfWidthName        string `envconfig:"HALF_WIDTH_NAME" default:"None"`
 	Description          string `envconfig:"DESCRIPTION" default:"None"`
@@ -24,15 +24,15 @@ type ReserveCommandEnv struct {
 
 // RecordingCommandEnv 録画コマンドに渡される変数
 type RecordingCommandEnv struct {
-	RecordedID           string `envconfig:"RECORDEDID" default:"None"`
-	ProgramID            string `envconfig:"PROGRAMID" default:"None"`
+	RecordedID           int    `envconfig:"RECORDEDID"`
+	ProgramID            int    `envconfig:"PROGRAMID"`
 	ChannelType          string `envconfig:"CHANNELTYPE" default:"None"`
-	ChannelID            string `envconfig:"CHANNELID" default:"None"`
+	ChannelID            int    `envconfig:"CHANNELID"`
 	ChannelName          string `envconfig:"CHANNELNAME" default:"None"`
 	HalfWidthChannelName string `envconfig:"HALF_WIDTH_CHANNELNAME" default:"None"`
-	StartAt              string `envconfig:"STARTAT" default:"None"`
-	EndAt                string `envconfig:"ENDAT" default:"None"`
-	Duration             string `envconfig:"DURATION" default:"None"`
+	StartAt              int    `envconfig:"STARTAT"`
+	EndAt                int    `envconfig:"ENDAT"`
+	Duration             int    `envconfig:"DURATION"`
 	Name                 string `envconfig:"NAME" default:"None"`
 	HalfWidthName        string `envconfig:"HALF_WIDTH_NAME" default:"None"`
 	Description          string `envconfig:"DESCRIPTION" default:"None"`
@@ -48,11 +48,11 @@ type RecordingCommandEnv struct {
 
 // EncodingCommandEnv エンコードコマンドに渡される環境変数
 type EncodingCommandEnv struct {
-	RecordedID           string `envconfig:"RECORDEDID" default:"None"`
-	VideoFileID          string `envconfig:"VIDEOFILEID" default:"None"`
+	RecordedID           int    `envconfig:"RECORDEDID"`
+	VideoFileID          int    `envconfig:"VIDEOFILEID"`
 	OutputPath           string `envconfig:"OUTPUTPATH" default:"None"`
 	Mode                 string `envconfig:"MODE" default:"None"`
-	ChannelID            string `envconfig:"CHANNELID" default:"None"`
+	ChannelID            int    `envconfig:"CHANNELID"`
 	ChannelName          string `envconfig:"CHANNELNAME" default:"None"`
 	HalfWidthChannelName string `envconfig:"HALF_WIDTH_CHANNELNAME" default:"None"`
 	Name                 string `envconfig:"NAME" default:"None"`

@@ -1,13 +1,12 @@
 package app
 
 import (
-	"strconv"
 	"time"
 
 	"github.com/hiroxto/epgstation-slack-notification/pkg/env"
 )
 
-// ReserveUseCaseParam ReserveFinishNotificationUseCaseのパラメータ
+// ReserveUseCaseParam ReserveNotificationUseCase のパラメータ
 type ReserveUseCaseParam struct {
 	EnableDebug   bool
 	SlackAPIKey   string
@@ -19,14 +18,14 @@ type ReserveUseCaseParam struct {
 
 // ReserveDetail 予約情報
 type ReserveDetail struct {
-	ProgramID            string
+	ProgramID            int
 	ChannelType          string
-	ChannelID            string
+	ChannelID            int
 	ChannelName          string
 	HalfWidthChannelName string
-	StartAt              int64
-	EndAt                int64
-	Duration             int64
+	StartAt              int
+	EndAt                int
+	Duration             int
 	Name                 string
 	HalfWidthName        string
 	Description          string
@@ -35,17 +34,14 @@ type ReserveDetail struct {
 	HalfWidthExtended    string
 	StartAtTime          time.Time
 	EndAtTime            time.Time
-	DurationMin          int64
+	DurationMin          int
 }
 
 // ReserveDetailFromEnv env.ReserveCommandEnv を ReserveDetail に変換する
 func ReserveDetailFromEnv(reserveEnv env.ReserveCommandEnv) ReserveDetail {
-	startAt, _ := strconv.ParseInt(reserveEnv.StartAt, 10, 64)
-	startAtTime := time.UnixMilli(startAt)
-	endAt, _ := strconv.ParseInt(reserveEnv.EndAt, 10, 64)
-	endAtTime := time.UnixMilli(endAt)
-	durationMs, _ := strconv.ParseInt(reserveEnv.Duration, 10, 64)
-	durationInSeconds := durationMs / 1000
+	startAtTime := time.UnixMilli(int64(reserveEnv.StartAt))
+	endAtTime := time.UnixMilli(int64(reserveEnv.EndAt))
+	durationInSeconds := reserveEnv.Duration / 1000
 	durationMin := durationInSeconds / 60
 
 	return ReserveDetail{
@@ -54,9 +50,9 @@ func ReserveDetailFromEnv(reserveEnv env.ReserveCommandEnv) ReserveDetail {
 		ChannelID:            reserveEnv.ChannelID,
 		ChannelName:          reserveEnv.ChannelName,
 		HalfWidthChannelName: reserveEnv.HalfWidthChannelName,
-		StartAt:              startAt,
-		EndAt:                endAt,
-		Duration:             durationMs,
+		StartAt:              reserveEnv.StartAt,
+		EndAt:                reserveEnv.EndAt,
+		Duration:             reserveEnv.Duration,
 		Name:                 reserveEnv.Name,
 		HalfWidthName:        reserveEnv.HalfWidthName,
 		Description:          reserveEnv.Description,
