@@ -15,26 +15,62 @@ var CommandDumpEnvs = &cli.Command{
    環境変数を出力するデバッグ用コマンド
 `,
 	Action: commandDumpEnvsAction,
+	Flags: []cli.Flag{
+		&cli.StringSliceFlag{
+			Name:  "only",
+			Value: cli.NewStringSlice(commandDumpEnvsValidOnlyValues...),
+		},
+	},
 }
 
+var commandDumpEnvsValidOnlyValues = []string{"reserve", "recording", "encoding"}
+
 func commandDumpEnvsAction(context *cli.Context) error {
-	reserveCommandEnv, err := env.LoadReserveCommandEnv()
-	if err != nil {
-		return err
-	}
-	fmt.Printf("%#v\n", reserveCommandEnv)
+	onlyValues := context.StringSlice("only")
 
-	recordingCommandEnv, err := env.LoadRecordingCommandEnv()
-	if err != nil {
-		return err
-	}
-	fmt.Printf("%#v\n", recordingCommandEnv)
+	// onlyオプションのチェック
+	invalidOnlyOptions := []string{}
+	for _, onlyValue := range onlyValues {
+		found := false
+		for _, allowedOnlyValue := range commandDumpEnvsValidOnlyValues {
+			if onlyValue == allowedOnlyValue {
+				found = true
+				break
+			}
+		}
 
-	encodingCommandEnv, err := env.LoadEncodingCommandEnv()
-	if err != nil {
-		return err
+		if !found {
+			invalidOnlyOptions = append(invalidOnlyOptions, onlyValue)
+		}
 	}
-	fmt.Printf("%#v\n", encodingCommandEnv)
+	if len(invalidOnlyOptions) != 0 {
+		return fmt.Errorf("invalid only options : %v", invalidOnlyOptions)
+	}
+
+	for _, onlyValue := range onlyValues {
+		switch onlyValue {
+		case "reserve":
+			recordingCommandEnv, err := env.LoadRecordingCommandEnv()
+			if err != nil {
+				return err
+			}
+			fmt.Printf("%#v\n", recordingCommandEnv)
+		case "recording":
+			recordingCommandEnv, err := env.LoadRecordingCommandEnv()
+			if err != nil {
+				return err
+			}
+			fmt.Printf("%#v\n", recordingCommandEnv)
+		case "encoding":
+			encodingCommandEnv, err := env.LoadEncodingCommandEnv()
+			if err != nil {
+				return err
+			}
+			fmt.Printf("%#v\n", encodingCommandEnv)
+		default:
+			return fmt.Errorf("unknown value:%v", onlyValue)
+		}
+	}
 
 	return nil
 }
