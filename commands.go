@@ -10,7 +10,7 @@ import (
 var commands = []*cli.Command{
 	command.ReserveNewAdditionCommand,
 	command.ReserveUpdateCommand,
-	commandReserveDeleted,
+	command.ReserveDeletedCommand,
 	commandRecordingPreStart,
 	commandRecordingPrepRecFailed,
 
