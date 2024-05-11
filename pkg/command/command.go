@@ -20,3 +20,13 @@ func getConfigFilePath() (string, error) {
 
 	return filepath.Join(filepath.Dir(exeFilePath), DefaultConfigFileName), nil
 }
+
+// readConfigFile 設定ファイルを読み込む
+func readConfigFile(configFilePath string) ([]byte, error) {
+	data, err := os.ReadFile(configFilePath)
+	if err != nil {
+		return nil, err
+	}
+
+	return data, err
+}

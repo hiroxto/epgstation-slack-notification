@@ -25,7 +25,12 @@ func commandEncodingFinishAction(context *cli.Context) error {
 		return err
 	}
 
-	config, err := config.LoadConfigFromYaml([]byte(configFilePath))
+	configData, err := readConfigFile(configFilePath)
+	if err != nil {
+		return err
+	}
+
+	config, err := config.LoadConfigFromYaml([]byte(configData))
 	if err != nil {
 		return err
 	}
