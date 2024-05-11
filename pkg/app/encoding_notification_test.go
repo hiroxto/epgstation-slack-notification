@@ -9,11 +9,11 @@ import (
 
 func Test_EncodingDetailFromEnv(t *testing.T) {
 	env := env.EncodingCommandEnv{
-		RecordedID:           1,
-		VideoFileID:          2,
+		RecordedID:           "1",
+		VideoFileID:          "2",
 		OutputPath:           "OUTPUTPATH",
 		Mode:                 "MODE",
-		ChannelID:            3,
+		ChannelID:            "3",
 		ChannelName:          "CHANNELNAME",
 		HalfWidthChannelName: "HALF_WIDTH_CHANNELNAME",
 		Name:                 "NAME",
@@ -27,11 +27,11 @@ func Test_EncodingDetailFromEnv(t *testing.T) {
 	actual := EncodingDetailFromEnv(env)
 
 	expected := EncodingDetail{
-		RecordedID:           1,
-		VideoFileID:          2,
+		RecordedID:           "1",
+		VideoFileID:          "2",
 		OutputPath:           "OUTPUTPATH",
 		Mode:                 "MODE",
-		ChannelID:            3,
+		ChannelID:            "3",
 		ChannelName:          "CHANNELNAME",
 		HalfWidthChannelName: "HALF_WIDTH_CHANNELNAME",
 		Name:                 "NAME",

@@ -1,6 +1,7 @@
 package app
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/hiroxto/epgstation-slack-notification/pkg/env"
@@ -18,14 +19,14 @@ type ReserveUseCaseParam struct {
 
 // ReserveDetail 予約情報
 type ReserveDetail struct {
-	ProgramID            int
+	ProgramID            string
 	ChannelType          string
-	ChannelID            int
+	ChannelID            string
 	ChannelName          string
 	HalfWidthChannelName string
-	StartAt              int
-	EndAt                int
-	Duration             int
+	StartAt              string
+	EndAt                string
+	Duration             string
 	Name                 string
 	HalfWidthName        string
 	Description          string
@@ -34,14 +35,17 @@ type ReserveDetail struct {
 	HalfWidthExtended    string
 	StartAtTime          time.Time
 	EndAtTime            time.Time
-	DurationMin          int
+	DurationMin          int64
 }
 
 // ReserveDetailFromEnv env.ReserveCommandEnv を ReserveDetail に変換する
 func ReserveDetailFromEnv(reserveEnv env.ReserveCommandEnv) ReserveDetail {
-	startAtTime := time.UnixMilli(int64(reserveEnv.StartAt))
-	endAtTime := time.UnixMilli(int64(reserveEnv.EndAt))
-	durationInSeconds := reserveEnv.Duration / 1000
+	startAt, _ := strconv.ParseInt(reserveEnv.StartAt, 10, 64)
+	startAtTime := time.UnixMilli(startAt)
+	endAt, _ := strconv.ParseInt(reserveEnv.EndAt, 10, 64)
+	endAtTime := time.UnixMilli(endAt)
+	duration, _ := strconv.ParseInt(reserveEnv.Duration, 10, 64)
+	durationInSeconds := duration / 1000
 	durationMin := durationInSeconds / 60
 
 	return ReserveDetail{

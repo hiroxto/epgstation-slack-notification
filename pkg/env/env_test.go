@@ -15,14 +15,14 @@ func Test_LoadReserveCommandEnv_デフォルトパラメータで読み込める
 	}
 
 	expected := ReserveCommandEnv{
-		ProgramID:            0,
+		ProgramID:            "None",
 		ChannelType:          "None",
-		ChannelID:            0,
+		ChannelID:            "None",
 		ChannelName:          "None",
 		HalfWidthChannelName: "None",
-		StartAt:              0,
-		EndAt:                0,
-		Duration:             0,
+		StartAt:              "None",
+		EndAt:                "None",
+		Duration:             "None",
 		Name:                 "None",
 		HalfWidthName:        "None",
 		Description:          "None",
@@ -59,14 +59,14 @@ func Test_LoadReserveCommandEnv_フルパラメータで読み込める(t *testi
 	}
 
 	expected := ReserveCommandEnv{
-		ProgramID:            1,
+		ProgramID:            "1",
 		ChannelType:          "CHANNELTYPE",
-		ChannelID:            2,
+		ChannelID:            "2",
 		ChannelName:          "CHANNELNAME",
 		HalfWidthChannelName: "HALF_WIDTH_CHANNELNAME",
-		StartAt:              1715353200000,
-		EndAt:                1715355000000,
-		Duration:             1800000,
+		StartAt:              "1715353200000",
+		EndAt:                "1715355000000",
+		Duration:             "1800000",
 		Name:                 "NAME",
 		HalfWidthName:        "HALF_WIDTH_NAME",
 		Description:          "DESCRIPTION",
@@ -89,15 +89,15 @@ func Test_LoadRecordingCommandEnv_デフォルトパラメータで読み込め�
 	}
 
 	expected := RecordingCommandEnv{
-		RecordedID:           0,
-		ProgramID:            0,
+		RecordedID:           "None",
+		ProgramID:            "None",
 		ChannelType:          "None",
-		ChannelID:            0,
+		ChannelID:            "None",
 		ChannelName:          "None",
 		HalfWidthChannelName: "None",
-		StartAt:              0,
-		EndAt:                0,
-		Duration:             0,
+		StartAt:              "None",
+		EndAt:                "None",
+		Duration:             "None",
 		Name:                 "None",
 		HalfWidthName:        "None",
 		Description:          "None",
@@ -106,9 +106,9 @@ func Test_LoadRecordingCommandEnv_デフォルトパラメータで読み込め�
 		HalfWidthExtended:    "None",
 		RecPath:              "None",
 		LogPath:              "None",
-		ErrorCnt:             0,
-		DropCnt:              0,
-		ScramblingCount:      0,
+		ErrorCnt:             "None",
+		DropCnt:              "None",
+		ScramblingCount:      "None",
 	}
 
 	if !reflect.DeepEqual(expected, actual) {
@@ -145,15 +145,15 @@ func Test_LoadRecordingCommandEnv_フルパラメータで読み込める(t *tes
 	}
 
 	expected := RecordingCommandEnv{
-		RecordedID:           1,
-		ProgramID:            2,
+		RecordedID:           "1",
+		ProgramID:            "2",
 		ChannelType:          "CHANNELTYPE",
-		ChannelID:            3,
+		ChannelID:            "3",
 		ChannelName:          "CHANNELNAME",
 		HalfWidthChannelName: "HALF_WIDTH_CHANNELNAME",
-		StartAt:              1715353200000,
-		EndAt:                1715355000000,
-		Duration:             1800000,
+		StartAt:              "1715353200000",
+		EndAt:                "1715355000000",
+		Duration:             "1800000",
 		Name:                 "NAME",
 		HalfWidthName:        "HALF_WIDTH_NAME",
 		Description:          "DESCRIPTION",
@@ -162,9 +162,9 @@ func Test_LoadRecordingCommandEnv_フルパラメータで読み込める(t *tes
 		HalfWidthExtended:    "HALF_WIDTH_EXTENDED",
 		RecPath:              "RECPATH",
 		LogPath:              "LOGPATH",
-		ErrorCnt:             4,
-		DropCnt:              5,
-		ScramblingCount:      6,
+		ErrorCnt:             "4",
+		DropCnt:              "5",
+		ScramblingCount:      "6",
 	}
 
 	if !reflect.DeepEqual(expected, actual) {
@@ -181,11 +181,11 @@ func Test_LoadEncodingCommandEnv_デフォルトパラメータで読み込め�
 	}
 
 	expected := EncodingCommandEnv{
-		RecordedID:           0,
-		VideoFileID:          0,
+		RecordedID:           "None",
+		VideoFileID:          "None",
 		OutputPath:           "None",
 		Mode:                 "None",
-		ChannelID:            0,
+		ChannelID:            "None",
 		ChannelName:          "None",
 		HalfWidthChannelName: "None",
 		Name:                 "None",
@@ -223,11 +223,11 @@ func Test_LoadEncodingCommandEnv_フルパラメータで読み込める(t *test
 	}
 
 	expected := EncodingCommandEnv{
-		RecordedID:           1,
-		VideoFileID:          2,
+		RecordedID:           "1",
+		VideoFileID:          "2",
 		OutputPath:           "OUTPUTPATH",
 		Mode:                 "MODE",
-		ChannelID:            3,
+		ChannelID:            "3",
 		ChannelName:          "CHANNELNAME",
 		HalfWidthChannelName: "HALF_WIDTH_CHANNELNAME",
 		Name:                 "NAME",
