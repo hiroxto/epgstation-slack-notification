@@ -1,6 +1,7 @@
 package app
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/hiroxto/epgstation-slack-notification/pkg/env"
@@ -24,9 +25,9 @@ type RecordingDetail struct {
 	ChannelID            string
 	ChannelName          string
 	HalfWidthChannelName string
-	StartAt              int
-	EndAt                int
-	Duration             int
+	StartAt              string
+	EndAt                string
+	Duration             string
 	Name                 string
 	HalfWidthName        string
 	Description          string
@@ -40,14 +41,17 @@ type RecordingDetail struct {
 	ScramblingCount      int
 	StartAtTime          time.Time
 	EndAtTime            time.Time
-	DurationMin          int
+	DurationMin          int64
 }
 
 // RecordingDetailFromEnv env.RecordingCommandEnv を RecordingDetail に変換する
 func RecordingDetailFromEnv(recordingEnv env.RecordingCommandEnv) RecordingDetail {
-	startAtTime := time.UnixMilli(int64(recordingEnv.StartAt))
-	endAtTime := time.UnixMilli(int64(recordingEnv.EndAt))
-	durationInSeconds := recordingEnv.Duration / 1000
+	startAt, _ := strconv.ParseInt(recordingEnv.StartAt, 10, 64)
+	startAtTime := time.UnixMilli(startAt)
+	endAt, _ := strconv.ParseInt(recordingEnv.EndAt, 10, 64)
+	endAtTime := time.UnixMilli(endAt)
+	duration, _ := strconv.ParseInt(recordingEnv.Duration, 10, 64)
+	durationInSeconds := duration / 1000
 	durationMin := durationInSeconds / 60
 
 	return RecordingDetail{

@@ -11,9 +11,9 @@ type ReserveCommandEnv struct {
 	ChannelID            string `envconfig:"CHANNELID"`
 	ChannelName          string `envconfig:"CHANNELNAME" default:"None"`
 	HalfWidthChannelName string `envconfig:"HALF_WIDTH_CHANNELNAME" default:"None"`
-	StartAt              int    `envconfig:"STARTAT"`
-	EndAt                int    `envconfig:"ENDAT"`
-	Duration             int    `envconfig:"DURATION"`
+	StartAt              string `envconfig:"STARTAT"`
+	EndAt                string `envconfig:"ENDAT"`
+	Duration             string `envconfig:"DURATION"`
 	Name                 string `envconfig:"NAME" default:"None"`
 	HalfWidthName        string `envconfig:"HALF_WIDTH_NAME" default:"None"`
 	Description          string `envconfig:"DESCRIPTION" default:"None"`
@@ -30,9 +30,9 @@ type RecordingCommandEnv struct {
 	ChannelID            string `envconfig:"CHANNELID"`
 	ChannelName          string `envconfig:"CHANNELNAME" default:"None"`
 	HalfWidthChannelName string `envconfig:"HALF_WIDTH_CHANNELNAME" default:"None"`
-	StartAt              int    `envconfig:"STARTAT"`
-	EndAt                int    `envconfig:"ENDAT"`
-	Duration             int    `envconfig:"DURATION"`
+	StartAt              string `envconfig:"STARTAT"`
+	EndAt                string `envconfig:"ENDAT"`
+	Duration             string `envconfig:"DURATION"`
 	Name                 string `envconfig:"NAME" default:"None"`
 	HalfWidthName        string `envconfig:"HALF_WIDTH_NAME" default:"None"`
 	Description          string `envconfig:"DESCRIPTION" default:"None"`
