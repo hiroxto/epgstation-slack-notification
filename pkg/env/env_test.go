@@ -15,14 +15,14 @@ func Test_LoadReserveCommandEnv_デフォルトパラメータで読み込める
 	}
 
 	expected := ReserveCommandEnv{
-		ProgramID:            "",
+		ProgramID:            "None",
 		ChannelType:          "None",
-		ChannelID:            "",
+		ChannelID:            "None",
 		ChannelName:          "None",
 		HalfWidthChannelName: "None",
-		StartAt:              "",
-		EndAt:                "",
-		Duration:             "",
+		StartAt:              "None",
+		EndAt:                "None",
+		Duration:             "None",
 		Name:                 "None",
 		HalfWidthName:        "None",
 		Description:          "None",
@@ -89,15 +89,15 @@ func Test_LoadRecordingCommandEnv_デフォルトパラメータで読み込め�
 	}
 
 	expected := RecordingCommandEnv{
-		RecordedID:           "",
-		ProgramID:            "",
+		RecordedID:           "None",
+		ProgramID:            "None",
 		ChannelType:          "None",
-		ChannelID:            "",
+		ChannelID:            "None",
 		ChannelName:          "None",
 		HalfWidthChannelName: "None",
-		StartAt:              "",
-		EndAt:                "",
-		Duration:             "",
+		StartAt:              "None",
+		EndAt:                "None",
+		Duration:             "None",
 		Name:                 "None",
 		HalfWidthName:        "None",
 		Description:          "None",
@@ -106,9 +106,9 @@ func Test_LoadRecordingCommandEnv_デフォルトパラメータで読み込め�
 		HalfWidthExtended:    "None",
 		RecPath:              "None",
 		LogPath:              "None",
-		ErrorCnt:             "",
-		DropCnt:              "",
-		ScramblingCount:      "",
+		ErrorCnt:             "None",
+		DropCnt:              "None",
+		ScramblingCount:      "None",
 	}
 
 	if !reflect.DeepEqual(expected, actual) {
@@ -181,11 +181,11 @@ func Test_LoadEncodingCommandEnv_デフォルトパラメータで読み込め�
 	}
 
 	expected := EncodingCommandEnv{
-		RecordedID:           "",
-		VideoFileID:          "",
+		RecordedID:           "None",
+		VideoFileID:          "None",
 		OutputPath:           "None",
 		Mode:                 "None",
-		ChannelID:            "",
+		ChannelID:            "None",
 		ChannelName:          "None",
 		HalfWidthChannelName: "None",
 		Name:                 "None",
