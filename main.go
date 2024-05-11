@@ -1,9 +1,11 @@
 package main
 
 import (
-	"github.com/urfave/cli/v2"
 	"log"
 	"os"
+
+	"github.com/hiroxto/epgstation-slack-notification/pkg/command"
+	"github.com/urfave/cli/v2"
 )
 
 func main() {
@@ -34,4 +36,20 @@ func newCliApp() *cli.App {
 	}
 
 	return app
+}
+
+var commands = []*cli.Command{
+	command.ReserveNewAdditionCommand,
+	command.ReserveUpdateCommand,
+	command.ReserveDeletedCommand,
+	command.RecordingPreStartCommand,
+	command.RecordingPrepRecFailedCommand,
+
+	command.RecordingStartCommand,
+	command.RecordingFinishCommand,
+	command.RecordingFailedCommand,
+
+	command.EncodingFinishCommand,
+
+	command.DumpEnvsCommand,
 }
