@@ -1,6 +1,8 @@
 package config
 
-import "gopkg.in/yaml.v2"
+import (
+	"gopkg.in/yaml.v2"
+)
 
 // Config アプリの設定
 type Config struct {
