@@ -14,7 +14,7 @@ var commands = []*cli.Command{
 	command.RecordingPreStartCommand,
 	command.RecordingPrepRecFailedCommand,
 
-	commandRecordingStart,
+	command.RecordingStartCommand,
 	commandRecordingFinish,
 	commandRecordingFailed,
 
