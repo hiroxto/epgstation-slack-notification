@@ -9,17 +9,17 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-var CommandEncodingFinish = &cli.Command{
+var EncodingFinishCommand = &cli.Command{
 	Name:  "encoding-finish",
 	Usage: "encodingFinishCommand で使用",
 	Description: `
    エンコード終了時に実行するコマンド。
    encodingFinishCommand で使用する。
 `,
-	Action: commandEncodingFinishAction,
+	Action: encodingFinishCommandAction,
 }
 
-func commandEncodingFinishAction(context *cli.Context) error {
+func encodingFinishCommandAction(context *cli.Context) error {
 	configFilePath, err := getConfigFilePath()
 	if err != nil {
 		return err
