@@ -6,7 +6,7 @@ import (
 	"github.com/hiroxto/epgstation-slack-notification/pkg/env"
 )
 
-// ReserveUseCaseParam ReserveFinishNotificationUseCaseのパラメータ
+// ReserveUseCaseParam ReserveNotificationUseCase のパラメータ
 type ReserveUseCaseParam struct {
 	EnableDebug   bool
 	SlackAPIKey   string
