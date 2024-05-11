@@ -7,6 +7,7 @@ import (
 	"os"
 	"text/template"
 
+	"github.com/hiroxto/epgstation-slack-notification/pkg/config"
 	"github.com/slack-go/slack"
 )
 
@@ -14,6 +15,19 @@ import (
 type Field struct {
 	Title    string
 	Template string
+}
+
+// FieldsFromConfig config.FieldConfigをFieldに変換する
+func FieldsFromConfig(fieldConfigs []config.FieldConfig) []Field {
+	fields := []Field{}
+	for _, fieldConfig := range fieldConfigs {
+		fields = append(fields, Field{
+			Title:    fieldConfig.Title,
+			Template: fieldConfig.Template,
+		})
+	}
+
+	return fields
 }
 
 // createSlackClient Slackクライアントを作成する

@@ -51,14 +51,13 @@ func commandEncodingFinishAction(context *cli.Context) error {
 		return err
 	}
 
-	encodingDetail := app.EncodingDetailFromEnv(encodingCommandEnv)
 	param := app.EncodingUseCaseParam{
 		EnableDebug:    context.Bool("debug"),
 		SlackAPIKey:    slackAPIKey,
 		SlackChannel:   slackChannel,
 		Message:        commandConfig.Message,
-		Fields:         []app.Field{},
-		EncodingDetail: encodingDetail,
+		Fields:         app.FieldsFromConfig(commandConfig.FieldsSection),
+		EncodingDetail: app.EncodingDetailFromEnv(encodingCommandEnv),
 	}
 	err = app.EncodingNotificationUseCase(param)
 	if err != nil {
