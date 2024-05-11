@@ -24,9 +24,9 @@ type ReserveDetail struct {
 	ChannelID            string
 	ChannelName          string
 	HalfWidthChannelName string
-	StartAt              string
-	EndAt                string
-	Duration             uint
+	StartAt              int64
+	EndAt                int64
+	Duration             int64
 	Name                 string
 	HalfWidthName        string
 	Description          string
@@ -35,7 +35,7 @@ type ReserveDetail struct {
 	HalfWidthExtended    string
 	StartAtTime          time.Time
 	EndAtTime            time.Time
-	DurationMin          uint
+	DurationMin          int64
 }
 
 // ReserveDetailFromEnv env.ReserveCommandEnv を ReserveDetail に変換する
@@ -44,7 +44,7 @@ func ReserveDetailFromEnv(reserveEnv env.ReserveCommandEnv) ReserveDetail {
 	startAtTime := time.UnixMilli(startAt)
 	endAt, _ := strconv.ParseInt(reserveEnv.EndAt, 10, 64)
 	endAtTime := time.UnixMilli(endAt)
-	durationMs, _ := strconv.ParseUint(reserveEnv.Duration, 10, 64)
+	durationMs, _ := strconv.ParseInt(reserveEnv.Duration, 10, 64)
 	durationInSeconds := durationMs / 1000
 	durationMin := durationInSeconds / 60
 
@@ -54,9 +54,9 @@ func ReserveDetailFromEnv(reserveEnv env.ReserveCommandEnv) ReserveDetail {
 		ChannelID:            reserveEnv.ChannelID,
 		ChannelName:          reserveEnv.ChannelName,
 		HalfWidthChannelName: reserveEnv.HalfWidthChannelName,
-		StartAt:              reserveEnv.StartAt,
-		EndAt:                reserveEnv.EndAt,
-		Duration:             uint(durationMs),
+		StartAt:              startAt,
+		EndAt:                endAt,
+		Duration:             durationMs,
 		Name:                 reserveEnv.Name,
 		HalfWidthName:        reserveEnv.HalfWidthName,
 		Description:          reserveEnv.Description,
@@ -65,7 +65,7 @@ func ReserveDetailFromEnv(reserveEnv env.ReserveCommandEnv) ReserveDetail {
 		HalfWidthExtended:    reserveEnv.HalfWidthExtended,
 		StartAtTime:          startAtTime,
 		EndAtTime:            endAtTime,
-		DurationMin:          uint(durationMin),
+		DurationMin:          durationMin,
 	}
 }
 
