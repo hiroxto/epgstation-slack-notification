@@ -26,9 +26,9 @@ func Test_RecordingDetailFromEnv(t *testing.T) {
 		HalfWidthExtended:    "HALF_WIDTH_EXTENDED",
 		RecPath:              "RECPATH",
 		LogPath:              "LOGPATH",
-		ErrorCnt:             3,
-		DropCnt:              4,
-		ScramblingCount:      5,
+		ErrorCnt:             "3",
+		DropCnt:              "4",
+		ScramblingCount:      "5",
 	}
 
 	actual := RecordingDetailFromEnv(env)
@@ -50,9 +50,9 @@ func Test_RecordingDetailFromEnv(t *testing.T) {
 		HalfWidthExtended:    "HALF_WIDTH_EXTENDED",
 		RecPath:              "RECPATH",
 		LogPath:              "LOGPATH",
-		ErrorCnt:             3,
-		DropCnt:              4,
-		ScramblingCount:      5,
+		ErrorCnt:             "3",
+		DropCnt:              "4",
+		ScramblingCount:      "5",
 		StartAtTime:          time.UnixMilli(1715353200000),
 		EndAtTime:            time.UnixMilli(1715355000000),
 		DurationMin:          30,

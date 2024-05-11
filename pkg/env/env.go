@@ -41,9 +41,9 @@ type RecordingCommandEnv struct {
 	HalfWidthExtended    string `envconfig:"HALF_WIDTH_EXTENDED" default:"None"`
 	RecPath              string `envconfig:"RECPATH" default:"None"`
 	LogPath              string `envconfig:"LOGPATH" default:"None"`
-	ErrorCnt             int    `envconfig:"ERROR_CNT"`
-	DropCnt              int    `envconfig:"DROP_CNT"`
-	ScramblingCount      int    `envconfig:"SCRAMBLING_CNT"`
+	ErrorCnt             string `envconfig:"ERROR_CNT"`      // NOTE: 録画開始イベントの際に ERROR_CNT=null のように渡ってくるため string で受け取る
+	DropCnt              string `envconfig:"DROP_CNT"`       // NOTE: 録画開始イベントの際に DROP_CNT=null のように渡ってくるため string で受け取る
+	ScramblingCount      string `envconfig:"SCRAMBLING_CNT"` // NOTE: 録画開始イベントの際に SCRAMBLING_CNT=null のように渡ってくるため string で受け取る
 }
 
 // EncodingCommandEnv エンコードコマンドに渡される環境変数

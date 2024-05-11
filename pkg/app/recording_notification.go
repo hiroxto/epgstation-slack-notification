@@ -36,9 +36,9 @@ type RecordingDetail struct {
 	HalfWidthExtended    string
 	RecPath              string
 	LogPath              string
-	ErrorCnt             int
-	DropCnt              int
-	ScramblingCount      int
+	ErrorCnt             string
+	DropCnt              string
+	ScramblingCount      string
 	StartAtTime          time.Time
 	EndAtTime            time.Time
 	DurationMin          int64
