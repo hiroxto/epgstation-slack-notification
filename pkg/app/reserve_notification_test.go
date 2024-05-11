@@ -10,14 +10,14 @@ import (
 
 func Test_ReserveDetailFromEnv(t *testing.T) {
 	env := env.ReserveCommandEnv{
-		ProgramID:            "PROGRAMID",
+		ProgramID:            1,
 		ChannelType:          "CHANNELTYPE",
-		ChannelID:            "CHANNELID",
+		ChannelID:            2,
 		ChannelName:          "CHANNELNAME",
 		HalfWidthChannelName: "HALF_WIDTH_CHANNELNAME",
-		StartAt:              "1715353200000", // Unix Millis = 2024-05-11T00:00:00+09:00
-		EndAt:                "1715355000000", // Unix Millis = 2024-05-11T00:30:00+09:00
-		Duration:             "1800000",       // ms = 30 min
+		StartAt:              1715353200000, // Unix Millis = 2024-05-11T00:00:00+09:00
+		EndAt:                1715355000000, // Unix Millis = 2024-05-11T00:30:00+09:00
+		Duration:             1800000,       // ms = 30 min
 		Name:                 "NAME",
 		HalfWidthName:        "HALF_WIDTH_NAME",
 		Description:          "DESCRIPTION",
@@ -29,9 +29,9 @@ func Test_ReserveDetailFromEnv(t *testing.T) {
 	actual := ReserveDetailFromEnv(env)
 
 	expected := ReserveDetail{
-		ProgramID:            "PROGRAMID",
+		ProgramID:            1,
 		ChannelType:          "CHANNELTYPE",
-		ChannelID:            "CHANNELID",
+		ChannelID:            2,
 		ChannelName:          "CHANNELNAME",
 		HalfWidthChannelName: "HALF_WIDTH_CHANNELNAME",
 		StartAt:              1715353200000,

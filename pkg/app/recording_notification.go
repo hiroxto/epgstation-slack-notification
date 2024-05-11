@@ -1,7 +1,6 @@
 package app
 
 import (
-	"strconv"
 	"time"
 
 	"github.com/hiroxto/epgstation-slack-notification/pkg/env"
@@ -19,15 +18,15 @@ type RecordingUseCaseParam struct {
 
 // RecordingDetail 録画情報
 type RecordingDetail struct {
-	RecordedID           string
-	ProgramID            string
+	RecordedID           int
+	ProgramID            int
 	ChannelType          string
-	ChannelID            string
+	ChannelID            int
 	ChannelName          string
 	HalfWidthChannelName string
-	StartAt              int64
-	EndAt                int64
-	Duration             int64
+	StartAt              int
+	EndAt                int
+	Duration             int
 	Name                 string
 	HalfWidthName        string
 	Description          string
@@ -41,17 +40,14 @@ type RecordingDetail struct {
 	ScramblingCount      int
 	StartAtTime          time.Time
 	EndAtTime            time.Time
-	DurationMin          int64
+	DurationMin          int
 }
 
 // RecordingDetailFromEnv env.RecordingCommandEnv を RecordingDetail に変換する
 func RecordingDetailFromEnv(recordingEnv env.RecordingCommandEnv) RecordingDetail {
-	startAt, _ := strconv.ParseInt(recordingEnv.StartAt, 10, 64)
-	startAtTime := time.UnixMilli(startAt)
-	endAt, _ := strconv.ParseInt(recordingEnv.EndAt, 10, 64)
-	endAtTime := time.UnixMilli(endAt)
-	durationMs, _ := strconv.ParseInt(recordingEnv.Duration, 10, 64)
-	durationInSeconds := durationMs / 1000
+	startAtTime := time.UnixMilli(int64(recordingEnv.StartAt))
+	endAtTime := time.UnixMilli(int64(recordingEnv.EndAt))
+	durationInSeconds := recordingEnv.Duration / 1000
 	durationMin := durationInSeconds / 60
 
 	return RecordingDetail{
@@ -61,9 +57,9 @@ func RecordingDetailFromEnv(recordingEnv env.RecordingCommandEnv) RecordingDetai
 		ChannelID:            recordingEnv.ChannelID,
 		ChannelName:          recordingEnv.ChannelName,
 		HalfWidthChannelName: recordingEnv.HalfWidthChannelName,
-		StartAt:              startAt,
-		EndAt:                endAt,
-		Duration:             durationMs,
+		StartAt:              recordingEnv.StartAt,
+		EndAt:                recordingEnv.EndAt,
+		Duration:             recordingEnv.Duration,
 		Name:                 recordingEnv.Name,
 		HalfWidthName:        recordingEnv.HalfWidthName,
 		Description:          recordingEnv.Description,

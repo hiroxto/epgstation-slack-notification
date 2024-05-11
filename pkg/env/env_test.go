@@ -15,14 +15,14 @@ func Test_LoadReserveCommandEnv_デフォルトパラメータで読み込める
 	}
 
 	expected := ReserveCommandEnv{
-		ProgramID:            "None",
+		ProgramID:            0,
 		ChannelType:          "None",
-		ChannelID:            "None",
+		ChannelID:            0,
 		ChannelName:          "None",
 		HalfWidthChannelName: "None",
-		StartAt:              "None",
-		EndAt:                "None",
-		Duration:             "None",
+		StartAt:              0,
+		EndAt:                0,
+		Duration:             0,
 		Name:                 "None",
 		HalfWidthName:        "None",
 		Description:          "None",
@@ -38,14 +38,14 @@ func Test_LoadReserveCommandEnv_デフォルトパラメータで読み込める
 
 func Test_LoadReserveCommandEnv_フルパラメータで読み込める(t *testing.T) {
 	os.Clearenv()
-	os.Setenv("PROGRAMID", "PROGRAMID")
+	os.Setenv("PROGRAMID", "1")
 	os.Setenv("CHANNELTYPE", "CHANNELTYPE")
-	os.Setenv("CHANNELID", "CHANNELID")
+	os.Setenv("CHANNELID", "2")
 	os.Setenv("CHANNELNAME", "CHANNELNAME")
 	os.Setenv("HALF_WIDTH_CHANNELNAME", "HALF_WIDTH_CHANNELNAME")
-	os.Setenv("STARTAT", "STARTAT")
-	os.Setenv("ENDAT", "ENDAT")
-	os.Setenv("DURATION", "DURATION")
+	os.Setenv("STARTAT", "1715353200000")
+	os.Setenv("ENDAT", "1715355000000")
+	os.Setenv("DURATION", "1800000")
 	os.Setenv("NAME", "NAME")
 	os.Setenv("HALF_WIDTH_NAME", "HALF_WIDTH_NAME")
 	os.Setenv("DESCRIPTION", "DESCRIPTION")
@@ -59,14 +59,14 @@ func Test_LoadReserveCommandEnv_フルパラメータで読み込める(t *testi
 	}
 
 	expected := ReserveCommandEnv{
-		ProgramID:            "PROGRAMID",
+		ProgramID:            1,
 		ChannelType:          "CHANNELTYPE",
-		ChannelID:            "CHANNELID",
+		ChannelID:            2,
 		ChannelName:          "CHANNELNAME",
 		HalfWidthChannelName: "HALF_WIDTH_CHANNELNAME",
-		StartAt:              "STARTAT",
-		EndAt:                "ENDAT",
-		Duration:             "DURATION",
+		StartAt:              1715353200000,
+		EndAt:                1715355000000,
+		Duration:             1800000,
 		Name:                 "NAME",
 		HalfWidthName:        "HALF_WIDTH_NAME",
 		Description:          "DESCRIPTION",
@@ -89,15 +89,15 @@ func Test_LoadRecordingCommandEnv_デフォルトパラメータで読み込め�
 	}
 
 	expected := RecordingCommandEnv{
-		RecordedID:           "None",
-		ProgramID:            "None",
+		RecordedID:           0,
+		ProgramID:            0,
 		ChannelType:          "None",
-		ChannelID:            "None",
+		ChannelID:            0,
 		ChannelName:          "None",
 		HalfWidthChannelName: "None",
-		StartAt:              "None",
-		EndAt:                "None",
-		Duration:             "None",
+		StartAt:              0,
+		EndAt:                0,
+		Duration:             0,
 		Name:                 "None",
 		HalfWidthName:        "None",
 		Description:          "None",
@@ -118,15 +118,15 @@ func Test_LoadRecordingCommandEnv_デフォルトパラメータで読み込め�
 
 func Test_LoadRecordingCommandEnv_フルパラメータで読み込める(t *testing.T) {
 	os.Clearenv()
-	os.Setenv("RECORDEDID", "RECORDEDID")
-	os.Setenv("PROGRAMID", "PROGRAMID")
+	os.Setenv("RECORDEDID", "1")
+	os.Setenv("PROGRAMID", "2")
 	os.Setenv("CHANNELTYPE", "CHANNELTYPE")
-	os.Setenv("CHANNELID", "CHANNELID")
+	os.Setenv("CHANNELID", "3")
 	os.Setenv("CHANNELNAME", "CHANNELNAME")
 	os.Setenv("HALF_WIDTH_CHANNELNAME", "HALF_WIDTH_CHANNELNAME")
-	os.Setenv("STARTAT", "STARTAT")
-	os.Setenv("ENDAT", "ENDAT")
-	os.Setenv("DURATION", "DURATION")
+	os.Setenv("STARTAT", "1715353200000")
+	os.Setenv("ENDAT", "1715355000000")
+	os.Setenv("DURATION", "1800000")
 	os.Setenv("NAME", "NAME")
 	os.Setenv("HALF_WIDTH_NAME", "HALF_WIDTH_NAME")
 	os.Setenv("DESCRIPTION", "DESCRIPTION")
@@ -135,9 +135,9 @@ func Test_LoadRecordingCommandEnv_フルパラメータで読み込める(t *tes
 	os.Setenv("HALF_WIDTH_EXTENDED", "HALF_WIDTH_EXTENDED")
 	os.Setenv("RECPATH", "RECPATH")
 	os.Setenv("LOGPATH", "LOGPATH")
-	os.Setenv("ERROR_CNT", "1")
-	os.Setenv("DROP_CNT", "2")
-	os.Setenv("SCRAMBLING_CNT", "3")
+	os.Setenv("ERROR_CNT", "4")
+	os.Setenv("DROP_CNT", "5")
+	os.Setenv("SCRAMBLING_CNT", "6")
 
 	actual, err := LoadRecordingCommandEnv()
 	if err != nil {
@@ -145,15 +145,15 @@ func Test_LoadRecordingCommandEnv_フルパラメータで読み込める(t *tes
 	}
 
 	expected := RecordingCommandEnv{
-		RecordedID:           "RECORDEDID",
-		ProgramID:            "PROGRAMID",
+		RecordedID:           1,
+		ProgramID:            2,
 		ChannelType:          "CHANNELTYPE",
-		ChannelID:            "CHANNELID",
+		ChannelID:            3,
 		ChannelName:          "CHANNELNAME",
 		HalfWidthChannelName: "HALF_WIDTH_CHANNELNAME",
-		StartAt:              "STARTAT",
-		EndAt:                "ENDAT",
-		Duration:             "DURATION",
+		StartAt:              1715353200000,
+		EndAt:                1715355000000,
+		Duration:             1800000,
 		Name:                 "NAME",
 		HalfWidthName:        "HALF_WIDTH_NAME",
 		Description:          "DESCRIPTION",
@@ -162,9 +162,9 @@ func Test_LoadRecordingCommandEnv_フルパラメータで読み込める(t *tes
 		HalfWidthExtended:    "HALF_WIDTH_EXTENDED",
 		RecPath:              "RECPATH",
 		LogPath:              "LOGPATH",
-		ErrorCnt:             1,
-		DropCnt:              2,
-		ScramblingCount:      3,
+		ErrorCnt:             4,
+		DropCnt:              5,
+		ScramblingCount:      6,
 	}
 
 	if !reflect.DeepEqual(expected, actual) {
@@ -181,11 +181,11 @@ func Test_LoadEncodingCommandEnv_デフォルトパラメータで読み込め�
 	}
 
 	expected := EncodingCommandEnv{
-		RecordedID:           "None",
-		VideoFileID:          "None",
+		RecordedID:           0,
+		VideoFileID:          0,
 		OutputPath:           "None",
 		Mode:                 "None",
-		ChannelID:            "None",
+		ChannelID:            0,
 		ChannelName:          "None",
 		HalfWidthChannelName: "None",
 		Name:                 "None",
@@ -203,11 +203,11 @@ func Test_LoadEncodingCommandEnv_デフォルトパラメータで読み込め�
 
 func Test_LoadEncodingCommandEnv_フルパラメータで読み込める(t *testing.T) {
 	os.Clearenv()
-	os.Setenv("RECORDEDID", "RECORDEDID")
-	os.Setenv("VIDEOFILEID", "VIDEOFILEID")
+	os.Setenv("RECORDEDID", "1")
+	os.Setenv("VIDEOFILEID", "2")
 	os.Setenv("OUTPUTPATH", "OUTPUTPATH")
 	os.Setenv("MODE", "MODE")
-	os.Setenv("CHANNELID", "CHANNELID")
+	os.Setenv("CHANNELID", "3")
 	os.Setenv("CHANNELNAME", "CHANNELNAME")
 	os.Setenv("HALF_WIDTH_CHANNELNAME", "HALF_WIDTH_CHANNELNAME")
 	os.Setenv("NAME", "NAME")
@@ -223,11 +223,11 @@ func Test_LoadEncodingCommandEnv_フルパラメータで読み込める(t *test
 	}
 
 	expected := EncodingCommandEnv{
-		RecordedID:           "RECORDEDID",
-		VideoFileID:          "VIDEOFILEID",
+		RecordedID:           1,
+		VideoFileID:          2,
 		OutputPath:           "OUTPUTPATH",
 		Mode:                 "MODE",
-		ChannelID:            "CHANNELID",
+		ChannelID:            3,
 		ChannelName:          "CHANNELNAME",
 		HalfWidthChannelName: "HALF_WIDTH_CHANNELNAME",
 		Name:                 "NAME",
