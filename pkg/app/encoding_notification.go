@@ -4,7 +4,7 @@ import (
 	"github.com/hiroxto/epgstation-slack-notification/pkg/env"
 )
 
-// EncodingUseCaseParam EncodingFinishNotificationUseCaseのパラメータ
+// EncodingUseCaseParam EncodingUseCaseのパラメータ
 type EncodingUseCaseParam struct {
 	EnableDebug    bool
 	SlackAPIKey    string
@@ -14,7 +14,7 @@ type EncodingUseCaseParam struct {
 	EncodingDetail EncodingDetail
 }
 
-// EncodingFinishDetail エンコーディング情報
+// EncodingDetail エンコーディング情報
 type EncodingDetail struct {
 	RecordedID           int
 	VideoFileID          int
@@ -31,7 +31,7 @@ type EncodingDetail struct {
 	HalfWidthExtended    string
 }
 
-// EncodingDetailFromEnv env.EncodingCommandEnv を EncodingFinishDetail に変換する
+// EncodingDetailFromEnv env.EncodingCommandEnv を EncodingDetail に変換する
 func EncodingDetailFromEnv(encodingEnv env.EncodingCommandEnv) EncodingDetail {
 	return EncodingDetail{
 		RecordedID:           encodingEnv.RecordedID,
@@ -50,7 +50,7 @@ func EncodingDetailFromEnv(encodingEnv env.EncodingCommandEnv) EncodingDetail {
 	}
 }
 
-// EncodingUseCase エンコーディング関連を通知する
+// EncodingNotificationUseCase エンコーディング関連を通知する
 func EncodingNotificationUseCase(param EncodingUseCaseParam) error {
 	slackClient, err := createSlackClient(param.SlackAPIKey, param.EnableDebug)
 	if err != nil {
