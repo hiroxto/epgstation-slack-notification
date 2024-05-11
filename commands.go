@@ -12,7 +12,7 @@ var commands = []*cli.Command{
 	command.ReserveUpdateCommand,
 	command.ReserveDeletedCommand,
 	command.RecordingPreStartCommand,
-	commandRecordingPrepRecFailed,
+	command.RecordingPrepRecFailedCommand,
 
 	commandRecordingStart,
 	commandRecordingFinish,
