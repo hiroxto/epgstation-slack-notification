@@ -7,32 +7,32 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// CommandDumpEnvs dump-envsコマンド
-var CommandDumpEnvs = &cli.Command{
+// DumpEnvsCommand dump-envsコマンド
+var DumpEnvsCommand = &cli.Command{
 	Name:  "dump-envs",
 	Usage: "環境変数を出力するデバッグ用コマンド",
 	Description: `
    環境変数を出力するデバッグ用コマンド
 `,
-	Action: commandDumpEnvsAction,
+	Action: dumpEnvsCommandAction,
 	Flags: []cli.Flag{
 		&cli.StringSliceFlag{
 			Name:  "only",
-			Value: cli.NewStringSlice(commandDumpEnvsValidOnlyValues...),
+			Value: cli.NewStringSlice(dumpEnvsCommandValidOnlyValues...),
 		},
 	},
 }
 
-var commandDumpEnvsValidOnlyValues = []string{"reserve", "recording", "encoding"}
+var dumpEnvsCommandValidOnlyValues = []string{"reserve", "recording", "encoding"}
 
-func commandDumpEnvsAction(context *cli.Context) error {
+func dumpEnvsCommandAction(context *cli.Context) error {
 	onlyValues := context.StringSlice("only")
 
 	// onlyオプションのチェック
 	invalidOnlyOptions := []string{}
 	for _, onlyValue := range onlyValues {
 		found := false
-		for _, allowedOnlyValue := range commandDumpEnvsValidOnlyValues {
+		for _, allowedOnlyValue := range dumpEnvsCommandValidOnlyValues {
 			if onlyValue == allowedOnlyValue {
 				found = true
 				break
