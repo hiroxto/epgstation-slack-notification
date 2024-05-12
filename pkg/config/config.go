@@ -1,7 +1,7 @@
 package config
 
 import (
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 // Config アプリの設定
@@ -53,7 +53,7 @@ type FieldConfig struct {
 func LoadConfigFromYaml(configYaml []byte) (Config, error) {
 	var config Config
 
-	err := yaml.UnmarshalStrict(configYaml, &config)
+	err := yaml.Unmarshal(configYaml, &config)
 	if err != nil {
 		return config, err
 	}
