@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker run --rm -it -v "$PWD":/_ -w /_ golang:1.20 bash -c '
+docker run --rm -it -v "$PWD":/_ -w /_ golang:1-alpine sh -c '
     go get -d ./...
 
     dirname="dist"
