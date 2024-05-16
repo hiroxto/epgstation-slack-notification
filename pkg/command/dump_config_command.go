@@ -14,6 +14,12 @@ var DumpConfigCommand = &cli.Command{
    設定を出力するデバッグ用コマンド
 `,
 	Action: dumpConfigCommandAction,
+	Flags: []cli.Flag{
+		&cli.BoolFlag{
+			Name:  "color",
+			Value: false,
+		},
+	},
 }
 
 func dumpConfigCommandAction(context *cli.Context) error {
@@ -28,6 +34,7 @@ func dumpConfigCommandAction(context *cli.Context) error {
 		return err
 	}
 
+	pp.Default.SetColoringEnabled(context.Bool("color"))
 	pp.Println(config)
 
 	return nil
