@@ -24,6 +24,10 @@ var DumpEnvCommand = &cli.Command{
 			Name:  "only",
 			Value: cli.NewStringSlice(dumpEnvCommandValidOnlyValues...),
 		},
+		&cli.BoolFlag{
+			Name:  "color",
+			Value: false,
+		},
 	},
 }
 
@@ -51,6 +55,7 @@ func dumpEnvCommandAction(context *cli.Context) error {
 		return fmt.Errorf("invalid only options : %v", invalidOnlyOptions)
 	}
 
+	pp.Default.SetColoringEnabled(context.Bool("color"))
 	for _, onlyValue := range onlyValues {
 		switch onlyValue {
 		case "reserve":
