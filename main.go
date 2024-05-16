@@ -53,8 +53,8 @@ func newCliApp() (*cli.App, error) {
 			Aliases: []string{
 				"c",
 			},
-			Usage:       "設定ファイルのパスを指定。",
-			DefaultText: defaultConfigFilePath,
+			Usage: "設定ファイルのパスを指定。",
+			Value: defaultConfigFilePath,
 		},
 	}
 
