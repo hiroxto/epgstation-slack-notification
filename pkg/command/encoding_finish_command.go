@@ -20,11 +20,7 @@ var EncodingFinishCommand = &cli.Command{
 }
 
 func encodingFinishCommandAction(context *cli.Context) error {
-	configFilePath, err := getConfigFilePath()
-	if err != nil {
-		return err
-	}
-
+	configFilePath := getConfigFilePath(context)
 	configData, err := readConfigFile(configFilePath)
 	if err != nil {
 		return err

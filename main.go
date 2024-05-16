@@ -3,15 +3,23 @@ package main
 import (
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/hiroxto/epgstation-slack-notification/pkg/command"
 	"github.com/urfave/cli/v2"
 )
 
-func main() {
-	app := newCliApp()
-	err := app.Run(os.Args)
+// DefaultConfigFileName デフォルトの設定ファイル名
+const DefaultConfigFileName = "epgstation-slack-config.yml"
 
+func main() {
+	app, err := newCliApp()
+	if err != nil {
+		log.Println(err)
+		os.Exit(1)
+	}
+
+	err = app.Run(os.Args)
 	if err != nil {
 		log.Println(err)
 
@@ -24,7 +32,14 @@ func main() {
 	}
 }
 
-func newCliApp() *cli.App {
+func newCliApp() (*cli.App, error) {
+	// 同一ディレクトリにあるファイルを指定
+	exeFilePath, err := os.Executable()
+	if err != nil {
+		return nil, err
+	}
+	defaultConfigFilePath := filepath.Join(filepath.Dir(exeFilePath), DefaultConfigFileName)
+
 	app := cli.NewApp()
 	app.Name = "epgstation-slack-notification"
 	app.Usage = "EPGStationの通知をSlackに送るコマンドラインツール"
@@ -33,9 +48,17 @@ func newCliApp() *cli.App {
 	app.Commands = commands
 	app.Flags = []cli.Flag{
 		&cli.BoolFlag{Name: "debug", Usage: "デバッグモードを有効化"},
+		&cli.StringFlag{
+			Name: "config",
+			Aliases: []string{
+				"c",
+			},
+			Usage: "設定ファイルのパスを指定。",
+			Value: defaultConfigFilePath,
+		},
 	}
 
-	return app
+	return app, nil
 }
 
 var commands = []*cli.Command{
