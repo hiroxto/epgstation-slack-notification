@@ -30,3 +30,9 @@ jobs:
 
       - name: go test
         run: go test -v ${{ matrix.package }}
+
+      - name: gofmt
+        run: gofmt -e -l -w ${{ matrix.package }}
+
+      - name: Check diff
+        run: git diff --exit-code
