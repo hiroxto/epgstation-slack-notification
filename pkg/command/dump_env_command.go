@@ -10,10 +10,7 @@ import (
 
 // DumpEnvCommand dump:env コマンド
 var DumpEnvCommand = &cli.Command{
-	Name: "dump:env",
-	Aliases: []string{
-		"dump-envs", // そのうち消す
-	},
+	Name:  "dump:env",
 	Usage: "環境変数を出力するデバッグ用コマンド",
 	Description: `
    環境変数を出力するデバッグ用コマンド
