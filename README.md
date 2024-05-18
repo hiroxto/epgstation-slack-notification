@@ -106,7 +106,9 @@ $ pm2 restart epgstation
 - `EncodingDetail` を使うコマンド
   - `encoding-finish`
 
-データの構造は基本的に [EPGStation のドキュメント通り](https://github.com/l3tnun/EPGStation/blob/master/doc/conf-manual.md#%E5%A4%96%E9%83%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E5%AE%9F%E8%A1%8C)の値となり，一部独自の値を持っている。
+データは基本的に [EPGStation のドキュメント通りの環境変数](https://github.com/l3tnun/EPGStation/blob/master/doc/conf-manual.md#%E5%A4%96%E9%83%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E5%AE%9F%E8%A1%8C)の値が入る。
+
+EPGStation から渡される環境変数に加えて一部独自の値も持っている。
 - `StartAtTime`
   - 環境変数 `STARTAT` を `time.Time` 型に変換した値
 - `EndAtTime`
