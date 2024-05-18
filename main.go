@@ -75,5 +75,6 @@ var commands = []*cli.Command{
 	command.EncodingFinishCommand,
 
 	command.DumpConfigCommand,
+	command.DumpDetailCommand,
 	command.DumpEnvCommand,
 }
