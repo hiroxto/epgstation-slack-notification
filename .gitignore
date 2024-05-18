@@ -19,3 +19,5 @@
 epgstation-slack-config.yml
 *.log
 /epgstation-slack-notification
+
+.idea
