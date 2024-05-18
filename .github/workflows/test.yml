@@ -10,6 +10,12 @@ jobs:
       matrix:
         go-version:
           - 1.x
+        package:
+          - .
+          - ./pkg/app
+          - ./pkg/command
+          - ./pkg/config
+          - ./pkg/env
 
     steps:
       -   uses: actions/checkout@v4
@@ -20,16 +26,7 @@ jobs:
           go-version: ${{ matrix.go-version }}
 
       - name: go vet
-        run: go vet
+        run: go vet ${{ matrix.package }}
 
-      - name: test app
-        run: go test ./pkg/app/ -v
-
-      - name: test command
-        run: go test ./pkg/command/ -v
-
-      - name: test config
-        run: go test ./pkg/config/ -v
-
-      - name: test env
-        run: go test ./pkg/env/ -v
+      - name: go test
+        run: go test -v ${{ matrix.package }}
