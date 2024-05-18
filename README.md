@@ -86,6 +86,34 @@ EPGStation v1 を使っている場合は`config/config.json`にコマンドを�
 $ pm2 restart epgstation
 ```
 
+## 通知内容のカスタマイズ
+
+通知設定の `message` と `template` は Go の text/template を使って任意の内容を出力できる。
+
+テンプレートに渡されるデータの構造と中身は `dump:detail` コマンドを使って確認可能。
+
+渡されるデータはコマンド毎に分かれていて以下のように使い分けされる。
+- `ReserveDetail` を使うコマンド
+  - `reserve-new-addition`
+  - `reserve-update`
+  - `reserve-deleted`
+  - `recording-pre-start`
+  - `recording-prep-rec-failed`
+- `RecordingDetail` を使うコマンド
+  - `recording-start`
+  - `recording-finish`
+  - `recording-failed`
+- `EncodingDetail` を使うコマンド
+  - `encoding-finish`
+
+データの構造は基本的に [EPGStation のドキュメント通り](https://github.com/l3tnun/EPGStation/blob/master/doc/conf-manual.md#%E5%A4%96%E9%83%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E5%AE%9F%E8%A1%8C)の値となり，一部独自の値を持っている。
+- `StartAtTime`
+  - 環境変数 `STARTAT` を `time.Time` 型に変換した値
+- `EndAtTime`
+  - 環境変数 `ENDAT` を `time.Time` 型に変換した値
+- `DurationMin`
+  - 環境変数 `DURATION` を分単位の `int64` 型に変換した値
+
 ## Licence
 
 [MIT Licence](https://raw.githubusercontent.com/hiroxto/epgstation-slack-notification/master/LICENSE)
