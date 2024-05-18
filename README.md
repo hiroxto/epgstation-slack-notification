@@ -114,6 +114,14 @@ $ pm2 restart epgstation
 - `DurationMin`
   - 環境変数 `DURATION` を分単位の `int64` 型に変換した値
 
+## 設定の確認
+
+設定内容を確認する時は `dump:config` コマンドを利用する。
+
+## 環境変数の確認
+
+環境変数の内容を確認する時は `dump:env` コマンドを利用する。
+
 ## Licence
 
 [MIT Licence](https://raw.githubusercontent.com/hiroxto/epgstation-slack-notification/master/LICENSE)
