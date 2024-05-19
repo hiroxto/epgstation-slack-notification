@@ -4,6 +4,27 @@
 
 EPGStation の通知を Slack に送るコマンドラインツール
 
+<details>
+<summary>スクリーンショット</summary>
+
+### 録画予約新規追加
+
+![reserveNewAddtionCommand](https://github.com/hiroxto/epgstation-slack-notification/assets/12016555/5969a57f-b1ff-4543-a605-4427f8942832)
+
+### 録画準備開始
+
+![recordingPreStartCommand](https://github.com/hiroxto/epgstation-slack-notification/assets/12016555/13752950-4afa-4aea-b0f9-53fd570b903f)
+
+### 録画開始
+
+![recordingStartCommand](https://github.com/hiroxto/epgstation-slack-notification/assets/12016555/dd771fe7-137d-4a21-bde2-5d641d51c9ad)
+
+### エンコード終了
+
+![encodingFinishCommand](https://github.com/hiroxto/epgstation-slack-notification/assets/12016555/0e7a9677-2ee9-401e-99a6-bee6c4f22985)
+
+</details>
+
 ## ダウンロード
 
 [Releases](https://github.com/hiroxto/epgstation-slack-notification/releases) から OS とアーキテクチャに合ったバイナリをダウンロード。
