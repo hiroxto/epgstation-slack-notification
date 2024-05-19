@@ -43,7 +43,7 @@ func newCliApp() (*cli.App, error) {
 	app := cli.NewApp()
 	app.Name = "epgstation-slack-notification"
 	app.Usage = "EPGStationの通知をSlackに送るコマンドラインツール"
-	app.Version = "2.2.0"
+	app.Version = "2.2.1"
 	app.Copyright = "(c) 2020 Hiroto Kitazawa"
 	app.Commands = commands
 	app.Flags = []cli.Flag{
