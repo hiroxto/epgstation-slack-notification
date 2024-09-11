@@ -51,6 +51,7 @@ func encodingFinishCommandAction(context *cli.Context) error {
 		EnableDebug:    context.Bool("debug"),
 		SlackAPIKey:    slackAPIKey,
 		SlackChannel:   slackChannel,
+		UserName:       commandConfig.UserName,
 		Message:        commandConfig.Message,
 		Fields:         app.FieldsFromConfig(commandConfig.FieldsSection),
 		EncodingDetail: app.EncodingDetailFromEnv(encodingCommandEnv),
