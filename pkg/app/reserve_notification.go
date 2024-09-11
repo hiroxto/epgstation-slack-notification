@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/slack-go/slack"
 	"strconv"
 	"time"
 
@@ -12,6 +13,7 @@ type ReserveUseCaseParam struct {
 	EnableDebug   bool
 	SlackAPIKey   string
 	SlackChannel  string
+	UserName      string
 	Message       string
 	Fields        []Field
 	ReserveDetail ReserveDetail
@@ -86,8 +88,9 @@ func ReserveNotificationUseCase(param ReserveUseCaseParam) error {
 		return err
 	}
 
-	options := buildMessageOptions(message, fields)
-	_, _, err = slackClient.PostMessage(param.SlackChannel, options)
+	messageOptions := buildMessageOptions(message, fields)
+	userNameOption := slack.MsgOptionUsername(param.UserName)
+	_, _, err = slackClient.PostMessage(param.SlackChannel, messageOptions, userNameOption)
 
 	if err != nil {
 		return err

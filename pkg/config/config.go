@@ -39,6 +39,7 @@ type CommandsConfig struct {
 type CommandConfig struct {
 	Enable        bool          `yaml:"enable"`
 	Channel       string        `yaml:"channel"`
+	UserName      string        `yaml:"userName"`
 	Message       string        `yaml:"message"`
 	FieldsSection []FieldConfig `yaml:"fields-section"`
 }

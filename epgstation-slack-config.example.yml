@@ -18,6 +18,10 @@ commands:
     # EPGStation の config/config.yml にコマンドの設定はしてあるけど通知を無効化したいときなどは false にする
     enable: true
 
+    # Slack の Bot のユーザー名
+    # chat:write.customize の権限が与えられている場合のみ変更される
+    userName: "録画予約新規追加通知"
+
     # Slack で使用されるメッセージ
     # Box Kit のヘッダーセクションで使われ, 通知の際はこのメッセージが表示される
     # 絵文字も使える
@@ -55,25 +59,30 @@ commands:
   reserve-update:
     <<: *pre-command-default
     enable: true
+    userName: "録画情報更新通知"
     message: ":up: {{ .ChannelName }} で {{ .Name }} の録画情報が更新されました"
 
   reserve-deleted:
     <<: *pre-command-default
     enable: true
+    userName: "録画予約削除通知"
     message: ":black_square_for_stop: {{ .ChannelName }} で {{ .Name }} の録画予約が削除されました"
 
   recording-pre-start:
     <<: *pre-command-default
     enable: true
+    userName: "録画準備開始通知"
     message: ":soon: {{ .ChannelName }} で {{ .Name }} の録画準備が開始しました"
 
   recording-prep-rec-failed:
     <<: *pre-command-default
     enable: true
+    userName: "録画準備失敗通知"
     message: ":x: {{ .ChannelName }} で {{ .Name }} の録画準備に失敗しました"
 
   recording-start: &rec-command-default
     enable: true
+    userName: "録画開始通知"
     # struct の内容は /pkg/app/recording_notification.go の RecordingDetail を参照
     message: ":arrow_forward: {{ .ChannelName }} で {{ .Name }} の録画が開始しました"
     fields-section:
@@ -103,6 +112,7 @@ commands:
 
   recording-finish:
     enable: true
+    userName: "録画終了通知"
     message: ":white_check_mark: {{ .ChannelName }} で {{ .Name }} の録画が終了しました"
     fields-section:
       - title: "RecordedID, ProgramID"
@@ -135,10 +145,12 @@ commands:
   recording-failed:
     <<: *rec-command-default
     enable: true
+    userName: "録画エラー通知"
     message: ":x: {{ .ChannelName }} で {{ .Name }} の録画中にエラーが発生しました"
 
   encoding-finish:
     enable: true
+    userName: "エンコード終了通知"
     # struct の内容は /pkg/app/encoding_notification.go の EncodingDetail を参照
     message: ":white_check_mark: {{ .HalfWidthChannelName }} の {{ .HalfWidthName }} のエンコードが終了しました"
     fields-section:

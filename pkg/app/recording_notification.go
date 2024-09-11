@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/slack-go/slack"
 	"strconv"
 	"time"
 
@@ -12,6 +13,7 @@ type RecordingUseCaseParam struct {
 	EnableDebug     bool
 	SlackAPIKey     string
 	SlackChannel    string
+	UserName        string
 	Message         string
 	Fields          []Field
 	RecordingDetail RecordingDetail
@@ -98,8 +100,9 @@ func RecordingNotificationUseCase(param RecordingUseCaseParam) error {
 		return err
 	}
 
-	options := buildMessageOptions(message, fields)
-	_, _, err = slackClient.PostMessage(param.SlackChannel, options)
+	messageOptions := buildMessageOptions(message, fields)
+	userNameOption := slack.MsgOptionUsername(param.UserName)
+	_, _, err = slackClient.PostMessage(param.SlackChannel, messageOptions, userNameOption)
 
 	if err != nil {
 		return err
