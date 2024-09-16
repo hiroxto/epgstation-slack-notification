@@ -70,7 +70,7 @@ func buildCommandFields(fieldsConfigs []Field, env interface{}) ([]*slack.TextBl
 		}
 
 		text := fmt.Sprintf("*%s*\n%s", fieldsConfig.Title, content)
-		fields = append(fields, slack.NewTextBlockObject("mrkdwn", text, false, false))
+		fields = append(fields, slack.NewTextBlockObject(slack.MarkdownType, text, false, false))
 	}
 
 	return fields, nil
@@ -90,7 +90,7 @@ func buildMessageOptions(message string, fields []*slack.TextBlockObject) slack.
 
 // createHeaderSection header部分を作成する
 func createHeaderSection(text string) *slack.SectionBlock {
-	headerText := slack.NewTextBlockObject("mrkdwn", text, false, false)
+	headerText := slack.NewTextBlockObject(slack.MarkdownType, text, false, false)
 
 	return slack.NewSectionBlock(headerText, nil, nil)
 }
