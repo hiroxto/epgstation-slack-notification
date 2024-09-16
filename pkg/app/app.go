@@ -43,7 +43,7 @@ func createSlackClient(apiKey string, debug bool) (*slack.Client, error) {
 }
 
 // formatContent テンプレートをフォーマットする
-func formatContent(name string, userTemplate string, env interface{}) (string, error) {
+func formatContent(name string, userTemplate string, detail interface{}) (string, error) {
 	var messageBuffer bytes.Buffer
 	t, err := template.New(name).Parse(userTemplate)
 
@@ -51,7 +51,7 @@ func formatContent(name string, userTemplate string, env interface{}) (string, e
 		return messageBuffer.String(), err
 	}
 
-	if err := t.Execute(&messageBuffer, env); err != nil {
+	if err := t.Execute(&messageBuffer, detail); err != nil {
 		return messageBuffer.String(), err
 	}
 
@@ -59,11 +59,11 @@ func formatContent(name string, userTemplate string, env interface{}) (string, e
 }
 
 // buildCommandFields テンプレートをフォーマットしたフィールドのリストを作る
-func buildCommandFields(fieldsConfigs []Field, env interface{}) ([]*slack.TextBlockObject, error) {
+func buildCommandFields(fieldsConfigs []Field, detail interface{}) ([]*slack.TextBlockObject, error) {
 	var fields []*slack.TextBlockObject
 
 	for _, fieldsConfig := range fieldsConfigs {
-		content, err := formatContent("", fieldsConfig.Template, env)
+		content, err := formatContent("", fieldsConfig.Template, detail)
 
 		if err != nil {
 			return nil, err
