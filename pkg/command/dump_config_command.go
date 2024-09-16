@@ -29,13 +29,13 @@ func dumpConfigCommandAction(context *cli.Context) error {
 		return err
 	}
 
-	config, err := config.LoadConfigFromYaml([]byte(configData))
+	conf, err := config.LoadConfigFromYaml([]byte(configData))
 	if err != nil {
 		return err
 	}
 
 	pp.Default.SetColoringEnabled(context.Bool("color"))
-	pp.Println(config)
+	pp.Println(conf)
 
 	return nil
 }

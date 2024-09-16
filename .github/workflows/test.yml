@@ -18,7 +18,31 @@ jobs:
           - ./pkg/env
 
     steps:
-      -   uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+
+      - name: Use Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: go test
+        run: go test -v ${{ matrix.package }}
+
+  vet:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version:
+          - 1.x
+        package:
+          - .
+          - ./pkg/app
+          - ./pkg/command
+          - ./pkg/config
+          - ./pkg/env
+
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Use Go ${{ matrix.go-version }}
         uses: actions/setup-go@v5
@@ -28,8 +52,26 @@ jobs:
       - name: go vet
         run: go vet ${{ matrix.package }}
 
-      - name: go test
-        run: go test -v ${{ matrix.package }}
+  gofmt:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version:
+          - 1.x
+        package:
+          - .
+          - ./pkg/app
+          - ./pkg/command
+          - ./pkg/config
+          - ./pkg/env
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
 
       - name: gofmt
         run: gofmt -e -l -w ${{ matrix.package }}

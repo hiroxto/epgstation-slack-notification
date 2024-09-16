@@ -52,12 +52,12 @@ type FieldConfig struct {
 
 // LoadConfigFromYaml YAMLから設定を読み込む
 func LoadConfigFromYaml(configYaml []byte) (Config, error) {
-	var config Config
+	var conf Config
 
-	err := yaml.Unmarshal(configYaml, &config)
+	err := yaml.Unmarshal(configYaml, &conf)
 	if err != nil {
-		return config, err
+		return conf, err
 	}
 
-	return config, nil
+	return conf, nil
 }

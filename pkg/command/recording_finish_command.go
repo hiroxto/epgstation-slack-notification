@@ -27,18 +27,18 @@ func recordingFinishCommandAction(context *cli.Context) error {
 		return err
 	}
 
-	config, err := config.LoadConfigFromYaml([]byte(configData))
+	conf, err := config.LoadConfigFromYaml([]byte(configData))
 	if err != nil {
 		return err
 	}
 
-	commandConfig := config.Commands.RecordingFinish
+	commandConfig := conf.Commands.RecordingFinish
 	if !commandConfig.Enable {
 		fmt.Printf("%s command is disabled.\n", context.Command.Name)
 		return nil
 	}
-	slackAPIKey := config.Slack.APIKey
-	slackChannel := config.Slack.Channel
+	slackAPIKey := conf.Slack.APIKey
+	slackChannel := conf.Slack.Channel
 	if len(commandConfig.Channel) > 0 {
 		slackChannel = commandConfig.Channel
 	}

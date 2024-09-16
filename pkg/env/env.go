@@ -65,33 +65,33 @@ type EncodingCommandEnv struct {
 
 // LoadReserveCommandEnv 予約コマンドと録画準備コマンドで渡される環境変数を読み込む
 func LoadReserveCommandEnv() (ReserveCommandEnv, error) {
-	var env ReserveCommandEnv
+	var reserveEnv ReserveCommandEnv
 
-	if err := envconfig.Process("", &env); err != nil {
-		return env, err
+	if err := envconfig.Process("", &reserveEnv); err != nil {
+		return reserveEnv, err
 	}
 
-	return env, nil
+	return reserveEnv, nil
 }
 
 // LoadRecordingCommandEnv 録画コマンドで渡される環境変数を読み込む
 func LoadRecordingCommandEnv() (RecordingCommandEnv, error) {
-	var env RecordingCommandEnv
+	var recordingEnv RecordingCommandEnv
 
-	if err := envconfig.Process("", &env); err != nil {
-		return env, err
+	if err := envconfig.Process("", &recordingEnv); err != nil {
+		return recordingEnv, err
 	}
 
-	return env, nil
+	return recordingEnv, nil
 }
 
 // LoadEncodingCommandEnv エンコードコマンドで渡される環境変数を読み込む
 func LoadEncodingCommandEnv() (EncodingCommandEnv, error) {
-	var env EncodingCommandEnv
+	var encodingEnv EncodingCommandEnv
 
-	if err := envconfig.Process("", &env); err != nil {
-		return env, err
+	if err := envconfig.Process("", &encodingEnv); err != nil {
+		return encodingEnv, err
 	}
 
-	return env, nil
+	return encodingEnv, nil
 }

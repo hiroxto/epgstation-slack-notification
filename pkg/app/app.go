@@ -19,7 +19,8 @@ type Field struct {
 
 // FieldsFromConfig config.FieldConfigをFieldに変換する
 func FieldsFromConfig(fieldConfigs []config.FieldConfig) []Field {
-	fields := []Field{}
+	var fields []Field
+
 	for _, fieldConfig := range fieldConfigs {
 		fields = append(fields, Field{
 			Title:    fieldConfig.Title,
@@ -42,7 +43,7 @@ func createSlackClient(apiKey string, debug bool) (*slack.Client, error) {
 }
 
 // formatContent テンプレートをフォーマットする
-func formatContent(name string, userTemplate string, env interface{}) (string, error) {
+func formatContent(name string, userTemplate string, detail interface{}) (string, error) {
 	var messageBuffer bytes.Buffer
 	t, err := template.New(name).Parse(userTemplate)
 
@@ -50,7 +51,7 @@ func formatContent(name string, userTemplate string, env interface{}) (string, e
 		return messageBuffer.String(), err
 	}
 
-	if err := t.Execute(&messageBuffer, env); err != nil {
+	if err := t.Execute(&messageBuffer, detail); err != nil {
 		return messageBuffer.String(), err
 	}
 
@@ -58,18 +59,18 @@ func formatContent(name string, userTemplate string, env interface{}) (string, e
 }
 
 // buildCommandFields テンプレートをフォーマットしたフィールドのリストを作る
-func buildCommandFields(fieldsConfigs []Field, env interface{}) ([]*slack.TextBlockObject, error) {
+func buildCommandFields(fieldsConfigs []Field, detail interface{}) ([]*slack.TextBlockObject, error) {
 	var fields []*slack.TextBlockObject
 
 	for _, fieldsConfig := range fieldsConfigs {
-		content, err := formatContent("", fieldsConfig.Template, env)
+		content, err := formatContent("", fieldsConfig.Template, detail)
 
 		if err != nil {
 			return nil, err
 		}
 
 		text := fmt.Sprintf("*%s*\n%s", fieldsConfig.Title, content)
-		fields = append(fields, slack.NewTextBlockObject("mrkdwn", text, false, false))
+		fields = append(fields, slack.NewTextBlockObject(slack.MarkdownType, text, false, false))
 	}
 
 	return fields, nil
@@ -89,7 +90,7 @@ func buildMessageOptions(message string, fields []*slack.TextBlockObject) slack.
 
 // createHeaderSection header部分を作成する
 func createHeaderSection(text string) *slack.SectionBlock {
-	headerText := slack.NewTextBlockObject("mrkdwn", text, false, false)
+	headerText := slack.NewTextBlockObject(slack.MarkdownType, text, false, false)
 
 	return slack.NewSectionBlock(headerText, nil, nil)
 }
