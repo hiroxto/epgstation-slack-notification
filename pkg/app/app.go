@@ -19,7 +19,8 @@ type Field struct {
 
 // FieldsFromConfig config.FieldConfigをFieldに変換する
 func FieldsFromConfig(fieldConfigs []config.FieldConfig) []Field {
-	fields := []Field{}
+	var fields []Field
+
 	for _, fieldConfig := range fieldConfigs {
 		fields = append(fields, Field{
 			Title:    fieldConfig.Title,
