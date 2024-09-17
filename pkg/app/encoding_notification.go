@@ -54,10 +54,7 @@ func EncodingDetailFromEnv(encodingEnv env.EncodingCommandEnv) EncodingDetail {
 
 // EncodingNotificationUseCase エンコーディング関連を通知する
 func EncodingNotificationUseCase(param EncodingUseCaseParam) error {
-	slackClient, err := createSlackClient(param.SlackAPIKey, param.EnableDebug)
-	if err != nil {
-		return err
-	}
+	slackClient := createSlackClient(param.SlackAPIKey, param.EnableDebug)
 
 	message, err := formatContent("", param.Message, param.EncodingDetail)
 	if err != nil {
