@@ -85,10 +85,7 @@ func RecordingDetailFromEnv(recordingEnv env.RecordingCommandEnv) RecordingDetai
 
 // RecordingNotificationUseCase 予約関連を通知する
 func RecordingNotificationUseCase(param RecordingUseCaseParam) error {
-	slackClient, err := createSlackClient(param.SlackAPIKey, param.EnableDebug)
-	if err != nil {
-		return err
-	}
+	slackClient := createSlackClient(param.SlackAPIKey, param.EnableDebug)
 
 	message, err := formatContent("", param.Message, param.RecordingDetail)
 	if err != nil {

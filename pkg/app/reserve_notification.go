@@ -73,10 +73,7 @@ func ReserveDetailFromEnv(reserveEnv env.ReserveCommandEnv) ReserveDetail {
 
 // ReserveNotificationUseCase 予約関連を通知する
 func ReserveNotificationUseCase(param ReserveUseCaseParam) error {
-	slackClient, err := createSlackClient(param.SlackAPIKey, param.EnableDebug)
-	if err != nil {
-		return err
-	}
+	slackClient := createSlackClient(param.SlackAPIKey, param.EnableDebug)
 
 	message, err := formatContent("", param.Message, param.ReserveDetail)
 	if err != nil {

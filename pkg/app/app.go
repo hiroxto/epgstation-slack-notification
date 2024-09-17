@@ -32,10 +32,8 @@ func FieldsFromConfig(fieldConfigs []config.FieldConfig) []Field {
 }
 
 // createSlackClient Slackクライアントを作成する
-func createSlackClient(apiKey string, debug bool) (*slack.Client, error) {
-	api := slack.New(apiKey, slack.OptionDebug(debug), slack.OptionLog(log.New(os.Stdout, "slack-bot: ", log.Lshortfile|log.LstdFlags)))
-
-	return api, nil
+func createSlackClient(apiKey string, debug bool) *slack.Client {
+	return slack.New(apiKey, slack.OptionDebug(debug), slack.OptionLog(log.New(os.Stdout, "slack-bot: ", log.Lshortfile|log.LstdFlags)))
 }
 
 // formatContent テンプレートをフォーマットする
