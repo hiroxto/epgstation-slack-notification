@@ -16,6 +16,7 @@ jobs:
           - ./pkg/command
           - ./pkg/config
           - ./pkg/env
+          - ./pkg/service
 
     steps:
       - uses: actions/checkout@v4
@@ -40,6 +41,7 @@ jobs:
           - ./pkg/command
           - ./pkg/config
           - ./pkg/env
+          - ./pkg/service
 
     steps:
       - uses: actions/checkout@v4
@@ -64,6 +66,7 @@ jobs:
           - ./pkg/command
           - ./pkg/config
           - ./pkg/env
+          - ./pkg/service
 
     steps:
       - uses: actions/checkout@v4
