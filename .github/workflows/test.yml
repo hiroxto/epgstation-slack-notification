@@ -4,8 +4,36 @@ on:
   pull_request:
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version:
+          - 1.x
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Cache Go modules
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-${{ matrix.go-version }}-
+
+      - name: Install dependencies
+        run: go mod vendor
+
   test:
     runs-on: ubuntu-latest
+    needs:
+      - prepare
     strategy:
       matrix:
         go-version:
@@ -25,12 +53,20 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
+
+      - name: Restore Go modules cache
+        uses: actions/cache/restore@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('**/go.sum') }}
 
       - name: go test
         run: go test -v ${{ matrix.package }}
 
   vet:
     runs-on: ubuntu-latest
+    needs:
+      - prepare
     strategy:
       matrix:
         go-version:
@@ -50,12 +86,20 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
+
+      - name: Restore Go modules cache
+        uses: actions/cache/restore@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('**/go.sum') }}
 
       - name: go vet
         run: go vet ${{ matrix.package }}
 
   gofmt:
     runs-on: ubuntu-latest
+    needs:
+      - prepare
     strategy:
       matrix:
         go-version:
@@ -75,6 +119,12 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
+
+      - name: Restore Go modules cache
+        uses: actions/cache/restore@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('**/go.sum') }}
 
       - name: gofmt
         run: gofmt -e -l -w ${{ matrix.package }}
