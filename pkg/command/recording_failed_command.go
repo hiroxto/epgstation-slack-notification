@@ -22,9 +22,8 @@ var RecordingFailedCommand = &cli.Command{
 }
 
 func recordingFailedCommandAction(context *cli.Context) error {
-	configFilePath := getConfigFilePath(context)
 	fileService := service.NewFileService()
-	configData, err := fileService.ReadConfigFile(configFilePath)
+	configData, err := fileService.ReadConfigFile(context.String("config"))
 	if err != nil {
 		return err
 	}
