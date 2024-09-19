@@ -2,7 +2,7 @@ package app
 
 import (
 	"github.com/hiroxto/epgstation-slack-notification/pkg/env"
-	"github.com/slack-go/slack"
+	"github.com/hiroxto/epgstation-slack-notification/pkg/service"
 )
 
 // EncodingUseCaseParam EncodingUseCaseのパラメータ
@@ -54,22 +54,9 @@ func EncodingDetailFromEnv(encodingEnv env.EncodingCommandEnv) EncodingDetail {
 
 // EncodingNotificationUseCase エンコーディング関連を通知する
 func EncodingNotificationUseCase(param EncodingUseCaseParam) error {
-	slackClient := createSlackClient(param.SlackAPIKey, param.EnableDebug)
+	client := service.NewSlackService(param.SlackAPIKey, param.EnableDebug)
 
-	message, err := formatContent("", param.Message, param.EncodingDetail)
-	if err != nil {
-		return err
-	}
-
-	fields, err := buildCommandFields(param.Fields, param.EncodingDetail)
-	if err != nil {
-		return err
-	}
-
-	messageOptions := buildMessageOptions(message, fields)
-	userNameOption := slack.MsgOptionUsername(param.UserName)
-	_, _, err = slackClient.PostMessage(param.SlackChannel, messageOptions, userNameOption)
-
+	err := client.PostMessageWithFields(param.SlackChannel, param.Message, convertFields(param.Fields), param.EncodingDetail, param.UserName)
 	if err != nil {
 		return err
 	}

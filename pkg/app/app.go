@@ -8,6 +8,7 @@ import (
 	"text/template"
 
 	"github.com/hiroxto/epgstation-slack-notification/pkg/config"
+	"github.com/hiroxto/epgstation-slack-notification/pkg/service"
 	"github.com/slack-go/slack"
 )
 
@@ -23,6 +24,20 @@ func FieldsFromConfig(fieldConfigs []config.FieldConfig) []Field {
 
 	for _, fieldConfig := range fieldConfigs {
 		fields = append(fields, Field{
+			Title:    fieldConfig.Title,
+			Template: fieldConfig.Template,
+		})
+	}
+
+	return fields
+}
+
+// convertFields app.Fieldsをservice.Fieldに変換する
+func convertFields(appFields []Field) []service.Field {
+	var fields []service.Field
+
+	for _, fieldConfig := range appFields {
+		fields = append(fields, service.Field{
 			Title:    fieldConfig.Title,
 			Template: fieldConfig.Template,
 		})
