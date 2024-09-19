@@ -1,11 +1,11 @@
 package app
 
 import (
-	"github.com/slack-go/slack"
 	"strconv"
 	"time"
 
 	"github.com/hiroxto/epgstation-slack-notification/pkg/env"
+	"github.com/hiroxto/epgstation-slack-notification/pkg/service"
 )
 
 // ReserveUseCaseParam ReserveNotificationUseCase のパラメータ
@@ -73,22 +73,9 @@ func ReserveDetailFromEnv(reserveEnv env.ReserveCommandEnv) ReserveDetail {
 
 // ReserveNotificationUseCase 予約関連を通知する
 func ReserveNotificationUseCase(param ReserveUseCaseParam) error {
-	slackClient := createSlackClient(param.SlackAPIKey, param.EnableDebug)
+	client := service.NewSlackService(param.SlackAPIKey, param.EnableDebug)
 
-	message, err := formatContent("", param.Message, param.ReserveDetail)
-	if err != nil {
-		return err
-	}
-
-	fields, err := buildCommandFields(param.Fields, param.ReserveDetail)
-	if err != nil {
-		return err
-	}
-
-	messageOptions := buildMessageOptions(message, fields)
-	userNameOption := slack.MsgOptionUsername(param.UserName)
-	_, _, err = slackClient.PostMessage(param.SlackChannel, messageOptions, userNameOption)
-
+	err := client.PostMessageWithFields(param.SlackChannel, param.Message, convertFields(param.Fields), param.ReserveDetail, param.UserName)
 	if err != nil {
 		return err
 	}

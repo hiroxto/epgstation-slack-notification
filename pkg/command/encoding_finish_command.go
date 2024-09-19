@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"github.com/hiroxto/epgstation-slack-notification/pkg/service"
 
 	"github.com/hiroxto/epgstation-slack-notification/pkg/app"
 	"github.com/hiroxto/epgstation-slack-notification/pkg/config"
@@ -20,13 +21,13 @@ var EncodingFinishCommand = &cli.Command{
 }
 
 func encodingFinishCommandAction(context *cli.Context) error {
-	configFilePath := getConfigFilePath(context)
-	configData, err := readConfigFile(configFilePath)
+	fileService := service.NewFileService()
+	configData, err := fileService.ReadConfigFile(context.String("config"))
 	if err != nil {
 		return err
 	}
 
-	conf, err := config.LoadConfigFromYaml([]byte(configData))
+	conf, err := config.LoadConfigFromYaml(configData)
 	if err != nil {
 		return err
 	}

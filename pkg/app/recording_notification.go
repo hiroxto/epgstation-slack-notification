@@ -1,11 +1,11 @@
 package app
 
 import (
-	"github.com/slack-go/slack"
 	"strconv"
 	"time"
 
 	"github.com/hiroxto/epgstation-slack-notification/pkg/env"
+	"github.com/hiroxto/epgstation-slack-notification/pkg/service"
 )
 
 // RecordingUseCaseParam RecordingNotificationUseCaseのパラメータ
@@ -85,22 +85,9 @@ func RecordingDetailFromEnv(recordingEnv env.RecordingCommandEnv) RecordingDetai
 
 // RecordingNotificationUseCase 予約関連を通知する
 func RecordingNotificationUseCase(param RecordingUseCaseParam) error {
-	slackClient := createSlackClient(param.SlackAPIKey, param.EnableDebug)
+	client := service.NewSlackService(param.SlackAPIKey, param.EnableDebug)
 
-	message, err := formatContent("", param.Message, param.RecordingDetail)
-	if err != nil {
-		return err
-	}
-
-	fields, err := buildCommandFields(param.Fields, param.RecordingDetail)
-	if err != nil {
-		return err
-	}
-
-	messageOptions := buildMessageOptions(message, fields)
-	userNameOption := slack.MsgOptionUsername(param.UserName)
-	_, _, err = slackClient.PostMessage(param.SlackChannel, messageOptions, userNameOption)
-
+	err := client.PostMessageWithFields(param.SlackChannel, param.Message, convertFields(param.Fields), param.RecordingDetail, param.UserName)
 	if err != nil {
 		return err
 	}

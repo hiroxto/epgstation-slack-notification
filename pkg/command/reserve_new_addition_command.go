@@ -6,6 +6,7 @@ import (
 	"github.com/hiroxto/epgstation-slack-notification/pkg/app"
 	"github.com/hiroxto/epgstation-slack-notification/pkg/config"
 	"github.com/hiroxto/epgstation-slack-notification/pkg/env"
+	"github.com/hiroxto/epgstation-slack-notification/pkg/service"
 	"github.com/urfave/cli/v2"
 )
 
@@ -21,13 +22,13 @@ var ReserveNewAdditionCommand = &cli.Command{
 }
 
 func reserveNewAdditionCommandAction(context *cli.Context) error {
-	configFilePath := getConfigFilePath(context)
-	configData, err := readConfigFile(configFilePath)
+	fileService := service.NewFileService()
+	configData, err := fileService.ReadConfigFile(context.String("config"))
 	if err != nil {
 		return err
 	}
 
-	conf, err := config.LoadConfigFromYaml([]byte(configData))
+	conf, err := config.LoadConfigFromYaml(configData)
 	if err != nil {
 		return err
 	}

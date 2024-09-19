@@ -2,6 +2,7 @@ package command
 
 import (
 	"github.com/hiroxto/epgstation-slack-notification/pkg/config"
+	"github.com/hiroxto/epgstation-slack-notification/pkg/service"
 	"github.com/k0kubun/pp/v3"
 	"github.com/urfave/cli/v2"
 )
@@ -23,13 +24,13 @@ var DumpConfigCommand = &cli.Command{
 }
 
 func dumpConfigCommandAction(context *cli.Context) error {
-	configFilePath := getConfigFilePath(context)
-	configData, err := readConfigFile(configFilePath)
+	fileService := service.NewFileService()
+	configData, err := fileService.ReadConfigFile(context.String("config"))
 	if err != nil {
 		return err
 	}
 
-	conf, err := config.LoadConfigFromYaml([]byte(configData))
+	conf, err := config.LoadConfigFromYaml(configData)
 	if err != nil {
 		return err
 	}
