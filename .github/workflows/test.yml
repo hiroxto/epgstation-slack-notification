@@ -26,6 +26,7 @@ jobs:
           key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-${{ matrix.go-version }}-
+            ${{ runner.os }}-go-
 
       - name: Install dependencies
         run: go mod vendor
@@ -59,6 +60,9 @@ jobs:
         with:
           path: vendor
           key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-${{ matrix.go-version }}-
+            ${{ runner.os }}-go-
 
       - name: go test
         run: go test -v ${{ matrix.package }}
@@ -92,6 +96,9 @@ jobs:
         with:
           path: vendor
           key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-${{ matrix.go-version }}-
+            ${{ runner.os }}-go-
 
       - name: go vet
         run: go vet ${{ matrix.package }}
@@ -125,6 +132,9 @@ jobs:
         with:
           path: vendor
           key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-${{ matrix.go-version }}-
+            ${{ runner.os }}-go-
 
       - name: gofmt
         run: gofmt -e -l -w ${{ matrix.package }}
