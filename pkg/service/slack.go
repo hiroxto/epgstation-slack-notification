@@ -54,7 +54,6 @@ func (c *SlackService) PostMessageWithFields(channelID string, messageTemplate s
 			textBlocks,
 			nil,
 		),
-		slack.NewDividerBlock(),
 	)
 
 	messageOptions := slack.MsgOptionCompose(fallbackOption, blockOption)
