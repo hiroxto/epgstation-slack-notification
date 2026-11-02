@@ -1,10 +1,11 @@
 package command
 
 import (
+	"context"
 	"github.com/hiroxto/epgstation-slack-notification/pkg/config"
 	"github.com/hiroxto/epgstation-slack-notification/pkg/service"
 	"github.com/k0kubun/pp/v3"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 // DumpConfigCommand dump-config コマンド
@@ -23,9 +24,9 @@ var DumpConfigCommand = &cli.Command{
 	},
 }
 
-func dumpConfigCommandAction(context *cli.Context) error {
+func dumpConfigCommandAction(_ context.Context, cmd *cli.Command) error {
 	fileService := service.NewFileService()
-	configData, err := fileService.ReadConfigFile(context.String("config"))
+	configData, err := fileService.ReadConfigFile(cmd.String("config"))
 	if err != nil {
 		return err
 	}
@@ -35,7 +36,7 @@ func dumpConfigCommandAction(context *cli.Context) error {
 		return err
 	}
 
-	pp.Default.SetColoringEnabled(context.Bool("color"))
+	pp.Default.SetColoringEnabled(cmd.Bool("color"))
 	pp.Println(conf)
 
 	return nil
