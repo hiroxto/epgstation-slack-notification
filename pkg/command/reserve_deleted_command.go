@@ -1,13 +1,14 @@
 package command
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/hiroxto/epgstation-slack-notification/pkg/app"
 	"github.com/hiroxto/epgstation-slack-notification/pkg/config"
 	"github.com/hiroxto/epgstation-slack-notification/pkg/env"
 	"github.com/hiroxto/epgstation-slack-notification/pkg/service"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 var ReserveDeletedCommand = &cli.Command{
@@ -20,9 +21,9 @@ var ReserveDeletedCommand = &cli.Command{
 	Action: reserveDeletedCommandAction,
 }
 
-func reserveDeletedCommandAction(context *cli.Context) error {
+func reserveDeletedCommandAction(_ context.Context, cmd *cli.Command) error {
 	fileService := service.NewFileService()
-	configData, err := fileService.ReadConfigFile(context.String("config"))
+	configData, err := fileService.ReadConfigFile(cmd.String("config"))
 	if err != nil {
 		return err
 	}
@@ -34,7 +35,7 @@ func reserveDeletedCommandAction(context *cli.Context) error {
 
 	commandConfig := conf.Commands.ReserveDeletedCommand
 	if !commandConfig.Enable {
-		fmt.Printf("%s command is disabled.\n", context.Command.Name)
+		fmt.Printf("%s command is disabled.\n", cmd.Name)
 		return nil
 	}
 	slackAPIKey := conf.Slack.APIKey
@@ -49,7 +50,7 @@ func reserveDeletedCommandAction(context *cli.Context) error {
 	}
 
 	param := app.ReserveUseCaseParam{
-		EnableDebug:   context.Bool("debug"),
+		EnableDebug:   cmd.Bool("debug"),
 		SlackAPIKey:   slackAPIKey,
 		SlackChannel:  slackChannel,
 		UserName:      commandConfig.UserName,

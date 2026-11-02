@@ -1,12 +1,13 @@
 package main
 
 import (
+	"context"
 	"log"
 	"os"
 	"path/filepath"
 
 	"github.com/hiroxto/epgstation-slack-notification/pkg/command"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 // DefaultConfigFileName デフォルトの設定ファイル名
@@ -19,7 +20,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = app.Run(os.Args)
+	err = app.Run(context.Background(), os.Args)
 	if err != nil {
 		log.Println(err)
 
@@ -32,7 +33,7 @@ func main() {
 	}
 }
 
-func newCliApp() (*cli.App, error) {
+func newCliApp() (*cli.Command, error) {
 	// 同一ディレクトリにあるファイルを指定
 	exeFilePath, err := os.Executable()
 	if err != nil {
@@ -40,7 +41,7 @@ func newCliApp() (*cli.App, error) {
 	}
 	defaultConfigFilePath := filepath.Join(filepath.Dir(exeFilePath), DefaultConfigFileName)
 
-	app := cli.NewApp()
+	app := &cli.Command{}
 	app.Name = "epgstation-slack-notification"
 	app.Usage = "EPGStationの通知をSlackに送るコマンドラインツール"
 	app.Version = "2.2.1"

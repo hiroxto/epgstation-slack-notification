@@ -1,10 +1,11 @@
 package command
 
 import (
+	"context"
 	"github.com/hiroxto/epgstation-slack-notification/pkg/app"
 	"github.com/hiroxto/epgstation-slack-notification/pkg/env"
 	"github.com/k0kubun/pp/v3"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 // DumpDetailCommand dump:detail コマンド
@@ -23,8 +24,8 @@ var DumpDetailCommand = &cli.Command{
 	},
 }
 
-func dumpDetailCommandAction(context *cli.Context) error {
-	pp.Default.SetColoringEnabled(context.Bool("color"))
+func dumpDetailCommandAction(_ context.Context, cmd *cli.Command) error {
+	pp.Default.SetColoringEnabled(cmd.Bool("color"))
 
 	// reserve
 	reserveCommandEnv, err := env.LoadReserveCommandEnv()
