@@ -23,10 +23,10 @@ permissions:
   contents: read
 
 jobs:
-  verify:
+  prepare:
     runs-on: ubuntu-latest
     outputs:
-      sha: ${{ steps.verified.outputs.sha }}
+      sha: ${{ steps.target-commit.outputs.sha }}
       tag: ${{ steps.target.outputs.tag }}
     steps:
       - name: Validate inputs and select target
@@ -66,6 +66,20 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Record target commit
+        id: target-commit
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  gofmt:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+          persist-credentials: false
+
       - name: Set up Go
         uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
@@ -81,17 +95,81 @@ jobs:
             exit 1
           fi
 
+  dependencies:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+          persist-credentials: false
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: true
+
       - name: Check dependencies
         run: |
           go mod tidy
           git diff --exit-code -- go.mod go.sum
           test -z "$(git ls-files --others --exclude-standard -- go.mod go.sum)"
 
+  vet:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+          persist-credentials: false
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: true
+
       - name: Vet
         run: go vet ./...
 
+  test:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+          persist-credentials: false
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: true
+
       - name: Test
         run: go test ./...
+
+  goreleaser-check:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+          persist-credentials: false
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: true
 
       - name: Check GoReleaser configuration
         uses: goreleaser/goreleaser-action@a4f02ab5355a589de60d917a659ce617ed19b3de # v7.3.0
@@ -99,6 +177,15 @@ jobs:
           version: ~> v2
           args: check
 
-      - name: Record verified commit
-        id: verified
-        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+  verify:
+    if: ${{ always() }}
+    needs: [prepare, gofmt, dependencies, vet, test, goreleaser-check]
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ needs.prepare.outputs.sha }}
+      tag: ${{ needs.prepare.outputs.tag }}
+    steps:
+      - name: Require all checks to succeed
+        env:
+          CHECK_RESULTS: ${{ toJSON(needs) }}
+        run: jq -e 'all(.[]; .result == "success")' <<< "$CHECK_RESULTS"
