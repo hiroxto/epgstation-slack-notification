@@ -12,6 +12,28 @@ import (
 	"github.com/k0kubun/pp/v3"
 )
 
+func TestCLIVersion(t *testing.T) {
+	originalVersion, originalCommit, originalDate := version, commit, date
+	t.Cleanup(func() { version, commit, date = originalVersion, originalCommit, originalDate })
+	version = "1.2.3"
+	commit = "0123456789abcdef0123456789abcdef01234567"
+	date = "2026-01-23T01:02:03Z"
+
+	app, err := newCliApp()
+	if err != nil {
+		t.Fatal(err)
+	}
+	var output bytes.Buffer
+	app.Writer = &output
+	if err := app.Run(context.Background(), []string{"notification", "--version"}); err != nil {
+		t.Fatal(err)
+	}
+	want := "epgstation-slack-notification version 1.2.3 (commit: 0123456789abcdef0123456789abcdef01234567, date: 2026-01-23T01:02:03Z)\n"
+	if output.String() != want {
+		t.Fatalf("unexpected version output: got %q, want %q", output.String(), want)
+	}
+}
+
 func TestCLIConfigFlags(t *testing.T) {
 	configPath := filepath.Join(t.TempDir(), "disabled.yml")
 	if err := os.WriteFile(configPath, []byte("commands: {}\n"), 0600); err != nil {
