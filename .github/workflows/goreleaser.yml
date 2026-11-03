@@ -35,11 +35,10 @@ jobs:
           ref: ${{ needs.verify.outputs.sha }}
           fetch-depth: 0
 
-      - name: Set up Go
-        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+      - name: Set up mise
+        uses: jdx/mise-action@f5be966e4a917d54244728e6a5fdcd1d93a35e6c # v5.2.6
         with:
-          go-version-file: go.mod
-          cache: true
+          cache: false
 
       - name: Prepare release tag
         id: release

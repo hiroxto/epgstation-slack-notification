@@ -1,0 +1,32 @@
+[tools]
+go = "1.26.0"
+
+[tasks.build]
+description = "Build the binary for the current platform"
+run = "go build -o epgstation-slack-notification ."
+
+[tasks."fmt:check"]
+description = "Check Go formatting"
+run = '''
+unformatted=$(git ls-files -z '*.go' | xargs -0 gofmt -l)
+if [ -n "$unformatted" ]; then
+  printf '%s\n' "$unformatted"
+  exit 1
+fi
+'''
+
+[tasks."deps:check"]
+description = "Check Go module files are tidy"
+run = '''
+go mod tidy
+git diff --exit-code -- go.mod go.sum
+test -z "$(git ls-files --others --exclude-standard -- go.mod go.sum)"
+'''
+
+[tasks.vet]
+description = "Run go vet"
+run = "go vet ./..."
+
+[tasks.test]
+description = "Run Go tests"
+run = "go test ./..."
