@@ -1,9 +1,13 @@
-before:
-  hooks:
-    - go mod tidy
+version: 2
 builds:
   -
     main: .
+    ldflags:
+      - >-
+        -s -w
+        -X main.version={{.Version}}
+        -X main.commit={{.FullCommit}}
+        -X main.date={{.Date}}
     env:
       - CGO_ENABLED=0
     goos:

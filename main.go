@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -12,6 +13,12 @@ import (
 
 // DefaultConfigFileName デフォルトの設定ファイル名
 const DefaultConfigFileName = "epgstation-slack-config.yml"
+
+var (
+	version = "dev"
+	commit  = "unknown"
+	date    = "unknown"
+)
 
 func main() {
 	app, err := newCliApp()
@@ -44,7 +51,7 @@ func newCliApp() (*cli.Command, error) {
 	app := &cli.Command{}
 	app.Name = "epgstation-slack-notification"
 	app.Usage = "EPGStationの通知をSlackに送るコマンドラインツール"
-	app.Version = "2.2.1"
+	app.Version = fmt.Sprintf("%s (commit: %s, date: %s)", version, commit, date)
 	app.Copyright = "(c) 2020 Hiroto Kitazawa"
 	app.Commands = commands
 	app.Flags = []cli.Flag{
