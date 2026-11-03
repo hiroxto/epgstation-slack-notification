@@ -41,22 +41,28 @@ jobs:
 
           fail() { echo "$*" >&2; exit 1; }
 
+          # 呼び出し元のrefを使い、指定がなければイベントのSHAを検証する。
           target=${INPUT_REF:-$GITHUB_SHA}
           tag=''
           pattern='^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$'
           if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
+            # 手動リリースはmasterからの実行と正式版タグの入力に限定する。
             [[ "$GITHUB_REF" == refs/heads/master ]] || fail 'Manual releases must run on master'
             tag=$INPUT_TAG
             [[ "$tag" =~ $pattern ]] || fail 'Invalid release tag'
+            # 完全一致するタグだけを採用し、既存タグの再試行ではそのコミットを検証する。
+            # 未作成ならtargetを変更せず、今回のイベントのSHAを検証する。
             existing_ref=$(gh api "repos/$GITHUB_REPOSITORY/git/matching-refs/tags/$tag" \
               --jq ".[] | select(.ref == \"refs/tags/$tag\") | .ref")
             if [[ -n "$existing_ref" ]]; then
               target=$existing_ref
             fi
           elif [[ "$target" == refs/tags/* ]]; then
+            # タグpushではrefから公開対象のタグ名を取り出して検証する。
             tag=${target#refs/tags/}
             [[ "$tag" =~ $pattern ]] || fail 'Invalid release tag'
           fi
+          # checkout用のrefと、公開処理へ引き継ぐタグ名を出力する。
           printf 'ref=%s\ntag=%s\n' "$target" "$tag" >> "$GITHUB_OUTPUT"
 
       - name: Checkout target

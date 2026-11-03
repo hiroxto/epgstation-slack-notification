@@ -53,22 +53,26 @@ jobs:
 
           fail() { echo "$*" >&2; exit 1; }
 
+          # テストしたコミットと一致することを確認し、リモートの最新タグを取得する。
           [[ "$(git rev-parse HEAD)" == "$VERIFIED_SHA" ]] || fail 'Checkout does not match the verified commit'
           git fetch --force --prune origin '+refs/tags/*:refs/tags/*'
           pattern='^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$'
           tag=$VERIFIED_TAG
           [[ "$tag" =~ $pattern ]] || fail 'Invalid release tag'
+          # 既存タグは再利用するが、検証後に別のコミットへ変更されていれば停止する。
           exists=false
           if git show-ref --verify --quiet "refs/tags/$tag"; then
             exists=true
             [[ "$(git rev-parse "refs/tags/$tag^{commit}")" == "$VERIFIED_SHA" ]] || fail 'Remote tag no longer matches the verified commit'
           fi
 
+          # 公開途中で失敗しても再試行対象が分かるよう、先に要約を記録する。
           {
             printf 'Commit: `%s`\n\nTag: `%s`\n\nVersion: `%s`\n\n' "$VERIFIED_SHA" "$tag" "${tag#v}"
             printf 'If publication fails after pushing the tag, start a new run with tag `%s`. Inspect and delete any draft release before retrying.\n\n' "$tag"
           } >> "$GITHUB_STEP_SUMMARY"
 
+          # 下書きを含め全ページを確認し、同じタグのReleaseがあれば上書きせず停止する。
           releases=$(gh api --paginate "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
             --jq '.[] | [.tag_name, .draft, .html_url] | @tsv')
           while IFS=$'\t' read -r existing_tag draft url; do
@@ -79,6 +83,7 @@ jobs:
             fi
           done <<< "$releases"
 
+          # 未作成の場合だけ、検証済みコミットにタグを作成してpushする。
           if [[ "$exists" == false ]]; then
             git tag "$tag" "$VERIFIED_SHA"
             git push origin "refs/tags/$tag"
