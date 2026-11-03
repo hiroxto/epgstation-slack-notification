@@ -86,20 +86,11 @@ jobs:
           ref: ${{ needs.prepare.outputs.sha }}
           persist-credentials: false
 
-      - name: Set up Go
-        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
-        with:
-          go-version-file: go.mod
-          cache: true
+      - name: Set up mise
+        uses: jdx/mise-action@f5be966e4a917d54244728e6a5fdcd1d93a35e6c # v5.2.6
 
       - name: Check formatting
-        run: |
-          mapfile -d '' files < <(git ls-files -z '*.go')
-          unformatted=$(gofmt -l "${files[@]}")
-          if [[ -n "$unformatted" ]]; then
-            printf '%s\n' "$unformatted"
-            exit 1
-          fi
+        run: mise run fmt:check
 
   dependencies:
     needs: prepare
@@ -111,17 +102,11 @@ jobs:
           ref: ${{ needs.prepare.outputs.sha }}
           persist-credentials: false
 
-      - name: Set up Go
-        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
-        with:
-          go-version-file: go.mod
-          cache: true
+      - name: Set up mise
+        uses: jdx/mise-action@f5be966e4a917d54244728e6a5fdcd1d93a35e6c # v5.2.6
 
       - name: Check dependencies
-        run: |
-          go mod tidy
-          git diff --exit-code -- go.mod go.sum
-          test -z "$(git ls-files --others --exclude-standard -- go.mod go.sum)"
+        run: mise run deps:check
 
   vet:
     needs: prepare
@@ -133,14 +118,11 @@ jobs:
           ref: ${{ needs.prepare.outputs.sha }}
           persist-credentials: false
 
-      - name: Set up Go
-        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
-        with:
-          go-version-file: go.mod
-          cache: true
+      - name: Set up mise
+        uses: jdx/mise-action@f5be966e4a917d54244728e6a5fdcd1d93a35e6c # v5.2.6
 
       - name: Vet
-        run: go vet ./...
+        run: mise run vet
 
   test:
     needs: prepare
@@ -152,14 +134,27 @@ jobs:
           ref: ${{ needs.prepare.outputs.sha }}
           persist-credentials: false
 
-      - name: Set up Go
-        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
-        with:
-          go-version-file: go.mod
-          cache: true
+      - name: Set up mise
+        uses: jdx/mise-action@f5be966e4a917d54244728e6a5fdcd1d93a35e6c # v5.2.6
 
       - name: Test
-        run: go test ./...
+        run: mise run test
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+          persist-credentials: false
+
+      - name: Set up mise
+        uses: jdx/mise-action@f5be966e4a917d54244728e6a5fdcd1d93a35e6c # v5.2.6
+
+      - name: Build
+        run: mise run build
 
   goreleaser-check:
     needs: prepare
@@ -171,11 +166,8 @@ jobs:
           ref: ${{ needs.prepare.outputs.sha }}
           persist-credentials: false
 
-      - name: Set up Go
-        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
-        with:
-          go-version-file: go.mod
-          cache: true
+      - name: Set up mise
+        uses: jdx/mise-action@f5be966e4a917d54244728e6a5fdcd1d93a35e6c # v5.2.6
 
       - name: Check GoReleaser configuration
         uses: goreleaser/goreleaser-action@a4f02ab5355a589de60d917a659ce617ed19b3de # v7.3.0
@@ -185,7 +177,7 @@ jobs:
 
   verify:
     if: ${{ always() }}
-    needs: [prepare, gofmt, dependencies, vet, test, goreleaser-check]
+    needs: [prepare, gofmt, dependencies, vet, test, build, goreleaser-check]
     runs-on: ubuntu-latest
     outputs:
       sha: ${{ needs.prepare.outputs.sha }}
