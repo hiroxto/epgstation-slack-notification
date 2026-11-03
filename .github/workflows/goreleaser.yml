@@ -1,36 +1,111 @@
-
 name: GoReleaser
 
 on:
   push:
-    # vX.Y.Z のタグが push されたときに実行する
-    tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (for example: v2.2.2)'
+        type: string
+        required: true
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  goreleaser:
+  verify:
+    uses: ./.github/workflows/test.yml
+    with:
+      ref: ${{ startsWith(github.ref, 'refs/tags/') && github.ref || github.sha }}
+
+  release:
+    needs: verify
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: release
+      cancel-in-progress: false
+      queue: max
     steps:
-      -
-        name: Checkout
+      - name: Checkout verified commit
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ needs.verify.outputs.sha }}
           fetch-depth: 0
 
-      -
-        name: Set up Go
+      - name: Set up Go
         uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
-          go-version: 1.x
+          go-version-file: go.mod
+          cache: true
 
-      -
-        name: Run GoReleaser
+      - name: Prepare release tag
+        id: release
+        env:
+          VERIFIED_SHA: ${{ needs.verify.outputs.sha }}
+          VERIFIED_TAG: ${{ needs.verify.outputs.tag }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          fail() { echo "$*" >&2; exit 1; }
+
+          [[ "$(git rev-parse HEAD)" == "$VERIFIED_SHA" ]] || fail 'Checkout does not match the verified commit'
+          git fetch --force --prune origin '+refs/tags/*:refs/tags/*'
+          pattern='^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$'
+          tag=$VERIFIED_TAG
+          [[ "$tag" =~ $pattern ]] || fail 'Invalid release tag'
+          exists=false
+          if git show-ref --verify --quiet "refs/tags/$tag"; then
+            exists=true
+            [[ "$(git rev-parse "refs/tags/$tag^{commit}")" == "$VERIFIED_SHA" ]] || fail 'Remote tag no longer matches the verified commit'
+          fi
+
+          {
+            printf 'Commit: `%s`\n\nTag: `%s`\n\nVersion: `%s`\n\n' "$VERIFIED_SHA" "$tag" "${tag#v}"
+            printf 'If publication fails after pushing the tag, start a new run with tag `%s`. Inspect and delete any draft release before retrying.\n\n' "$tag"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          releases=$(gh api --paginate "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
+            --jq '.[] | [.tag_name, .draft, .html_url] | @tsv')
+          while IFS=$'\t' read -r existing_tag draft url; do
+            if [[ "$existing_tag" == "$tag" ]]; then
+              state=Published
+              [[ "$draft" != true ]] || state=Draft
+              fail "$state release already exists: $url"
+            fi
+          done <<< "$releases"
+
+          if [[ "$exists" == false ]]; then
+            git tag "$tag" "$VERIFIED_SHA"
+            git push origin "refs/tags/$tag"
+          fi
+          printf 'tag=%s\n' "$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Confirm remote tag before publication
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          VERIFIED_SHA: ${{ needs.verify.outputs.sha }}
+        run: |
+          git fetch --force origin "refs/tags/$RELEASE_TAG:refs/tags/$RELEASE_TAG"
+          test "$(git rev-parse "refs/tags/$RELEASE_TAG^{commit}")" = "$VERIFIED_SHA"
+
+      - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@a4f02ab5355a589de60d917a659ce617ed19b3de # v7.3.0
         with:
-          version: latest
+          version: ~> v2
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GORELEASER_CURRENT_TAG: ${{ steps.release.outputs.tag }}
+
+      - name: Record published release
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          url=$(gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json url --jq .url)
+          printf 'Release: %s\n' "$url" >> "$GITHUB_STEP_SUMMARY"
