@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	github.com/k0kubun/pp/v3 v3.5.4
 	github.com/kelseyhightower/envconfig v1.4.0
-	github.com/slack-go/slack v0.33.0
+	github.com/slack-go/slack v0.35.0
 	github.com/urfave/cli/v3 v3.14.0
 	gopkg.in/yaml.v3 v3.0.1
 )
