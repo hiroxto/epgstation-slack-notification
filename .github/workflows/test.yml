@@ -140,6 +140,22 @@ jobs:
       - name: Test
         run: mise run test
 
+  vulncheck:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+          persist-credentials: false
+
+      - name: Set up mise
+        uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+
+      - name: Check vulnerabilities
+        run: mise run vulncheck
+
   build:
     needs: prepare
     runs-on: ubuntu-latest
@@ -177,7 +193,7 @@ jobs:
 
   verify:
     if: ${{ always() }}
-    needs: [prepare, gofmt, dependencies, vet, test, build, goreleaser-check]
+    needs: [prepare, gofmt, dependencies, vet, test, vulncheck, build, goreleaser-check]
     runs-on: ubuntu-latest
     outputs:
       sha: ${{ needs.prepare.outputs.sha }}

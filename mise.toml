@@ -1,6 +1,9 @@
 [settings]
 idiomatic_version_file_enable_tools = ["go"]
 
+[tools]
+"go:golang.org/x/vuln/cmd/govulncheck" = "1.10.0"
+
 [tasks.build]
 description = "Build the binary for the current platform"
 run = "go build -o epgstation-slack-notification ."
@@ -30,3 +33,7 @@ run = "go vet ./..."
 [tasks.test]
 description = "Run Go tests"
 run = "go test ./..."
+
+[tasks.vulncheck]
+description = "Check for known vulnerabilities with govulncheck"
+run = "govulncheck ./..."
