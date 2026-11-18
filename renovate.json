@@ -5,5 +5,20 @@
     ],
     "postUpdateOptions": [
         "gomodTidy"
+    ],
+    "packageRules": [
+        {
+            "description": "go.mod の go ディレクティブを最新の Go に更新する。mise は go ディレクティブの版の Go をインストールするため、CI とリリースのビルドで使う Go もこの設定で更新される。",
+            "matchManagers": [
+                "gomod"
+            ],
+            "matchDepNames": [
+                "go"
+            ],
+            "matchDepTypes": [
+                "golang"
+            ],
+            "rangeStrategy": "bump"
+        }
     ]
 }
