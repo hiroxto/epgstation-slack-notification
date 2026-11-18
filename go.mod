@@ -1,6 +1,6 @@
 module github.com/hiroxto/epgstation-slack-notification
 
-go 1.26.0
+go 1.26.11
 
 require (
 	github.com/k0kubun/pp/v3 v3.5.4
