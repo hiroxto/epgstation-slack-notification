@@ -76,6 +76,14 @@ jobs:
         id: target-commit
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
+      # Goの版はgo.modで決まるが、mise-actionの既定のキャッシュキーはgo.modを含まない。
+      # キーにgo.modのハッシュを含めないと、Goの更新後も古いGoとそのGoでビルドしたgovulncheckが復元され、govulncheckが新しいGoのソースを解析できずに失敗する。
+      # 後続のジョブが並列にインストールしないよう、ここでキャッシュを作成する。後続のジョブにも同じcache_keyを指定する。
+      - name: Set up mise
+        uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        with:
+          cache_key: "{{default}}-${{ hashFiles('go.mod') }}"
+
   gofmt:
     needs: prepare
     runs-on: ubuntu-latest
@@ -88,6 +96,8 @@ jobs:
 
       - name: Set up mise
         uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        with:
+          cache_key: "{{default}}-${{ hashFiles('go.mod') }}"
 
       - name: Check formatting
         run: mise run fmt:check
@@ -104,6 +114,8 @@ jobs:
 
       - name: Set up mise
         uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        with:
+          cache_key: "{{default}}-${{ hashFiles('go.mod') }}"
 
       - name: Check dependencies
         run: mise run deps:check
@@ -120,6 +132,8 @@ jobs:
 
       - name: Set up mise
         uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        with:
+          cache_key: "{{default}}-${{ hashFiles('go.mod') }}"
 
       - name: Vet
         run: mise run vet
@@ -136,6 +150,8 @@ jobs:
 
       - name: Set up mise
         uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        with:
+          cache_key: "{{default}}-${{ hashFiles('go.mod') }}"
 
       - name: Test
         run: mise run test
@@ -150,11 +166,10 @@ jobs:
           ref: ${{ needs.prepare.outputs.sha }}
           persist-credentials: false
 
-      # キャッシュキーにgo.modが含まれず、Goの更新後も古いGoでビルドしたgovulncheckが復元されて解析に失敗するため、キャッシュを使わない。
       - name: Set up mise
         uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
         with:
-          cache: false
+          cache_key: "{{default}}-${{ hashFiles('go.mod') }}"
 
       - name: Check vulnerabilities
         run: mise run vulncheck
@@ -171,6 +186,8 @@ jobs:
 
       - name: Set up mise
         uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        with:
+          cache_key: "{{default}}-${{ hashFiles('go.mod') }}"
 
       - name: Build
         run: mise run build
@@ -187,6 +204,8 @@ jobs:
 
       - name: Set up mise
         uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        with:
+          cache_key: "{{default}}-${{ hashFiles('go.mod') }}"
 
       - name: Check GoReleaser configuration
         uses: goreleaser/goreleaser-action@a4f02ab5355a589de60d917a659ce617ed19b3de # v7.3.0
