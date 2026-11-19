@@ -150,8 +150,11 @@ jobs:
           ref: ${{ needs.prepare.outputs.sha }}
           persist-credentials: false
 
+      # キャッシュキーにgo.modが含まれず、Goの更新後も古いGoでビルドしたgovulncheckが復元されて解析に失敗するため、キャッシュを使わない。
       - name: Set up mise
         uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        with:
+          cache: false
 
       - name: Check vulnerabilities
         run: mise run vulncheck
