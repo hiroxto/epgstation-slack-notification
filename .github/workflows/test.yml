@@ -76,7 +76,7 @@ jobs:
         id: target-commit
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
-      # Goの版はgo.modで決まるが、mise-actionの既定のキャッシュキーはgo.modを含まない。
+      # Goのバージョンはgo.modで決まるが、mise-actionの既定のキャッシュキーはgo.modを含まない。
       # キーにgo.modのハッシュを含めないと、Goの更新後も古いGoとそのGoでビルドしたgovulncheckが復元され、govulncheckが新しいGoのソースを解析できずに失敗する。
       # 後続のジョブが並列にインストールしないよう、ここでキャッシュを作成する。後続のジョブにも同じcache_keyを指定する。
       - name: Set up mise
